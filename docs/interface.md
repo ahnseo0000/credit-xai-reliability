@@ -25,7 +25,9 @@
 | `shap__<변수명>` | 해당 변수의 SHAP 값 (log-odds 기준) |
 
 - 변수명은 Home Credit 원본 컬럼명 그대로 쓴다 (예: `feat__EXT_SOURCE_2`).
-- 모형에 들어간 변수는 성별을 빼고 전부 넣는다.
+  - 예외: 파생 변수는 `variable_dict.csv`에 정의한 이름을 쓴다 (예: `feat__CREDIT_INCOME_RATIO`). `feat__` 값은 원본 컬럼으로 계산한 값이다.
+- 모형에 들어간 변수(`variable_dict.csv`의 `use = 사용`)는 전부 넣는다. 성별은 `use = 집단변수`라 `group_gender`로만 들어간다.
+- 결측 표시 변수는 따로 만들지 않는다 (XGBoost가 결측을 자체 처리). 로지스틱 baseline에서 만들더라도 `llm_input_full.csv`에는 넣지 않는다. 만약 XGBoost 입력에 넣게 되면 `<변수명>_MISSING` 이름으로 `variable_dict.csv`에 행을 추가해야 한다 (그래야 LLM이 언급했을 때 환각으로 잡히지 않음).
 - 범주형 변수를 원-핫 인코딩했다면, 더미들의 SHAP 값을 합쳐 원래 변수 하나로 만든다. SHAP은 가법적이라 합산해도 된다. LLM이 `NAME_EDUCATION_TYPE_Higher education` 같은 더미명을 다루지 않게 하기 위해서다.
 - `DAYS_BIRTH`처럼 음수 일수로 된 변수는 원본 그대로 두고, LLM 프롬프트를 만들 때 나이·연차로 변환해 보여준다.
 
@@ -62,4 +64,25 @@
 
 ## `variable_dict.csv` 컬럼
 
-`variable`, `korean_name`, `description`, `unit`
+| 컬럼 | 설명 |
+| --- | --- |
+| `variable` | 원본 컬럼명 또는 파생 변수명 |
+| `korean_name` | 한국어 이름 (LLM 프롬프트·서비스 화면에 사용) |
+| `description` | 한국어 설명. 파생 변수는 계산식 |
+| `unit` | 단위 |
+| `use` | `사용` (모형 입력) / `제외` / `집단변수` (모형 입력 제외, 집단 분석용) |
+| `var_group` | 서로 관련된 원본·파생 변수 묶음. 비어 있으면 단독 변수 |
+| `note` | 제외 사유, 전처리 주의사항 |
+
+### `var_group`과 일치도 매칭
+
+원본 변수와 그 파생 변수(예: `AMT_CREDIT`, `AMT_INCOME_TOTAL`, `CREDIT_INCOME_RATIO`)를 함께 넣으면 SHAP 기여도가 여러 변수로 나뉜다. 그래서 LLM이 맞는 내용을 말해도 변수명이 SHAP 1위와 다르면 누락형·순위 역전형으로 잡힐 수 있다.
+
+| `var_group` | 변수 |
+| --- | --- |
+| `loan_burden` | `AMT_INCOME_TOTAL`, `AMT_CREDIT`, `AMT_ANNUITY`, `AMT_GOODS_PRICE`, `CREDIT_INCOME_RATIO`, `ANNUITY_INCOME_RATIO`, `CREDIT_TERM` |
+| `employment` | `DAYS_EMPLOYED`, `EMPLOYED_AGE_RATIO` |
+
+- **주 분석**: 변수 단위로 매칭한다 (T4-1 지표 그대로).
+- **민감도 분석**: 같은 `var_group` 안의 변수는 같은 변수로 보고, 묶음의 SHAP은 합산(가법성)한 뒤 다시 매칭한다. 주 분석과 결과가 크게 다르면, 그 차이를 SHAP이 나뉜 탓으로 보고 따로 보고한다.
+- 묶음 정의는 SHAP 계산 전에 확정하고, 결과를 본 뒤 바꾸지 않는다 (확인 필요: 안서영).
