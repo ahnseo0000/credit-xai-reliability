@@ -1,0 +1,21 @@
+# Data (never commit raw data)
+data/*
+!data/.gitkeep
+
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Results
+results/raw/
+*.parquet
+
+# OS
+.DS_Store
