@@ -8,3 +8,16 @@ INCOME_PER_PERSON,1인당 소득,연소득을 가족 수로 나눈 값이다.,�
 CREDIT_GOODS_RATIO,상품가 대비 대출 금액,대출 금액을 구매 상품 가격으로 나눈 값이다.,배,사용,loan_burden,L0 집계 (application_train),application_train,1
 ROW_MISSING_CNT,신청서 결측 개수,모형 입력 신청서 변수 51개 중 값이 비어 있는 항목의 개수이다.,개,사용,,L0 집계 (application_train),application_train,1
 DOC_SUBMITTED_CNT,제출 서류 개수,서류 2~21번 중 제출한 서류의 개수이다.,개,사용,,L0 집계 (application_train),application_train,1
+BUREAU_CNT,타기관 대출 건수,타 금융기관 대출 기록의 총 건수이다 (기록이 없으면 0).,건,사용,bureau_account,L0 집계 (bureau),bureau,2
+BUREAU_ACTIVE_CNT,타기관 진행 중 대출 수,타 금융기관 대출 중 진행 중인 건수이다.,건,사용,bureau_account,L0 집계 (bureau),bureau,2
+BUREAU_CLOSED_CNT,타기관 종료 대출 수,타 금융기관 대출 중 종료된 건수이다.,건,사용,bureau_account,L0 집계 (bureau),bureau,2
+BUREAU_ACTIVE_RATIO,타기관 진행 중 대출 비율,타 금융기관 대출 중 진행 중인 건의 비율이다.,비율,사용,bureau_account,L0 집계 (bureau),bureau,2
+BUREAU_TYPE_NUNIQUE,타기관 대출 상품 종류 수,타 금융기관 대출의 상품 종류가 몇 가지인지 센 값이다.,개,사용,bureau_account,L0 집계 (bureau),bureau,2
+BUREAU_OLDEST_DAYS,최초 대출 개설 경과일,신청일 기준 가장 오래된 타기관 대출이 개설된 지 며칠 지났는지이다.,일,사용,bureau_account,L0 집계 (bureau),bureau,2
+BUREAU_MAX_DAY_OVERDUE,타기관 최대 연체일수,타 금융기관 대출 중 현재 연체일수의 최댓값이다.,일,사용,bureau_overdue,L0 집계 (bureau),bureau,2
+BUREAU_OVERDUE_ACCT_CNT,타기관 연체 대출 수,타 금융기관 대출 중 현재 연체 중인 건수이다.,건,사용,bureau_overdue,L0 집계 (bureau),bureau,2
+BUREAU_MAX_OVERDUE_AMT,타기관 최대 연체금액,타 금융기관 대출에서 기록된 연체금액의 최댓값이다.,통화 단위,사용,bureau_overdue,L0 집계 (bureau),bureau,2
+BUREAU_CREDIT_SUM,타기관 대출 금액 합계,타 금융기관 대출 금액의 합계이다.,통화 단위,사용,bureau_utilization,L0 집계 (bureau),bureau,2
+BUREAU_DEBT_SUM,타기관 대출 잔액 합계,타 금융기관 대출의 현재 잔액 합계이다.,통화 단위,사용,bureau_utilization,L0 집계 (bureau),bureau,2
+BUREAU_DEBT_RATIO,타기관 대출 소진율,타 금융기관 대출 잔액 합계를 대출 금액 합계로 나눈 값이다.,비율,사용,bureau_utilization,L0 집계 (bureau),bureau,2
+BUREAU_ACTIVE_DEBT_RATIO,타기관 진행 중 대출 소진율,진행 중인 타기관 대출만의 잔액 합계를 대출 금액 합계로 나눈 값이다.,비율,사용,bureau_utilization,L0 집계 (bureau),bureau,2
