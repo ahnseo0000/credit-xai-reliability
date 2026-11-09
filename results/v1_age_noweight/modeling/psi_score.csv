@@ -1,0 +1,5 @@
+﻿model,comparison,PSI
+로지스틱,train vs valid,0.00015271863243816421
+로지스틱,train vs test,0.00018127146064381806
+XGBoost 보정 후 (platt),train vs valid,0.00033433646710416564
+XGBoost 보정 후 (platt),train vs test,0.00022214145392353838
