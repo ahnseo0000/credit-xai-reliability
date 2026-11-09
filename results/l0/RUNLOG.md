@@ -23,3 +23,18 @@
 - `02:00:25` 커밋: L0 4단계(bureau_balance): 변수 6개 추가, test AUC 0.7769 (3ceaf2e)
 - `02:00:27` IV 표 저장 (train 215,257행만 사용, 선별 안 함): 변수 84개, IV>0.5 1개 ['EXT_SOURCE_MEAN']
 - `02:00:27` IV 상위 5: EXT_SOURCE_MEAN 0.611, EXT_SOURCE_MIN 0.462, EXT_SOURCE_MAX 0.450, EXT_SOURCE_PROD 0.379, EXT_SOURCE_3 0.327
+- `02:00:27` 커밋: L0: IV 표 (train만, 선별 없음), IV>0.5 변수 1개 (1e01866)
+- `02:00:27` 전체 소요 14.8분, 완료 단계 [1, 2, 3, 4], 중단 여부 False
+
+## git log (최근 8개, 이 로그 커밋 직전 시점)
+
+```
+1e01866 L0: IV 표 (train만, 선별 없음), IV>0.5 변수 1개
+3ceaf2e L0 4단계(bureau_balance): 변수 6개 추가, test AUC 0.7769
+7a72317 L0 3단계(previous_application): 변수 5개 추가, test AUC 0.7780
+233c66c L0 2단계(bureau): 변수 13개 추가, test AUC 0.7742
+5a8deb5 L0 1단계(application_derived): 변수 9개 추가, test AUC 0.7702
+ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation 실행기 추가
+0afbb54 결과: v1 조합 3종과 2x2 비교 (v1 기준 = 연령 제외, 가중치 없음)
+230b6ed train에 --version/--exclude/--spw 옵션과 2x2 비교 스크립트 추가
+```
