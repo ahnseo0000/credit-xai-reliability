@@ -1,0 +1,10 @@
+﻿variable,korean_name,description,unit,use,var_group,note,source,stage
+EXT_SOURCE_MEAN,외부 신용평가 점수 평균,외부 신용평가 점수 1~3 중 값이 있는 것의 평균이다.,0~1,사용,ext_source,L0 집계 (application_train),application_train,1
+EXT_SOURCE_MIN,외부 신용평가 점수 최솟값,외부 신용평가 점수 1~3 중 값이 있는 것의 최솟값이다.,0~1,사용,ext_source,L0 집계 (application_train),application_train,1
+EXT_SOURCE_MAX,외부 신용평가 점수 최댓값,외부 신용평가 점수 1~3 중 값이 있는 것의 최댓값이다.,0~1,사용,ext_source,L0 집계 (application_train),application_train,1
+EXT_SOURCE_PROD,외부 신용평가 점수 곱,외부 신용평가 점수 1~3 중 값이 있는 것을 모두 곱한 값이다.,0~1,사용,ext_source,L0 집계 (application_train),application_train,1
+EXT_SOURCE_MISSING_CNT,외부 신용평가 점수 결측 개수,외부 신용평가 점수 1~3 중 값이 없는 것의 개수이다.,개,사용,ext_source,L0 집계 (application_train),application_train,1
+INCOME_PER_PERSON,1인당 소득,연소득을 가족 수로 나눈 값이다.,통화 단위,사용,loan_burden,L0 집계 (application_train),application_train,1
+CREDIT_GOODS_RATIO,상품가 대비 대출 금액,대출 금액을 구매 상품 가격으로 나눈 값이다.,배,사용,loan_burden,L0 집계 (application_train),application_train,1
+ROW_MISSING_CNT,신청서 결측 개수,모형 입력 신청서 변수 51개 중 값이 비어 있는 항목의 개수이다.,개,사용,,L0 집계 (application_train),application_train,1
+DOC_SUBMITTED_CNT,제출 서류 개수,서류 2~21번 중 제출한 서류의 개수이다.,개,사용,,L0 집계 (application_train),application_train,1
