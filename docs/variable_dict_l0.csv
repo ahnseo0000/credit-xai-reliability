@@ -26,3 +26,9 @@ PREV_REFUSED_RATIO,과거 신청 거절 비율,과거 신청 중 거절된 건�
 PREV_APPROVED_AMT_RATIO,요청액 대비 승인액,승인된 과거 신청의 승인 금액을 요청 금액으로 나눈 값의 평균이다.,비율,사용,prev_application,L0 집계 (previous_application),previous_application,3
 PREV_DAYS_SINCE_LAST,마지막 과거 신청 경과일,가장 최근 과거 신청의 결정일로부터 신청일까지 지난 일수이다.,일,사용,prev_application,L0 집계 (previous_application),previous_application,3
 PREV_MEAN_GAP_DAYS,과거 신청 평균 간격,과거 신청 결정일 사이의 평균 간격이다 (신청이 2건 미만이면 없음).,일,사용,prev_application,L0 집계 (previous_application),previous_application,3
+BB_WORST_3M,최근 3개월 최악 연체 등급,타기관 대출의 최근 3개월 월별 상태 중 가장 나쁜 연체 등급이다 (0 정상 ~ 5 심각).,등급,사용,bureau_history,L0 집계 (bureau_balance),bureau_balance,4
+BB_WORST_6M,최근 6개월 최악 연체 등급,타기관 대출의 최근 6개월 월별 상태 중 가장 나쁜 연체 등급이다 (0 정상 ~ 5 심각).,등급,사용,bureau_history,L0 집계 (bureau_balance),bureau_balance,4
+BB_WORST_12M,최근 12개월 최악 연체 등급,타기관 대출의 최근 12개월 월별 상태 중 가장 나쁜 연체 등급이다 (0 정상 ~ 5 심각).,등급,사용,bureau_history,L0 집계 (bureau_balance),bureau_balance,4
+BB_DPD30_CNT,30일 초과 연체 월 수,타기관 대출 이력에서 31일 이상 연체였던 달의 수이다.,개월,사용,bureau_history,L0 집계 (bureau_balance),bureau_balance,4
+BB_DPD60_CNT,60일 초과 연체 월 수,타기관 대출 이력에서 61일 이상 연체였던 달의 수이다.,개월,사용,bureau_history,L0 집계 (bureau_balance),bureau_balance,4
+BB_DPD90_CNT,90일 초과 연체 월 수,타기관 대출 이력에서 91일 이상 연체였던 달의 수이다.,개월,사용,bureau_history,L0 집계 (bureau_balance),bureau_balance,4
