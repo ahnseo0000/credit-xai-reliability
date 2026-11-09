@@ -20,3 +20,6 @@
 - `01:56:45` 3단계(previous_application) 학습 4.6분: 입력 78개(+5), best_iter 1587, AUC 0.7780 (직전 대비 +0.0038 [+0.0019, +0.0059]), KS 0.4230, 보정 전 ECE 0.0030 → 후 0.0028, PD-연령 순위상관 -0.272, 연령구간 AUC 0.602
 - `01:56:45` 커밋: L0 3단계(previous_application): 변수 5개 추가, test AUC 0.7780 (7a72317)
 - `02:00:24` 4단계(bureau_balance) 학습 3.3분: 입력 84개(+6), best_iter 1016, AUC 0.7769 (직전 대비 -0.0011 [-0.0024, +0.0000]), KS 0.4227, 보정 전 ECE 0.0017 → 후 0.0019, PD-연령 순위상관 -0.281, 연령구간 AUC 0.605
+- `02:00:25` 커밋: L0 4단계(bureau_balance): 변수 6개 추가, test AUC 0.7769 (3ceaf2e)
+- `02:00:27` IV 표 저장 (train 215,257행만 사용, 선별 안 함): 변수 84개, IV>0.5 1개 ['EXT_SOURCE_MEAN']
+- `02:00:27` IV 상위 5: EXT_SOURCE_MEAN 0.611, EXT_SOURCE_MIN 0.462, EXT_SOURCE_MAX 0.450, EXT_SOURCE_PROD 0.379, EXT_SOURCE_3 0.327

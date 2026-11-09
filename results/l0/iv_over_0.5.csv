@@ -1,0 +1,2 @@
+﻿variable,source,stage,train_missing_rate,n_bins,IV,IV_band
+EXT_SOURCE_MEAN,application_train,1,0.0005667643793233205,11,0.6109412906912759,>0.5 (누수 의심)
