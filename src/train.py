@@ -32,7 +32,7 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 from . import config as C
 from .data import add_groups, clean, income_cuts, load_raw, load_var_dict, model_features, split_labels
-from .metrics import N_BINS, bootstrap_auc, credit_metrics, decile_table, monotonicity
+from .metrics import N_BINS, calibration_method_table, metric_suite
 from .models import Calibrator, best_f1_threshold, evaluate, feature_to_variable, make_preprocessor
 
 OUT = C.MODELING_DIR
@@ -226,16 +226,38 @@ def main():
 
     # ------------------------------------------------ L1-9 신용 검증 지표 (테스트셋)
     log("신용 지표·부트스트랩 (B=1000)")
-    preds = {"로지스틱": p_te_lr, "XGBoost 보정 전": p_te_raw, f"XGBoost 보정 후 ({method})": p_te_xgb}
-    cm = pd.DataFrame([{"model": k, **credit_metrics(y_te, p)} for k, p in preds.items()])
+    xgb_name = f"XGBoost 보정 후 ({method})"
+    preds = {"로지스틱": p_te_lr, "XGBoost 보정 전": p_te_raw, xgb_name: p_te_xgb}
+    # PSI용 점수: 모형의 최종 부도확률 (보정은 단조변환이라 보정 전 PSI는 구간이 같아 동일하다)
+    p_tr_lr = lr_pipe.predict_proba(tr[feats])[:, 1]
+    p_tr_xgb = cal.predict(model.predict_proba(X_tr)[:, 1])
+    score_splits = {
+        "로지스틱": {"train": p_tr_lr, "valid": p_va_lr, "test": p_te_lr},
+        xgb_name: {"train": p_tr_xgb, "valid": p_va_xgb, "test": p_te_xgb},
+    }
+    feature_splits = {"train": tr[feats], "valid": va[feats], "test": te[feats]}
+    suite = metric_suite(y_te, preds, baseline="로지스틱", score_splits=score_splits, feature_splits=feature_splits)
+    cm, dec, boot = suite["summary"], suite["deciles"], suite["bootstrap"]
     cm.to_csv(OUT / "credit_metrics.csv", index=False, encoding="utf-8-sig")
-    dec = pd.concat([decile_table(y_te, p).assign(model=k) for k, p in preds.items()])
     dec.to_csv(OUT / "decile_table.csv", index=False, encoding="utf-8-sig")
-    boot = bootstrap_auc(y_te, preds, baseline="로지스틱")
     boot.to_csv(OUT / "bootstrap_auc.csv", index=False, encoding="utf-8-sig")
+    suite["hl"].to_csv(OUT / "hosmer_lemeshow.csv", index=False, encoding="utf-8-sig")
+    suite["psi_score"].to_csv(OUT / "psi_score.csv", index=False, encoding="utf-8-sig")
+    suite["psi_variable"].to_csv(OUT / "psi_variable.csv", index=False, encoding="utf-8-sig")
     plot_deciles(dec, y_te.mean())
+
+    # isotonic vs Platt 비교 (채택은 Platt 고정, 근거를 표로 남긴다)
+    cal_iso = Calibrator("isotonic").fit(p_va_raw, y_va)
+    cal_cmp = calibration_method_table(
+        y_te, {"isotonic": (cv_brier["isotonic"], cal_iso.predict(p_te_raw)), "platt": (cv_brier["platt"], p_te_xgb)}
+    )
+    cal_cmp.to_csv(OUT / "calibration_method_comparison.csv", index=False, encoding="utf-8-sig")
     log("\n" + cm.round(4).to_string(index=False))
     log("\n" + boot.round(4).to_string(index=False))
+    log("\n" + suite["hl"].round(4).to_string(index=False))
+    log("\n" + suite["psi_score"].round(5).to_string(index=False))
+    log("\n" + cal_cmp.round(5).to_string(index=False))
+    log("\n변수 PSI 상위 5\n" + suite["psi_variable"].head(5).round(5).to_string(index=False))
 
     # ------------------------------------------------ T1-8 저장
     bundle = {
@@ -271,7 +293,7 @@ def main():
     ).to_csv(C.RAW_RESULTS_DIR / "test_predictions.csv", index=False)
 
     write_report(comp, cal_tbl, method, cv_brier, model, spw, wald, dropped, vif, cuts, len(tr), len(va), len(te))
-    write_credit_report(cm, dec, boot)
+    write_credit_report(suite, cal_cmp)
     log("완료")
 
 
@@ -301,7 +323,8 @@ def plot_deciles(dec: pd.DataFrame, base_rate: float):
     plt.close(fig)
 
 
-def write_credit_report(cm: pd.DataFrame, dec: pd.DataFrame, boot: pd.DataFrame):
+def write_credit_report(suite: dict, cal_cmp: pd.DataFrame):
+    cm, dec, boot = suite["summary"], suite["deciles"], suite["bootstrap"]
     L = [
         "# 신용 검증 지표 (L1-9)",
         "",
@@ -336,6 +359,61 @@ def write_credit_report(cm: pd.DataFrame, dec: pd.DataFrame, boot: pd.DataFrame)
             diff = f"{r[5]:+.4f}"
             dci = f"[{r.diff_ci_low:+.4f}, {r.diff_ci_high:+.4f}]"
         L.append(f"| {r.model} | {r.AUC:.4f} | [{r.AUC_ci_low:.4f}, {r.AUC_ci_high:.4f}] | {diff} | {dci} |")
+    L += [
+        "",
+        "## Hosmer-Lemeshow (테스트셋, 십분위 10구간)",
+        "",
+        "통계량 = Σ (O−E)² / (E·(1−E/n)). p값은 자유도 10(학습에 쓰지 않은 표본)과 8(개발표본용)을 모두 적는다.",
+        "표본이 4.6만 건이라 작은 편차도 기각되기 쉬우므로 ECE·보정곡선과 함께 읽는다.",
+        "",
+        "| 모형 | HL 통계량 | p (df=10) | p (df=8) |",
+        "| --- | --- | --- | --- |",
+    ]
+    for r in suite["hl"].itertuples():
+        L.append(f"| {r.model} | {r.HL_stat:.2f} | {r.HL_p_df10:.4f} | {r.HL_p_df8:.4f} |")
+    L += [
+        "",
+        "## 확률 보정 방법 비교: isotonic vs Platt",
+        "",
+        "Brier는 낮을수록 좋다. 검증셋 5-fold는 보정 방법 선택에, 테스트셋은 최종 확인에 쓴다.",
+        "",
+        "| 방법 | 검증 5-fold Brier | 테스트 Brier | 테스트 ECE | 테스트 AUC | 고유 확률값 수 | 정확히 0 | 정확히 1 |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for r in cal_cmp.itertuples():
+        L.append(
+            f"| {r.method} | {r.valid_5fold_Brier:.5f} | {r.test_Brier:.5f} | {r.test_ECE_10q:.5f} | {r.test_AUC:.4f} "
+            f"| {r.unique_values:,} | {r.n_exact_zero:,} | {r.n_exact_one:,} |"
+        )
+    L += [
+        "",
+        "## PSI (Population Stability Index)",
+        "",
+        "구간은 학습셋 분위수 10구간(중복 경계는 합침, 양 끝 열림, 결측은 별도 구간)이고, 범주형은 학습셋 범주 + 기타 + 결측이다. "
+        "비율이 0인 구간은 ε=1e-4로 바꾼다. 관례적 해석: 0.1 미만 안정, 0.1~0.25 주의, 0.25 초과 변화.",
+        "",
+        "> **한계: 시간 변수 부재.** Home Credit 데이터에는 신청일이 없고 분할은 TARGET 층화 *무작위* 분할이다. "
+        "그래서 이 PSI는 분할 간 표본 변동만 재며 0 근처가 되는 것이 당연하다. 시점 간 모집단 변화(vintage·OOT)를 검증한 것이 아니다. "
+        "이후 집단 간 PSI(성별·연령·소득)가 의미 있는 변동 확인이 된다.",
+        "",
+        "점수 PSI (최종 부도확률 기준):",
+        "",
+        "| 모형 | 비교 | PSI |",
+        "| --- | --- | --- |",
+    ]
+    for r in suite["psi_score"].itertuples():
+        L.append(f"| {r.model} | {r.comparison} | {r.PSI:.5f} |")
+    pv = suite["psi_variable"]
+    L += [
+        "",
+        f"변수 PSI (모형 입력 {len(pv)}개): 최대 {pv[['PSI_train_vs_valid', 'PSI_train_vs_test']].to_numpy().max():.5f}, "
+        f"0.1 이상 {(pv[['PSI_train_vs_valid', 'PSI_train_vs_test']].max(axis=1) >= 0.1).sum()}개. 상위 10개 (전체: `psi_variable.csv`):",
+        "",
+        "| 변수 | train vs valid | train vs test |",
+        "| --- | --- | --- |",
+    ]
+    for r in pv.head(10).itertuples():
+        L.append(f"| `{r.variable}` | {r.PSI_train_vs_valid:.5f} | {r.PSI_train_vs_test:.5f} |")
     for m in dec["model"].unique():
         d = dec[dec["model"] == m]
         L += ["", f"## 십분위 표: {m}", "", "| 구간 | 인원 | 부도 | 부도율 | lift | 누적 포착률 | 평균 예측확률 |", "| --- | --- | --- | --- | --- | --- | --- |"]

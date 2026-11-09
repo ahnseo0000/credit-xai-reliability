@@ -87,6 +87,114 @@ def credit_metrics(y: np.ndarray, p: np.ndarray) -> dict:
     }
 
 
+PSI_EPS = 1e-4  # 비율이 0인 구간에 넣는 값
+
+
+def hosmer_lemeshow(y: np.ndarray, p: np.ndarray, g: int = N_BINS) -> dict:
+    """Hosmer-Lemeshow 적합도. 예측확률 기준 같은 인원 g구간 (십분위와 같은 구간 정의).
+
+    통계량 = Σ (O_b − E_b)² / (E_b · (1 − E_b / n_b)), O 실제 부도 수, E 예측 부도 수 합.
+    p값은 자유도 g (학습에 쓰지 않은 표본에 대한 표준 선택)와 g−2 (개발표본용) 두 가지를 모두 낸다.
+    표본이 4만 건 이상이라 통계량이 작은 편차에도 커지므로 ECE·보정곡선과 함께 읽는다."""
+    from scipy.stats import chi2
+
+    d = pd.DataFrame({"y": y, "p": p, "bin": quantile_bins(p, g)})
+    t = d.groupby("bin").agg(n=("y", "size"), obs=("y", "sum"), exp=("p", "sum"))
+    stat = float((((t["obs"] - t["exp"]) ** 2) / (t["exp"] * (1 - t["exp"] / t["n"]))).sum())
+    return {
+        "HL_stat": stat,
+        "HL_p_df10": float(chi2.sf(stat, g)),
+        "HL_p_df8": float(chi2.sf(stat, g - 2)),
+    }
+
+
+def psi(expected: pd.Series, actual: pd.Series, n_bins: int = N_BINS, eps: float = PSI_EPS) -> float:
+    """Population Stability Index. 구간은 expected(기준=학습셋)에서 정한다.
+
+    - 수치형: expected의 분위수 n_bins구간 (중복 경계는 합침, 양 끝은 열어 둠). 결측은 별도 구간.
+    - 범주형: expected에 있는 범주 + 없던 범주('기타') + 결측.
+    - 비율이 0인 구간은 eps로 바꾼다 (재정규화 없음). PSI = Σ (a−e)·ln(a/e)."""
+    expected = pd.Series(expected).reset_index(drop=True)
+    actual = pd.Series(actual).reset_index(drop=True)
+    if pd.api.types.is_numeric_dtype(expected):
+        edges = np.unique(np.quantile(expected.dropna(), np.linspace(0, 1, n_bins + 1)[1:-1]))
+
+        def code(s):
+            c = np.searchsorted(edges, s.to_numpy(dtype=float), side="left")
+            return np.where(s.isna().to_numpy(), len(edges) + 1, c)
+
+        k = len(edges) + 2
+        ce, ca = code(expected), code(actual)
+    else:
+        cats = {v: i for i, v in enumerate(pd.unique(expected.dropna()))}
+        k = len(cats) + 2
+
+        def code(s):
+            return np.array([len(cats) + 1 if pd.isna(v) else cats.get(v, len(cats)) for v in s])
+
+        ce, ca = code(expected), code(actual)
+    e = np.bincount(ce, minlength=k) / len(ce)
+    a = np.bincount(ca, minlength=k) / len(ca)
+    e = np.where(e == 0, eps, e)
+    a = np.where(a == 0, eps, a)
+    return float(((a - e) * np.log(a / e)).sum())
+
+
+def calibration_method_table(y: np.ndarray, cands: dict[str, tuple[float, np.ndarray]]) -> pd.DataFrame:
+    """보정 방법 비교. cands: 방법 → (검증셋 5-fold Brier, 테스트셋 보정 확률)."""
+    rows = []
+    for name, (cv_brier, p) in cands.items():
+        rows.append(
+            {
+                "method": name,
+                "valid_5fold_Brier": cv_brier,
+                "test_Brier": float(brier_score_loss(y, p)),
+                "test_ECE_10q": ece(y, p),
+                "test_AUC": float(roc_auc_score(y, p)),
+                "unique_values": int(len(np.unique(p))),
+                "n_exact_zero": int((p == 0).sum()),
+                "n_exact_one": int((p == 1).sum()),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def metric_suite(
+    y: np.ndarray,
+    preds: dict[str, np.ndarray],
+    baseline: str,
+    score_splits: dict[str, dict[str, np.ndarray]] | None = None,
+    feature_splits: dict[str, pd.DataFrame] | None = None,
+    B: int = BOOTSTRAP_B,
+) -> dict[str, pd.DataFrame]:
+    """검증 지표를 한 번에 계산한다.
+
+    y, preds: 테스트셋 라벨과 모형별 예측 (클수록 위험).
+    score_splits: 모형 → {'train','valid','test': 점수} (점수 PSI용).
+    feature_splits: {'train','valid','test': 피처 DataFrame} (변수 PSI용).
+    반환: summary(KS·Gini·ECE·Brier 등), deciles, bootstrap, hl, psi_score, psi_variable."""
+    out = {
+        "summary": pd.DataFrame([{"model": k, **credit_metrics(y, p)} for k, p in preds.items()]),
+        "deciles": pd.concat([decile_table(y, p).assign(model=k) for k, p in preds.items()], ignore_index=True),
+        "bootstrap": bootstrap_auc(y, preds, baseline=baseline, B=B),
+        "hl": pd.DataFrame([{"model": k, **hosmer_lemeshow(y, p)} for k, p in preds.items()]),
+    }
+    if score_splits:
+        rows = []
+        for m, s in score_splits.items():
+            for other in ("valid", "test"):
+                rows.append({"model": m, "comparison": f"train vs {other}", "PSI": psi(pd.Series(s["train"]), pd.Series(s[other]))})
+        out["psi_score"] = pd.DataFrame(rows)
+    if feature_splits:
+        tr = feature_splits["train"]
+        rows = [
+            {"variable": c, "PSI_train_vs_valid": psi(tr[c], feature_splits["valid"][c]), "PSI_train_vs_test": psi(tr[c], feature_splits["test"][c])}
+            for c in tr.columns
+        ]
+        out["psi_variable"] = pd.DataFrame(rows).sort_values("PSI_train_vs_test", ascending=False, ignore_index=True)
+    return out
+
+
 def bootstrap_auc(y: np.ndarray, preds: dict[str, np.ndarray], baseline: str, B: int = BOOTSTRAP_B, seed: int = 42):
     """같은 재표본으로 모형별 AUC 95% 구간과 (모형 − baseline) AUC 차이 구간을 계산한다.
 

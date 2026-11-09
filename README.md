@@ -49,7 +49,7 @@ python -m src.train   # T1-2~8 전처리·분할·로지스틱·XGBoost·보정�
 | --- | --- |
 | `eda/eda_summary.md` | 부도율, 결측 비율, 집단별 부도율, 주요 변수 분포 |
 | `modeling/modeling_summary.md` | 성능 비교, 보정, 로지스틱 계수·Wald, VIF |
-| `modeling/credit_metrics.md` | KS, Gini, 십분위 lift, ECE, 부트스트랩 AUC |
+| `modeling/credit_metrics.md` | KS, Gini, 십분위 lift, ECE, 부트스트랩 AUC, Hosmer-Lemeshow, isotonic vs Platt, PSI |
 | `models/xgb_bundle.joblib` | 전처리기 + XGBoost + Platt 보정기 + 더미→변수 매핑 (Streamlit·SHAP용) |
 | `models/lr_pipeline.joblib` | 로지스틱 baseline 파이프라인 |
 | `raw/` (git 제외) | 분할 ID(`splits.csv`), 테스트셋 예측값(`test_predictions.csv`) |
