@@ -14,6 +14,18 @@ MODELING_DIR = VERSION_DIR / "modeling"
 MODELS_DIR = VERSION_DIR / "models"
 RAW_RESULTS_DIR = VERSION_DIR / "raw"  # git에 올리지 않는 중간 산출물
 
+
+def set_version(version: str) -> None:
+    """결과 저장 폴더를 results/<version>/ 으로 바꾼다 (조합별 비교 실험용)."""
+    global MODEL_VERSION, VERSION_DIR, EDA_DIR, MODELING_DIR, MODELS_DIR, RAW_RESULTS_DIR
+    MODEL_VERSION = version
+    VERSION_DIR = RESULTS_DIR / version
+    EDA_DIR = VERSION_DIR / "eda"
+    MODELING_DIR = VERSION_DIR / "modeling"
+    MODELS_DIR = VERSION_DIR / "models"
+    RAW_RESULTS_DIR = VERSION_DIR / "raw"
+
+
 RAW_DIR = DATA_DIR / "raw"
 RAW_TRAIN = RAW_DIR / "application_train.csv"
 VAR_DICT = DOCS_DIR / "variable_dict.csv"

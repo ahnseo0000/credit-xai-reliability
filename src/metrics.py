@@ -195,6 +195,45 @@ def metric_suite(
     return out
 
 
+def paired_auc_diffs(
+    y: np.ndarray,
+    preds: dict[str, np.ndarray],
+    pairs: list[tuple[str, str, str]],
+    B: int = BOOTSTRAP_B,
+    seed: int = 42,
+) -> pd.DataFrame:
+    """같은 부트스트랩 재표본으로 AUC 차이(a − b)의 95% percentile 구간을 계산한다.
+
+    pairs: (설명, a 모형 이름, b 모형 이름). 모든 모형이 같은 재표본을 쓰므로 쌍 비교다."""
+    rng = np.random.default_rng(seed)
+    n = len(y)
+    names = sorted({x for _, a, b in pairs for x in (a, b)})
+    aucs = {k: np.empty(B) for k in names}
+    for i in range(B):
+        idx = rng.integers(0, n, n)
+        yb = y[idx]
+        for k in names:
+            aucs[k][i] = fast_auc(yb, preds[k][idx])
+    rows = []
+    for label, a, b in pairs:
+        d = aucs[a] - aucs[b]
+        lo, hi = np.percentile(d, [2.5, 97.5])
+        rows.append(
+            {
+                "comparison": label,
+                "a": a,
+                "b": b,
+                "AUC_a": float(roc_auc_score(y, preds[a])),
+                "AUC_b": float(roc_auc_score(y, preds[b])),
+                "diff_a_minus_b": float(roc_auc_score(y, preds[a]) - roc_auc_score(y, preds[b])),
+                "ci_low": float(lo),
+                "ci_high": float(hi),
+                "ci_excludes_0": bool(lo > 0 or hi < 0),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 def bootstrap_auc(y: np.ndarray, preds: dict[str, np.ndarray], baseline: str, B: int = BOOTSTRAP_B, seed: int = 42):
     """같은 재표본으로 모형별 AUC 95% 구간과 (모형 − baseline) AUC 차이 구간을 계산한다.
 

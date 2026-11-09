@@ -8,6 +8,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import json
 import platform
 import warnings
@@ -128,7 +129,19 @@ def choose_calibration(p_raw: np.ndarray, y: np.ndarray) -> tuple[str, dict]:
     return min(mean, key=mean.get), mean
 
 
-def main():
+def parse_args(argv=None):
+    ap = argparse.ArgumentParser(description="학습·평가. 인자 없이 실행하면 v0_baseline 설정(연령 포함, 가중치 있음).")
+    ap.add_argument("--version", default=C.MODEL_VERSION, help="결과 폴더 이름 (results/<version>/)")
+    ap.add_argument("--exclude", default="", help="모형 입력에서 뺄 변수, 쉼표로 구분 (예: DAYS_BIRTH,EMPLOYED_AGE_RATIO)")
+    ap.add_argument("--spw", choices=["auto", "none"], default="auto", help="auto: 정상/부도 비로 scale_pos_weight, none: 1")
+    return ap.parse_args(argv)
+
+
+def main(argv=None):
+    global OUT
+    args = parse_args(argv)
+    C.set_version(args.version)
+    OUT = C.MODELING_DIR
     OUT.mkdir(parents=True, exist_ok=True)
     C.MODELS_DIR.mkdir(parents=True, exist_ok=True)
     C.RAW_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -137,9 +150,18 @@ def main():
     vd = load_var_dict()
     kor = dict(zip(vd["variable"], vd["korean_name"]))
     feats = model_features(vd)
+    excluded = [v for v in args.exclude.split(",") if v]
+    unknown = [v for v in excluded if v not in feats]
+    if unknown:
+        raise SystemExit(f"--exclude에 모형 입력이 아닌 변수가 있음: {unknown}")
+    feats = [f for f in feats if f not in excluded]
+    assert "CODE_GENDER" not in feats, "성별은 모형 입력에 들어가면 안 된다"
+    log(f"version={args.version}, 입력 변수 {len(feats)}개, 제외 {excluded or '없음'}, spw={args.spw}")
     df = clean(load_raw())
     split = split_labels(df)
     pd.DataFrame({C.ID_COL: df[C.ID_COL], "split": split}).to_csv(C.RAW_RESULTS_DIR / "splits.csv", index=False)
+    # 집단 변수(성별·연령)는 모형 입력과 별도 파일로 보관한다 (공정성·추출용).
+    # 소득 구간 경계는 학습셋 기준이라 아래 cuts 계산 후 add_groups로 채운다.
     tr, va, te = (df[split == s] for s in ("train", "valid", "test"))
     y_tr, y_va, y_te = (d[C.TARGET_COL].to_numpy() for d in (tr, va, te))
     log(f"split train/valid/test = {len(tr):,}/{len(va):,}/{len(te):,}, 부도율 {y_tr.mean():.4f}/{y_va.mean():.4f}/{y_te.mean():.4f}")
@@ -149,6 +171,17 @@ def main():
         json.dumps({"income_q1": cuts[0], "income_q2": cuts[1], "age_bins": [35, 55]}, indent=2), encoding="utf-8"
     )
     log(f"소득 경계값 q1={cuts[0]:,.1f}, q2={cuts[1]:,.1f}")
+    gv = add_groups(df, cuts)
+    gv.insert(0, "split", split)
+    gv.insert(0, C.ID_COL, df[C.ID_COL])
+    gv.insert(2, "CODE_GENDER", df["CODE_GENDER"])
+    gv.insert(3, "age_years", -df["DAYS_BIRTH"] / 365.25)
+    gv["AMT_INCOME_TOTAL"] = df["AMT_INCOME_TOTAL"]
+    gv.to_csv(C.RAW_RESULTS_DIR / "group_variables.csv", index=False)
+    (OUT / "run_config.json").write_text(
+        json.dumps({"version": args.version, "excluded": excluded, "spw": args.spw, "n_features": len(feats), "features": feats}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
     # ------------------------------------------------ T1-4 로지스틱 baseline
     log("로지스틱 baseline 학습")
@@ -178,7 +211,7 @@ def main():
     X_va = xgb_pre.transform(va[feats])
     X_te = xgb_pre.transform(te[feats])
     xgb_f2v = feature_to_variable(list(X_tr.columns), feats)
-    spw = float((y_tr == 0).sum() / (y_tr == 1).sum())
+    spw = float((y_tr == 0).sum() / (y_tr == 1).sum()) if args.spw == "auto" else 1.0
     model = xgb.XGBClassifier(scale_pos_weight=spw, **XGB_PARAMS)
     model.fit(X_tr, y_tr, eval_set=[(X_va, y_va)], verbose=500)
     log(f"best_iteration={model.best_iteration}, valid AUC={model.best_score:.4f}, scale_pos_weight={spw:.2f}")
@@ -338,7 +371,7 @@ def write_credit_report(suite: dict, cal_cmp: pd.DataFrame):
         "- **등급 단조성**: 십분위 부도율이 위험 순서대로 줄어드는지. 역전 = 다음 구간 부도율이 더 높은 경우.",
         f"- **ECE** = Σ (n_b/N) · |평균 예측확률_b − 실제 부도율_b|, b는 위의 같은 인원 {N_BINS}구간 (분위수 구간).",
         "- 부트스트랩: 테스트셋 관측 단순 복원추출 B=1,000, 시드 42, percentile 95% 구간. 모형 간 차이는 같은 재표본으로 계산(대응).",
-        "- XGBoost 보정 전은 `scale_pos_weight`로 학습해 확률 수준이 크게 높다. 순위 지표(AUC·KS·lift)는 보정 후와 같고 Brier·ECE만 다르다.",
+        "- XGBoost 보정 전은 보정기를 거치기 전 값이다 (`scale_pos_weight`를 쓰면 확률 수준이 높아진다). 순위 지표(AUC·KS·lift)는 보정 후와 같고 Brier·ECE만 다르다.",
         "",
         "## 요약",
         "",
@@ -444,7 +477,7 @@ def write_report(comp, cal_tbl, method, cv_brier, model, spw, wald, dropped, vif
         "",
         "## XGBoost",
         "",
-        f"- `scale_pos_weight` = {spw:.2f} (학습셋 정상/부도 비), early stopping 150라운드 (검증셋 AUC)",
+        f"- `scale_pos_weight` = {spw:.2f} ({'학습셋 정상/부도 비' if spw != 1.0 else '가중치 없음'}), early stopping 150라운드 (검증셋 AUC)",
         f"- best iteration = {model.best_iteration}, 검증셋 AUC = {model.best_score:.4f}",
         f"- 하이퍼파라미터는 고정값 (5-fold 튜닝은 범위에서 제외): `{ {k: v for k, v in XGB_PARAMS.items() if k not in ('n_jobs', 'eval_metric')} }`",
         "- 결측은 XGBoost가 자체 처리, 범주형은 원-핫 (100건 미만 범주는 infrequent로 묶음)",
