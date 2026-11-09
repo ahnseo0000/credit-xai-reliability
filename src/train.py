@@ -2,9 +2,9 @@
 
 실행: python -m src.train
 출력:
-  results/modeling/   성능 비교표, 로지스틱 계수·Wald, VIF, 보정 곡선, 집단 경계값
-  results/models/     저장된 모델 (Streamlit 재사용)
-  results/raw/        분할 ID, 테스트셋 예측값 (git 제외)
+  results/<MODEL_VERSION>/modeling/   성능 비교표, 신용 지표, 로지스틱 계수·Wald, VIF, 보정 곡선, 집단 경계값
+  results/<MODEL_VERSION>/models/     저장된 모델 (Streamlit 재사용)
+  results/<MODEL_VERSION>/raw/        분할 ID, 테스트셋 예측값 (git 제외)
 """
 from __future__ import annotations
 
@@ -35,7 +35,7 @@ from .data import add_groups, clean, income_cuts, load_raw, load_var_dict, model
 from .metrics import N_BINS, bootstrap_auc, credit_metrics, decile_table, monotonicity
 from .models import Calibrator, best_f1_threshold, evaluate, feature_to_variable, make_preprocessor
 
-OUT = C.RESULTS_DIR / "modeling"
+OUT = C.MODELING_DIR
 C.set_korean_font()
 
 XGB_PARAMS = dict(

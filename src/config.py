@@ -5,8 +5,14 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 DOCS_DIR = ROOT / "docs"
 RESULTS_DIR = ROOT / "results"
-RAW_RESULTS_DIR = RESULTS_DIR / "raw"  # git에 올리지 않는 중간 산출물
-MODELS_DIR = RESULTS_DIR / "models"
+
+# 결과는 모델 버전별 폴더에 저장한다. 버전을 올릴 때(새 피처·연령 제외 등) 이 값만 바꾼다.
+MODEL_VERSION = "v0_baseline"
+VERSION_DIR = RESULTS_DIR / MODEL_VERSION
+EDA_DIR = VERSION_DIR / "eda"
+MODELING_DIR = VERSION_DIR / "modeling"
+MODELS_DIR = VERSION_DIR / "models"
+RAW_RESULTS_DIR = VERSION_DIR / "raw"  # git에 올리지 않는 중간 산출물
 
 RAW_DIR = DATA_DIR / "raw"
 RAW_TRAIN = RAW_DIR / "application_train.csv"

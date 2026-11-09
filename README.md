@@ -17,7 +17,7 @@ credit-xai-llm/
 ├── notebooks/   # EDA·실험 노트북
 ├── src/         # 공용 파이썬 코드 (전처리, 모델, SHAP, LLM 호출, 분석)
 ├── app/         # Streamlit 앱
-├── results/     # 모델 산출물, 분석 결과표, 그림 (results/raw/는 커밋하지 않음)
+├── results/     # 모델 버전별 폴더(v0_baseline/ ...): 산출물, 결과표, 그림 (*/raw/는 커밋하지 않음)
 └── docs/        # 인터페이스 정의, 변수 사전 등 문서
 ```
 
@@ -34,31 +34,34 @@ cp .env.example .env   # GEMINI_API_KEY 값 입력
 
 - macOS에서는 XGBoost가 OpenMP를 필요로 합니다: `brew install libomp`
 - Gemini API 키는 Google AI Studio에서 발급합니다. `.env`는 절대 커밋하지 않습니다.
-- 저장된 모델(`results/models/*.joblib`)은 패키지 버전에 묶여 있으니 `requirements.txt`의 고정 버전을 그대로 쓰세요.
+- 저장된 모델(`results/<버전>/models/*.joblib`)은 패키지 버전에 묶여 있으니 `requirements.txt`의 고정 버전을 그대로 쓰세요.
 
 ## 실행
 
 ```bash
-python -m src.eda     # T1-1 EDA → results/eda/
-python -m src.train   # T1-2~8 전처리·분할·로지스틱·XGBoost·보정·비교·저장 (약 3분)
+python -m src.eda     # T1-1 EDA → results/<버전>/eda/
+python -m src.train   # T1-2~8 전처리·분할·로지스틱·XGBoost·보정·비교·저장 (약 4분)
 ```
 
-| 산출물 | 내용 |
+버전은 `src/config.py`의 `MODEL_VERSION`으로 정한다 (현재 `v0_baseline`).
+
+| 산출물 (`results/<버전>/` 아래) | 내용 |
 | --- | --- |
-| `results/eda/eda_summary.md` | 부도율, 결측 비율, 집단별 부도율, 주요 변수 분포 |
-| `results/modeling/modeling_summary.md` | 성능 비교, 보정, 로지스틱 계수·Wald, VIF |
-| `results/models/xgb_bundle.joblib` | 전처리기 + XGBoost + Platt 보정기 + 더미→변수 매핑 (Streamlit·SHAP용) |
-| `results/models/lr_pipeline.joblib` | 로지스틱 baseline 파이프라인 |
-| `results/raw/` (git 제외) | 분할 ID(`splits.csv`), 테스트셋 예측값(`test_predictions.csv`) |
+| `eda/eda_summary.md` | 부도율, 결측 비율, 집단별 부도율, 주요 변수 분포 |
+| `modeling/modeling_summary.md` | 성능 비교, 보정, 로지스틱 계수·Wald, VIF |
+| `modeling/credit_metrics.md` | KS, Gini, 십분위 lift, ECE, 부트스트랩 AUC |
+| `models/xgb_bundle.joblib` | 전처리기 + XGBoost + Platt 보정기 + 더미→변수 매핑 (Streamlit·SHAP용) |
+| `models/lr_pipeline.joblib` | 로지스틱 baseline 파이프라인 |
+| `raw/` (git 제외) | 분할 ID(`splits.csv`), 테스트셋 예측값(`test_predictions.csv`) |
 
 코드 구성: `src/config.py`(경로·상수), `src/data.py`(정제·파생 변수·집단·분할), `src/models.py`(전처리기·보정기·평가), `src/eda.py`, `src/train.py`.
 
 ## 데이터
 
-Kaggle [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/data)에서 `application_train.csv`를 내려받아 `data/`에 넣습니다.
+Kaggle [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/data)에서 `application_train.csv`(와 이후 단계의 보조 테이블)를 내려받아 `data/raw/`에 넣습니다.
 
 ```
-data/application_train.csv
+data/raw/application_train.csv
 ```
 
 `data/` 아래 파일은 `.gitignore`로 제외되어 레포에 올라가지 않습니다.

@@ -1,7 +1,7 @@
 """T1-1 EDA: 부도율, 결측 비율, 주요 변수 분포.
 
 실행: python -m src.eda
-출력: results/eda/
+출력: results/<MODEL_VERSION>/eda/
 """
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ import pandas as pd
 from . import config as C
 from .data import add_groups, clean, income_cuts, load_raw, load_var_dict, model_features, split_labels
 
-OUT = C.RESULTS_DIR / "eda"
+OUT = C.EDA_DIR
 C.set_korean_font()
 
 

@@ -14,7 +14,7 @@ __pycache__/
 venv/
 
 # Results
-results/raw/
+results/*/raw/
 *.parquet
 
 # OS
