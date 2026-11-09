@@ -32,6 +32,7 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 from . import config as C
 from .data import add_groups, clean, income_cuts, load_raw, load_var_dict, model_features, split_labels
+from .metrics import N_BINS, bootstrap_auc, credit_metrics, decile_table, monotonicity
 from .models import Calibrator, best_f1_threshold, evaluate, feature_to_variable, make_preprocessor
 
 OUT = C.RESULTS_DIR / "modeling"
@@ -49,7 +50,7 @@ XGB_PARAMS = dict(
     eval_metric="auc",
     early_stopping_rounds=150,
     random_state=C.SEED,
-    n_jobs=-1,
+    n_jobs=C.N_JOBS,
 )
 
 
@@ -198,12 +199,12 @@ def main():
     fig, ax = plt.subplots(figsize=(5.5, 5))
     ax.plot([0, 1], [0, 1], "k--", lw=1, label="완벽 보정")
     for name, p in [("XGBoost 보정 전", p_te_raw), (f"XGBoost 보정 후 ({method})", p_te_xgb), ("로지스틱", p_te_lr)]:
-        frac, mean_pred = calibration_curve(y_te, p, n_bins=15, strategy="quantile")
+        frac, mean_pred = calibration_curve(y_te, p, n_bins=N_BINS, strategy="quantile")
         ax.plot(mean_pred, frac, marker="o", ms=3, label=name)
         cal_rows.append({"model": name, "test_Brier": brier_score_loss(y_te, p), "mean_pred": p.mean(), "observed_rate": y_te.mean()})
     ax.set_xlabel("예측 부도확률")
     ax.set_ylabel("실제 부도율")
-    ax.set_title("보정 곡선 (테스트셋, 분위수 15구간)")
+    ax.set_title(f"보정 곡선 (테스트셋, 분위수 {N_BINS}구간)")
     ax.legend(fontsize=8)
     fig.tight_layout()
     fig.savefig(OUT / "calibration_curve.png", dpi=150)
@@ -222,6 +223,19 @@ def main():
     )
     comp.to_csv(OUT / "model_comparison.csv", index=False, encoding="utf-8-sig")
     log("\n" + comp.round(4).to_string(index=False))
+
+    # ------------------------------------------------ L1-9 신용 검증 지표 (테스트셋)
+    log("신용 지표·부트스트랩 (B=1000)")
+    preds = {"로지스틱": p_te_lr, "XGBoost 보정 전": p_te_raw, f"XGBoost 보정 후 ({method})": p_te_xgb}
+    cm = pd.DataFrame([{"model": k, **credit_metrics(y_te, p)} for k, p in preds.items()])
+    cm.to_csv(OUT / "credit_metrics.csv", index=False, encoding="utf-8-sig")
+    dec = pd.concat([decile_table(y_te, p).assign(model=k) for k, p in preds.items()])
+    dec.to_csv(OUT / "decile_table.csv", index=False, encoding="utf-8-sig")
+    boot = bootstrap_auc(y_te, preds, baseline="로지스틱")
+    boot.to_csv(OUT / "bootstrap_auc.csv", index=False, encoding="utf-8-sig")
+    plot_deciles(dec, y_te.mean())
+    log("\n" + cm.round(4).to_string(index=False))
+    log("\n" + boot.round(4).to_string(index=False))
 
     # ------------------------------------------------ T1-8 저장
     bundle = {
@@ -257,7 +271,78 @@ def main():
     ).to_csv(C.RAW_RESULTS_DIR / "test_predictions.csv", index=False)
 
     write_report(comp, cal_tbl, method, cv_brier, model, spw, wald, dropped, vif, cuts, len(tr), len(va), len(te))
+    write_credit_report(cm, dec, boot)
     log("완료")
+
+
+def plot_deciles(dec: pd.DataFrame, base_rate: float):
+    """십분위 부도율(막대)과 누적 포착률(선). 1=가장 위험한 십분위."""
+    models = list(dec["model"].unique())
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
+    w = 0.8 / len(models)
+    for i, m in enumerate(models):
+        d = dec[dec["model"] == m]
+        axes[0].bar(d["bin"] + (i - (len(models) - 1) / 2) * w, d["bad_rate"], width=w, label=m)
+        axes[1].plot(d["bin"], d["cum_capture"], marker="o", ms=3, label=m)
+    axes[0].axhline(base_rate, color="k", ls="--", lw=1, label="전체 부도율")
+    axes[0].set_xlabel("십분위 (1=최고위험)")
+    axes[0].set_ylabel("실제 부도율")
+    axes[0].set_title("십분위별 부도율")
+    axes[0].set_xticks(range(1, N_BINS + 1))
+    axes[0].legend(fontsize=7)
+    axes[1].plot([0, N_BINS], [0, 1], "k--", lw=1, label="무작위")
+    axes[1].set_xlabel("십분위 (누적)")
+    axes[1].set_ylabel("누적 부도 포착률")
+    axes[1].set_title("누적 포착률 (CAP)")
+    axes[1].set_xticks(range(1, N_BINS + 1))
+    axes[1].legend(fontsize=7)
+    fig.tight_layout()
+    fig.savefig(OUT / "decile_lift.png", dpi=150)
+    plt.close(fig)
+
+
+def write_credit_report(cm: pd.DataFrame, dec: pd.DataFrame, boot: pd.DataFrame):
+    L = [
+        "# 신용 검증 지표 (L1-9)",
+        "",
+        "`python -m src.train`으로 생성. 모두 테스트셋(46,127건) 기준.",
+        "",
+        "## 정의",
+        "",
+        "- **KS**: 부도·정상 누적분포의 최대 차이. **Gini** = 2·AUC − 1.",
+        f"- **십분위**: 예측 위험도 내림차순으로 같은 인원씩 {N_BINS}개 구간 (1=최고위험). 동점은 정렬 순서대로 쪼갠다.",
+        "- **lift** = 구간 부도율 / 전체 부도율. **누적 포착률** = 상위 k개 구간에 든 부도 수 / 전체 부도 수.",
+        "- **등급 단조성**: 십분위 부도율이 위험 순서대로 줄어드는지. 역전 = 다음 구간 부도율이 더 높은 경우.",
+        f"- **ECE** = Σ (n_b/N) · |평균 예측확률_b − 실제 부도율_b|, b는 위의 같은 인원 {N_BINS}구간 (분위수 구간).",
+        "- 부트스트랩: 테스트셋 관측 단순 복원추출 B=1,000, 시드 42, percentile 95% 구간. 모형 간 차이는 같은 재표본으로 계산(대응).",
+        "- XGBoost 보정 전은 `scale_pos_weight`로 학습해 확률 수준이 크게 높다. 순위 지표(AUC·KS·lift)는 보정 후와 같고 Brier·ECE만 다르다.",
+        "",
+        "## 요약",
+        "",
+        "| 모형 | AUC | Gini | KS | 1분위 lift | 상위 30% 포착률 | Brier | ECE | 등급 단조 | 역전 수 |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for r in cm.itertuples():
+        L.append(
+            f"| {r.model} | {r.AUC:.4f} | {r.Gini:.4f} | {r.KS:.4f} | {r.top_decile_lift:.2f} | {r.top30_capture:.1%} "
+            f"| {r.Brier:.4f} | {r.ECE_10q:.4f} | {'예' if r.grade_monotone else '아니오'} | {r.grade_inversions} |"
+        )
+    L += ["", "## 부트스트랩 AUC 95% 신뢰구간", "", "| 모형 | AUC | 95% CI | 로지스틱 대비 차이 | 차이 95% CI |", "| --- | --- | --- | --- | --- |"]
+    for r in boot.itertuples():
+        if pd.isna(getattr(r, "diff_ci_low", np.nan)):
+            diff = "-"
+            dci = "-"
+        else:
+            diff = f"{r[5]:+.4f}"
+            dci = f"[{r.diff_ci_low:+.4f}, {r.diff_ci_high:+.4f}]"
+        L.append(f"| {r.model} | {r.AUC:.4f} | [{r.AUC_ci_low:.4f}, {r.AUC_ci_high:.4f}] | {diff} | {dci} |")
+    for m in dec["model"].unique():
+        d = dec[dec["model"] == m]
+        L += ["", f"## 십분위 표: {m}", "", "| 구간 | 인원 | 부도 | 부도율 | lift | 누적 포착률 | 평균 예측확률 |", "| --- | --- | --- | --- | --- | --- | --- |"]
+        for r in d.itertuples():
+            L.append(f"| {r.bin} | {r.n:,} | {r.bads:,} | {r.bad_rate:.2%} | {r.lift:.2f} | {r.cum_capture:.1%} | {r.mean_pred:.2%} |")
+    L += ["", "그림: `decile_lift.png`, `calibration_curve.png`", ""]
+    (OUT / "credit_metrics.md").write_text("\n".join(L), encoding="utf-8")
 
 
 def write_report(comp, cal_tbl, method, cv_brier, model, spw, wald, dropped, vif, cuts, n_tr, n_va, n_te):

@@ -1,12 +1,16 @@
-pandas==3.1.1
-numpy==2.5.4
-scikit-learn==1.9.1
+# Python 3.13.1 (Windows 11)에서 결과를 재현한 버전. results/의 숫자는 이 버전 기준이다.
+# 아래 "미검증" 항목은 아직 실행해 보지 않은 단계(SHAP, LLM, 서비스)용이며 해당 단계 착수 시 확인 후 고정한다.
+pandas==2.2.3
+numpy==2.5.1
+scikit-learn==1.6.1
 xgboost==3.4.1
+scipy==1.17.1
+statsmodels==0.14.6
+matplotlib==3.10.0
+joblib==1.5.3
+
+# 미검증
 shap==0.54.1
-scipy==1.18.1
-statsmodels==0.15.0
-matplotlib==3.11.2
 google-genai==2.34.0
 python-dotenv==1.2.4
 streamlit==1.66.1
-joblib==1.6.0

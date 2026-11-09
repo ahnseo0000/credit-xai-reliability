@@ -8,10 +8,12 @@ RESULTS_DIR = ROOT / "results"
 RAW_RESULTS_DIR = RESULTS_DIR / "raw"  # git에 올리지 않는 중간 산출물
 MODELS_DIR = RESULTS_DIR / "models"
 
-RAW_TRAIN = DATA_DIR / "application_train.csv"
+RAW_DIR = DATA_DIR / "raw"
+RAW_TRAIN = RAW_DIR / "application_train.csv"
 VAR_DICT = DOCS_DIR / "variable_dict.csv"
 
 SEED = 42
+N_JOBS = 4  # XGBoost 스레드 수 고정 (재현성). 스레드 수가 바뀌면 부동소수점 합산 순서가 달라질 수 있다.
 ID_COL = "SK_ID_CURR"
 TARGET_COL = "TARGET"
 

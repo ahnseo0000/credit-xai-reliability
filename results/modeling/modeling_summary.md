@@ -14,26 +14,26 @@
 | 모델 | AUC | 정확도 | F1 | Brier | 컷오프 | TN | FP | FN | TP |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 로지스틱 회귀 | 0.7490 | 0.8463 | 0.2907 | 0.0687 | 0.150 | 37,585 | 4,818 | 2,271 | 1,453 |
-| XGBoost (보정 후) | 0.7710 | 0.8596 | 0.3217 | 0.0671 | 0.165 | 38,118 | 4,285 | 2,189 | 1,535 |
+| XGBoost (보정 후) | 0.7704 | 0.8578 | 0.3160 | 0.0672 | 0.165 | 38,053 | 4,350 | 2,209 | 1,515 |
 
 ## XGBoost
 
 - `scale_pos_weight` = 11.39 (학습셋 정상/부도 비), early stopping 150라운드 (검증셋 AUC)
-- best iteration = 994, 검증셋 AUC = 0.7667
+- best iteration = 843, 검증셋 AUC = 0.7670
 - 하이퍼파라미터는 고정값 (5-fold 튜닝은 범위에서 제외): `{'n_estimators': 3000, 'learning_rate': 0.03, 'max_depth': 5, 'min_child_weight': 20, 'subsample': 0.8, 'colsample_bytree': 0.7, 'reg_lambda': 5.0, 'tree_method': 'hist', 'early_stopping_rounds': 150, 'random_state': 42}`
 - 결측은 XGBoost가 자체 처리, 범주형은 원-핫 (100건 미만 범주는 infrequent로 묶음)
 
 ## 확률 보정 (T1-6)
 
-- 검증셋 안 5-fold Brier: isotonic 0.06718, Platt 0.06724
+- 검증셋 안 5-fold Brier: isotonic 0.06729, Platt 0.06722
 - **platt** 채택, 검증셋 전체로 다시 학습. isotonic은 계단함수라 부도확률이 정확히 0%·100%인 고객과 동점이 생긴다 (첫 실행에서 테스트셋 고유값 103개, 0%가 72명). 사용자·LLM에 보여줄 값으로 부적절하고 Brier 차이도 미미해 Platt을 쓴다.
 - 검증셋을 early stopping과 보정에 함께 썼다. 테스트셋은 어디에도 쓰지 않았다.
 - TreeSHAP은 보정 전 XGBoost의 log-odds 기준이다. 보정은 단조변환이라 고객 간 순위는 유지된다.
 
 | 모델 | 테스트 Brier | 평균 예측 | 실제 부도율 |
 | --- | --- | --- | --- |
-| XGBoost 보정 전 | 0.17943 | 0.3841 | 0.0807 |
-| XGBoost 보정 후 (platt) | 0.06714 | 0.0808 | 0.0807 |
+| XGBoost 보정 전 | 0.18172 | 0.3885 | 0.0807 |
+| XGBoost 보정 후 (platt) | 0.06720 | 0.0807 | 0.0807 |
 | 로지스틱 | 0.06866 | 0.0808 | 0.0807 |
 
 그림: `calibration_curve.png`
@@ -82,24 +82,24 @@ VIF > 10인 컬럼 41개 (5만 건 표본). 전체 표: `vif.csv`
 
 | 컬럼 | VIF |
 | --- | --- |
-| `NAME_FAMILY_STATUS_Separated` | ∞ (완전 선형종속) |
-| `NAME_FAMILY_STATUS_Widow` | ∞ (완전 선형종속) |
 | `CNT_CHILDREN` | ∞ (완전 선형종속) |
-| `CNT_FAM_MEMBERS` | ∞ (완전 선형종속) |
 | `NAME_FAMILY_STATUS_Single / not married` | ∞ (완전 선형종속) |
-| `ORGANIZATION_TYPE_XNA` | 6,799.1 |
-| `FLAG_EMP_PHONE` | 5,785.0 |
-| `NAME_INCOME_TYPE_Pensioner` | 1,049.8 |
-| `NAME_EDUCATION_TYPE_Secondary / secondary special` | 356.4 |
-| `OBS_60_CNT_SOCIAL_CIRCLE` | 318.1 |
-| `NAME_EDUCATION_TYPE_Higher education` | 317.0 |
-| `OBS_30_CNT_SOCIAL_CIRCLE` | 315.9 |
+| `NAME_FAMILY_STATUS_Widow` | ∞ (완전 선형종속) |
+| `NAME_FAMILY_STATUS_Separated` | ∞ (완전 선형종속) |
+| `CNT_FAM_MEMBERS` | ∞ (완전 선형종속) |
+| `ORGANIZATION_TYPE_XNA` | 8,715.0 |
+| `FLAG_EMP_PHONE` | 7,399.5 |
+| `NAME_INCOME_TYPE_Pensioner` | 1,184.5 |
+| `NAME_EDUCATION_TYPE_Secondary / secondary special` | 357.0 |
+| `NAME_EDUCATION_TYPE_Higher education` | 318.7 |
+| `OBS_60_CNT_SOCIAL_CIRCLE` | 318.4 |
+| `OBS_30_CNT_SOCIAL_CIRCLE` | 318.0 |
 | `ORGANIZATION_TYPE_Business Entity Type 3` | 156.8 |
 | `ORGANIZATION_TYPE_Self-employed` | 97.7 |
 | `AMT_CREDIT` | 58.1 |
 | `NAME_EDUCATION_TYPE_Incomplete higher` | 57.7 |
 | `ORGANIZATION_TYPE_Other` | 46.9 |
-| `AMT_GOODS_PRICE` | 43.0 |
+| `AMT_GOODS_PRICE` | 43.1 |
 | `ORGANIZATION_TYPE_Medicine` | 32.9 |
 | `ORGANIZATION_TYPE_Business Entity Type 2` | 30.8 |
 | `ORGANIZATION_TYPE_Government` | 29.5 |
