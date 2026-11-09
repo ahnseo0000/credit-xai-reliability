@@ -38,3 +38,4 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 0afbb54 결과: v1 조합 3종과 2x2 비교 (v1 기준 = 연령 제외, 가중치 없음)
 230b6ed train에 --version/--exclude/--spw 옵션과 2x2 비교 스크립트 추가
 ```
+- `02:00:28` 커밋: L0: RUNLOG 마무리 (4004b2f)
