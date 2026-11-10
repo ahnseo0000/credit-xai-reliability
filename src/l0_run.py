@@ -54,6 +54,7 @@ def git(*args) -> str:
 def commit(paths: list[str], msg: str, enabled: bool):
     if not enabled:
         return
+    paths = [p for p in paths if (C.ROOT / p).exists()]
     git("add", "--", *paths)
     out = git("commit", "-m", msg)  # push는 하지 않는다. Co-Authored-By도 붙이지 않는다.
     log(f"커밋: {msg.splitlines()[0]} ({git('rev-parse', '--short', 'HEAD')})")
@@ -105,7 +106,7 @@ def ablation_row(stage, name, n_feat, n_new, res, preds, prev_key, groups, extra
     pairs = []
     if prev_key:
         pairs.append(("vs_prev", key, prev_key))
-    if stage > 0:
+    if stage != 0:
         pairs.append(("vs_base", key, "s0"))
     if pairs:
         d = paired_auc_diffs(res["y"], preds, pairs).set_index("comparison")

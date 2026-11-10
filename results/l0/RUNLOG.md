@@ -74,3 +74,4 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 3ceaf2e L0 4단계(bureau_balance): 변수 6개 추가, test AUC 0.7769
 7a72317 L0 3단계(previous_application): 변수 5개 추가, test AUC 0.7780
 ```
+- `10:00:35` 커밋: L0 Tier2: RUNLOG 갱신 (f0a844f)
