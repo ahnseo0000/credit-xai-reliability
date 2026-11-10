@@ -104,3 +104,5 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `10:42:05` POS_CASH_balance: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 242열) train 3-fold 0.7788, valid 0.7821
 - `10:47:20` POS_CASH_balance: 선택 9개 / 후보 60개 (9.2분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
 - `10:47:20` POS_CASH_balance: IV 상위 5 POS_L24M_DPD_FLAG_SUM 0.034, POS_L24M_DPD_MEAN 0.033, POS_L24M_DPD_MAX 0.033, POS_L24M_DPD_FLAG_MEAN 0.033, POS_L24M_DPD_DEF_MAX 0.029. IV>=0.02 18개, 단독 train AUC 최대 0.533
+- `10:47:21` 커밋: L0 Tier2 8단계(POS_CASH_balance): 상관 중복 제거·증분 AUC·변수 선택 9개 (test 보기 전) (fdf06b6)
+- `10:58:16` 8단계(+POS_CASH_balance) 학습 10.1분: 입력 163개(+9), best_iter 957, valid AUC 0.7878, **test AUC 0.7895** (직전 대비 +0.0008 [-0.0007, +0.0023]), KS 0.4416, 보정 전 ECE 0.0027 → 후 0.0024, PD-연령 순위상관 -0.274, 연령구간 AUC 0.602
