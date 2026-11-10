@@ -57,3 +57,5 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `09:37:04` installments_payments: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 172열) train 3-fold 0.7693, valid 0.7744
 - `09:44:37` installments_payments: 선택 42개 / 후보 63개 (11.1분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
 - `09:44:37` installments_payments: IV 상위 5 INS_L24M_LATE_DAYS_MAX 0.094, INS_L12M_LATE_DAYS_MAX 0.081, INS_L24M_LATE_FLAG_MEAN 0.079, INS_LATE_L12M_LATE_DAYS_MAX 0.077, INS_LATE_L12M_LATE_DAYS_MEAN 0.073. IV>=0.02 56개, 단독 train AUC 최대 0.578
+- `09:44:38` 커밋: L0 Tier2 6단계(installments_payments): 상관 중복 제거·증분 AUC·변수 선택 42개 (test 보기 전) (344c7ee)
+- `10:00:34` 6단계(+installments_payments) 학습 14.7분: 입력 126개(+42), best_iter 1409, valid AUC 0.7840, **test AUC 0.7854** (직전 대비 +0.0080 [+0.0054, +0.0107]), KS 0.4312, 보정 전 ECE 0.0031 → 후 0.0029, PD-연령 순위상관 -0.267, 연령구간 AUC 0.599
