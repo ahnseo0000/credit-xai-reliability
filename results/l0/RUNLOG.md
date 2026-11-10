@@ -52,3 +52,8 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `09:31:07` **[결정]** 조립 방식 점검: Tier1 입력을 새 방식으로 재학습한 test AUC 0.7774 (기존 4단계 0.7769, 차이 +0.0005). 6단계부터 이 4r과 짝 비교한다.
 - `09:31:56` installments_payments: 타깃 EDA 저장 (슬라이스 9개 중 유지 9개: ALL, L3M, L6M, L12M, L24M, LATE, LATE_L12M, SHORT, SHORT_L12M)
 - `09:33:33` installments_payments: 후보 63개 생성, 키 307,511개 (중복 없음), 2.4분
+- `09:33:34` 커밋: L0 Tier2 6단계(installments_payments): 타깃 EDA, 후보 63개 생성 (86224aa)
+- `09:33:47` installments_payments: 후보 63개 → 상관 중복 제거 14개 → 증분 AUC 대상 49개 (IV는 train)
+- `09:37:04` installments_payments: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 172열) train 3-fold 0.7693, valid 0.7744
+- `09:44:37` installments_payments: 선택 42개 / 후보 63개 (11.1분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
+- `09:44:37` installments_payments: IV 상위 5 INS_L24M_LATE_DAYS_MAX 0.094, INS_L12M_LATE_DAYS_MAX 0.081, INS_L24M_LATE_FLAG_MEAN 0.079, INS_LATE_L12M_LATE_DAYS_MAX 0.077, INS_LATE_L12M_LATE_DAYS_MEAN 0.073. IV>=0.02 56개, 단독 train AUC 최대 0.578

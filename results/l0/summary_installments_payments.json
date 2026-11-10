@@ -1,1 +1,1 @@
-{"stage": 6, "table": "installments_payments", "n_slices": 9, "n_keep": 9, "n_cand": 63}
+{"stage": 6, "table": "installments_payments", "n_slices": 9, "n_keep": 9, "n_cand": 63, "n_dup": 14, "n_eval": 49, "n_selected": 42}
