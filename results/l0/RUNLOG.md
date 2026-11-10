@@ -110,3 +110,8 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `10:58:32` bureau: 타깃 EDA 저장 (슬라이스 14개 중 유지 13개: ALL, L3M, L6M, L12M, L24M, ACTIVE, CLOSED, CONSUMER, CARD, CAR, MORTGAGE, MICRO, ACTIVE_L12M)
 - `10:58:32` bureau: EDA에서 신호가 약해 후보를 만들지 않은 슬라이스: BADDEBT
 - `10:59:05` bureau: 후보 94개 생성, 키 307,511개 (중복 없음), 0.8분
+- `10:59:06` 커밋: L0 Tier2 9단계(bureau): 타깃 EDA, 후보 94개 생성 (e7dd303)
+- `10:59:23` bureau: 후보 94개 → 상관 중복 제거 36개 → 증분 AUC 대상 58개 (IV는 train)
+- `11:03:32` bureau: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 251열) train 3-fold 0.7813, valid 0.7854
+- `11:10:18` bureau: 선택 19개 / 후보 94개 (11.2분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
+- `11:10:19` bureau: IV 상위 5 BUR_ALL_DEBT_RATIO_MAX 0.148, BUR_ALL_DEBT_RATIO_MEAN 0.138, BUR_ALL_AGE_DAYS_MEAN 0.121, BUR_CARD_DEBT_RATIO_MEAN 0.101, BUR_ACTIVE_DEBT_RATIO_MEAN 0.093. IV>=0.02 53개, 단독 train AUC 최대 0.596
