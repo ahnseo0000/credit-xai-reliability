@@ -1,1 +1,1 @@
-{"stage": 8, "table": "POS_CASH_balance", "n_slices": 10, "n_keep": 10, "n_cand": 60}
+{"stage": 8, "table": "POS_CASH_balance", "n_slices": 10, "n_keep": 10, "n_cand": 60, "n_dup": 27, "n_eval": 33, "n_selected": 9}
