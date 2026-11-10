@@ -115,3 +115,5 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `11:03:32` bureau: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 251열) train 3-fold 0.7813, valid 0.7854
 - `11:10:18` bureau: 선택 19개 / 후보 94개 (11.2분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
 - `11:10:19` bureau: IV 상위 5 BUR_ALL_DEBT_RATIO_MAX 0.148, BUR_ALL_DEBT_RATIO_MEAN 0.138, BUR_ALL_AGE_DAYS_MEAN 0.121, BUR_CARD_DEBT_RATIO_MEAN 0.101, BUR_ACTIVE_DEBT_RATIO_MEAN 0.093. IV>=0.02 53개, 단독 train AUC 최대 0.596
+- `11:10:20` 커밋: L0 Tier2 9단계(bureau): 상관 중복 제거·증분 AUC·변수 선택 19개 (test 보기 전) (e21437a)
+- `11:27:42` 9단계(+bureau) 학습 16.7분: 입력 182개(+19), best_iter 1414, valid AUC 0.7912, **test AUC 0.7927** (직전 대비 +0.0032 [+0.0014, +0.0050]), KS 0.4428, 보정 전 ECE 0.0029 → 후 0.0028, PD-연령 순위상관 -0.268, 연령구간 AUC 0.599
