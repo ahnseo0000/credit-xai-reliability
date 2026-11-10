@@ -75,3 +75,17 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 7a72317 L0 3단계(previous_application): 변수 5개 추가, test AUC 0.7780
 ```
 - `10:00:35` 커밋: L0 Tier2: RUNLOG 갱신 (f0a844f)
+
+
+# L0 Tier 2 실행 로그 (2026-11-10 10:01)
+
+테이블: credit_card_balance, POS_CASH_balance, bureau, previous_application
+
+- `10:01:26` push 안 함, Co-Authored-By 없음, v0_baseline/v1_*/comparison_2x2 결과 수정 안 함. 라벨 계산은 train/valid만, test는 선택이 끝난 묶음의 보고용.
+- `10:01:26` **[결정]** 순서: installments_payments(6) → credit_card_balance(7) → POS_CASH_balance(8) → bureau(9) → previous_application(10). bureau_balance는 Tier1(4단계)에 이미 있어 Tier2에서 제외한다. bureau/previous_application은 Tier1에 없던 시간창·상태분리 슬라이스를 추가하는 후보 생성이다.
+- `10:01:26` **[결정]** 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
+- `10:01:36` 분할 확인 (train/valid/test = 215,257/46,127/46,127), 기준 입력 51개
+- `10:01:38` 앞선 테이블 installments_payments: 선택된 변수 42개를 불러옴
+- `10:02:15` credit_card_balance: 타깃 EDA 저장 (슬라이스 10개 중 유지 8개: ALL, L3M, L6M, L12M, L24M, COMPLETED, SIGNED, DPD_L12M)
+- `10:02:15` credit_card_balance: EDA에서 신호가 약해 후보를 만들지 않은 슬라이스: ACTIVE, DPD
+- `10:03:08` credit_card_balance: 후보 70개 생성, 키 307,511개 (중복 없음), 1.3분
