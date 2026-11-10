@@ -128,3 +128,18 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `11:50:16` previous_application: IV 상위 5 PRV_ALL_CREDIT_APP_RATIO_MEAN 0.071, PRV_ALL_REFUSED_FLAG_MEAN 0.070, PRV_L24M_REFUSED_FLAG_MEAN 0.069, PRV_L24M_REFUSED_FLAG_SUM 0.067, PRV_REFUSED_L24M_CNT 0.066. IV>=0.02 65개, 단독 train AUC 최대 0.572
 - `11:50:18` 커밋: L0 Tier2 10단계(previous_application): 상관 중복 제거·증분 AUC·변수 선택 8개 (test 보기 전) (a8188ad)
 - `17:27:26` 10단계(+previous_application) 학습 335.4분: 입력 190개(+8), best_iter 1406, valid AUC 0.7908, **test AUC 0.7930** (직전 대비 +0.0002 [-0.0008, +0.0013]), KS 0.4464, 보정 전 ECE 0.0027 → 후 0.0024, PD-연령 순위상관 -0.268, 연령구간 AUC 0.599
+- `17:27:26` 커밋: L0 Tier2 10단계(previous_application): 선택 8개 누적, test AUC 0.7930 (5256b62)
+- `17:27:27` 소요 446분, 테이블 ['credit_card_balance', 'POS_CASH_balance', 'bureau', 'previous_application'], 누수 중단 False
+
+## git log (최근 8개, 이 로그 커밋 직전 시점)
+
+```
+5256b62 L0 Tier2 10단계(previous_application): 선택 8개 누적, test AUC 0.7930
+a8188ad L0 Tier2 10단계(previous_application): 상관 중복 제거·증분 AUC·변수 선택 8개 (test 보기 전)
+6d13733 L0 Tier2 10단계(previous_application): 타깃 EDA, 후보 124개 생성
+eb62e53 L0 Tier2 9단계(bureau): 선택 19개 누적, test AUC 0.7927
+e21437a L0 Tier2 9단계(bureau): 상관 중복 제거·증분 AUC·변수 선택 19개 (test 보기 전)
+e7dd303 L0 Tier2 9단계(bureau): 타깃 EDA, 후보 94개 생성
+034008f L0 Tier2 8단계(POS_CASH_balance): 선택 9개 누적, test AUC 0.7895
+fdf06b6 L0 Tier2 8단계(POS_CASH_balance): 상관 중복 제거·증분 AUC·변수 선택 9개 (test 보기 전)
+```
