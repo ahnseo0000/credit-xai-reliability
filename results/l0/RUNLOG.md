@@ -89,3 +89,8 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `10:02:15` credit_card_balance: 타깃 EDA 저장 (슬라이스 10개 중 유지 8개: ALL, L3M, L6M, L12M, L24M, COMPLETED, SIGNED, DPD_L12M)
 - `10:02:15` credit_card_balance: EDA에서 신호가 약해 후보를 만들지 않은 슬라이스: ACTIVE, DPD
 - `10:03:08` credit_card_balance: 후보 70개 생성, 키 307,511개 (중복 없음), 1.3분
+- `10:03:09` 커밋: L0 Tier2 7단계(credit_card_balance): 타깃 EDA, 후보 70개 생성 (60b9e2e)
+- `10:03:14` credit_card_balance: 후보 70개 → 상관 중복 제거 22개 → 증분 AUC 대상 48개 (IV는 train)
+- `10:06:23` credit_card_balance: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 214열) train 3-fold 0.7778, valid 0.7806
+- `10:13:29` credit_card_balance: 선택 28개 / 후보 70개 (10.3분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
+- `10:13:29` credit_card_balance: IV 상위 5 CCB_L12M_UTIL_MAX 0.088, CCB_L6M_UTIL_MAX 0.085, CCB_L3M_UTIL_MAX 0.084, CCB_L24M_UTIL_MAX 0.082, CCB_L3M_UTIL_MEAN 0.075. IV>=0.02 35개, 단독 train AUC 최대 0.552
