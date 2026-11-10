@@ -28,3 +28,4 @@ Tier 1은 사전에 정한 목록을 구현한 것이었다. Tier 2는 *train �
 | 6 | installments_payments | 9/9 | 63 | 14 | 49 | 42 |
 | 7 | credit_card_balance | 10/8 | 70 | 22 | 48 | 28 |
 | 8 | POS_CASH_balance | 10/10 | 60 | 27 | 33 | 9 |
+| 9 | bureau | 14/13 | 94 | - | - | - |

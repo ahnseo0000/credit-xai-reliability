@@ -1,0 +1,95 @@
+﻿variable,korean_name,description,unit,slice,measure,stat,use,var_group,note,source,stage
+BUR_ALL_CNT,전체 기간 건수,타 금융기관 대출 이력에서 전체 기간에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,ALL,CNT,CNT,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_CREDIT_SUM_MEAN,전체 기간 대출 금액 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 대출 금액의 평균이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,CREDIT_SUM,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_CREDIT_SUM_SUM,전체 기간 대출 금액 합계,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 대출 금액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,CREDIT_SUM,sum,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_CREDIT_SUM_MAX,전체 기간 대출 금액 최댓값,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 대출 금액의 최댓값이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,CREDIT_SUM,max,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_DEBT_SUM_SUM,전체 기간 대출 잔액 합계,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,DEBT_SUM,sum,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_DEBT_SUM_MEAN,전체 기간 대출 잔액 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 대출 잔액의 평균이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,DEBT_SUM,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_DEBT_RATIO_MEAN,전체 기간 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,ALL,DEBT_RATIO,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액/대출금액 비율 최댓값,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 잔액/대출금액 비율의 최댓값이다 (해당 기록이 없으면 비어 있음).,비율,ALL,DEBT_RATIO,max,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_DAY_OVERDUE_MAX,전체 기간 현재 연체일수 최댓값,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ALL,DAY_OVERDUE,max,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_DAY_OVERDUE_MEAN,전체 기간 현재 연체일수 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 현재 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,ALL,DAY_OVERDUE,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_OVERDUE_FLAG_MEAN,전체 기간 연체 중 대출 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,ALL,OVERDUE_FLAG,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_OVERDUE_FLAG_SUM,전체 기간 연체 중 대출 횟수,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,ALL,OVERDUE_FLAG,sum,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_OVERDUE_AMT_SUM,전체 기간 현재 연체금액 합계,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 현재 연체금액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,OVERDUE_AMT,sum,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_MAX_OVERDUE_AMT_MAX,전체 기간 기록된 최대 연체금액 최댓값,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 기록된 최대 연체금액의 최댓값이다 (해당 기록이 없으면 비어 있음).,통화 단위,ALL,MAX_OVERDUE_AMT,max,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_PROLONG_SUM,전체 기간 대출 기간 연장 횟수 합계,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 대출 기간 연장 횟수의 합계이다 (해당 기록이 없으면 비어 있음).,회,ALL,PROLONG,sum,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_ENDDATE_REMAIN_MEAN,전체 기간 만기까지 남은 일수 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 만기까지 남은 일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,ALL,ENDDATE_REMAIN,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_AGE_DAYS_MAX,전체 기간 개설 경과일 최댓값,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 개설 경과일의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ALL,AGE_DAYS,max,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_ALL_AGE_DAYS_MEAN,전체 기간 개설 경과일 평균,타 금융기관 대출 이력에서 전체 기간 기록만 모아 계산한 개설 경과일의 평균이다 (해당 기록이 없으면 비어 있음).,일,ALL,AGE_DAYS,mean,사용,bureau_ALL,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_CNT,최근 3개월 건수,타 금융기관 대출 이력에서 최근 3개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L3M,CNT,CNT,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_DEBT_SUM_SUM,최근 3개월 대출 잔액 합계,타 금융기관 대출 이력에서 최근 3개월 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L3M,DEBT_SUM,sum,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_DEBT_RATIO_MEAN,최근 3개월 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 최근 3개월 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L3M,DEBT_RATIO,mean,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_DAY_OVERDUE_MAX,최근 3개월 현재 연체일수 최댓값,타 금융기관 대출 이력에서 최근 3개월 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L3M,DAY_OVERDUE,max,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_OVERDUE_FLAG_MEAN,최근 3개월 연체 중 대출 평균,타 금융기관 대출 이력에서 최근 3개월 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L3M,OVERDUE_FLAG,mean,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_OVERDUE_FLAG_SUM,최근 3개월 연체 중 대출 횟수,타 금융기관 대출 이력에서 최근 3개월 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,L3M,OVERDUE_FLAG,sum,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L3M_OVERDUE_AMT_SUM,최근 3개월 현재 연체금액 합계,타 금융기관 대출 이력에서 최근 3개월 기록만 모아 계산한 현재 연체금액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L3M,OVERDUE_AMT,sum,사용,bureau_L3M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_CNT,최근 6개월 건수,타 금융기관 대출 이력에서 최근 6개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L6M,CNT,CNT,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_DEBT_SUM_SUM,최근 6개월 대출 잔액 합계,타 금융기관 대출 이력에서 최근 6개월 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L6M,DEBT_SUM,sum,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 최근 6개월 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L6M,DEBT_RATIO,mean,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_DAY_OVERDUE_MAX,최근 6개월 현재 연체일수 최댓값,타 금융기관 대출 이력에서 최근 6개월 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L6M,DAY_OVERDUE,max,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_OVERDUE_FLAG_MEAN,최근 6개월 연체 중 대출 평균,타 금융기관 대출 이력에서 최근 6개월 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L6M,OVERDUE_FLAG,mean,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_OVERDUE_FLAG_SUM,최근 6개월 연체 중 대출 횟수,타 금융기관 대출 이력에서 최근 6개월 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,L6M,OVERDUE_FLAG,sum,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L6M_OVERDUE_AMT_SUM,최근 6개월 현재 연체금액 합계,타 금융기관 대출 이력에서 최근 6개월 기록만 모아 계산한 현재 연체금액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L6M,OVERDUE_AMT,sum,사용,bureau_L6M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_CNT,최근 12개월 건수,타 금융기관 대출 이력에서 최근 12개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L12M,CNT,CNT,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_DEBT_SUM_SUM,최근 12개월 대출 잔액 합계,타 금융기관 대출 이력에서 최근 12개월 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L12M,DEBT_SUM,sum,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 최근 12개월 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L12M,DEBT_RATIO,mean,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_DAY_OVERDUE_MAX,최근 12개월 현재 연체일수 최댓값,타 금융기관 대출 이력에서 최근 12개월 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L12M,DAY_OVERDUE,max,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_OVERDUE_FLAG_MEAN,최근 12개월 연체 중 대출 평균,타 금융기관 대출 이력에서 최근 12개월 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L12M,OVERDUE_FLAG,mean,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_OVERDUE_FLAG_SUM,최근 12개월 연체 중 대출 횟수,타 금융기관 대출 이력에서 최근 12개월 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,L12M,OVERDUE_FLAG,sum,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L12M_OVERDUE_AMT_SUM,최근 12개월 현재 연체금액 합계,타 금융기관 대출 이력에서 최근 12개월 기록만 모아 계산한 현재 연체금액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L12M,OVERDUE_AMT,sum,사용,bureau_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_CNT,최근 24개월 건수,타 금융기관 대출 이력에서 최근 24개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L24M,CNT,CNT,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_DEBT_SUM_SUM,최근 24개월 대출 잔액 합계,타 금융기관 대출 이력에서 최근 24개월 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L24M,DEBT_SUM,sum,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 최근 24개월 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L24M,DEBT_RATIO,mean,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_DAY_OVERDUE_MAX,최근 24개월 현재 연체일수 최댓값,타 금융기관 대출 이력에서 최근 24개월 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L24M,DAY_OVERDUE,max,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_OVERDUE_FLAG_MEAN,최근 24개월 연체 중 대출 평균,타 금융기관 대출 이력에서 최근 24개월 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L24M,OVERDUE_FLAG,mean,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_OVERDUE_FLAG_SUM,최근 24개월 연체 중 대출 횟수,타 금융기관 대출 이력에서 최근 24개월 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,L24M,OVERDUE_FLAG,sum,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_L24M_OVERDUE_AMT_SUM,최근 24개월 현재 연체금액 합계,타 금융기관 대출 이력에서 최근 24개월 기록만 모아 계산한 현재 연체금액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,L24M,OVERDUE_AMT,sum,사용,bureau_L24M,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_CNT,진행 중 상태 건수,타 금융기관 대출 이력에서 진행 중 상태에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,ACTIVE,CNT,CNT,사용,bureau_ACTIVE,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_DEBT_SUM_SUM,진행 중 상태 대출 잔액 합계,타 금융기관 대출 이력에서 진행 중 상태 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,ACTIVE,DEBT_SUM,sum,사용,bureau_ACTIVE,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_DEBT_RATIO_MEAN,진행 중 상태 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 진행 중 상태 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,ACTIVE,DEBT_RATIO,mean,사용,bureau_ACTIVE,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_DAY_OVERDUE_MAX,진행 중 상태 현재 연체일수 최댓값,타 금융기관 대출 이력에서 진행 중 상태 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ACTIVE,DAY_OVERDUE,max,사용,bureau_ACTIVE,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_OVERDUE_FLAG_MEAN,진행 중 상태 연체 중 대출 평균,타 금융기관 대출 이력에서 진행 중 상태 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,ACTIVE,OVERDUE_FLAG,mean,사용,bureau_ACTIVE,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_OVERDUE_FLAG_SUM,진행 중 상태 연체 중 대출 횟수,타 금융기관 대출 이력에서 진행 중 상태 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,ACTIVE,OVERDUE_FLAG,sum,사용,bureau_ACTIVE,L0 Tier2 후보 (bureau),bureau,9
+BUR_CLOSED_CNT,종료 상태 건수,타 금융기관 대출 이력에서 종료 상태에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,CLOSED,CNT,CNT,사용,bureau_CLOSED,L0 Tier2 후보 (bureau),bureau,9
+BUR_CLOSED_DEBT_SUM_SUM,종료 상태 대출 잔액 합계,타 금융기관 대출 이력에서 종료 상태 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,CLOSED,DEBT_SUM,sum,사용,bureau_CLOSED,L0 Tier2 후보 (bureau),bureau,9
+BUR_CLOSED_DEBT_RATIO_MEAN,종료 상태 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 종료 상태 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,CLOSED,DEBT_RATIO,mean,사용,bureau_CLOSED,L0 Tier2 후보 (bureau),bureau,9
+BUR_CLOSED_DAY_OVERDUE_MAX,종료 상태 현재 연체일수 최댓값,타 금융기관 대출 이력에서 종료 상태 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,CLOSED,DAY_OVERDUE,max,사용,bureau_CLOSED,L0 Tier2 후보 (bureau),bureau,9
+BUR_CLOSED_OVERDUE_FLAG_MEAN,종료 상태 연체 중 대출 평균,타 금융기관 대출 이력에서 종료 상태 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,CLOSED,OVERDUE_FLAG,mean,사용,bureau_CLOSED,L0 Tier2 후보 (bureau),bureau,9
+BUR_CLOSED_OVERDUE_FLAG_SUM,종료 상태 연체 중 대출 횟수,타 금융기관 대출 이력에서 종료 상태 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,CLOSED,OVERDUE_FLAG,sum,사용,bureau_CLOSED,L0 Tier2 후보 (bureau),bureau,9
+BUR_CONSUMER_CNT,소비자 대출 상품 건수,타 금융기관 대출 이력에서 소비자 대출 상품에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,CONSUMER,CNT,CNT,사용,bureau_CONSUMER,L0 Tier2 후보 (bureau),bureau,9
+BUR_CONSUMER_DEBT_SUM_SUM,소비자 대출 상품 대출 잔액 합계,타 금융기관 대출 이력에서 소비자 대출 상품 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,CONSUMER,DEBT_SUM,sum,사용,bureau_CONSUMER,L0 Tier2 후보 (bureau),bureau,9
+BUR_CONSUMER_DEBT_RATIO_MEAN,소비자 대출 상품 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 소비자 대출 상품 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,CONSUMER,DEBT_RATIO,mean,사용,bureau_CONSUMER,L0 Tier2 후보 (bureau),bureau,9
+BUR_CONSUMER_DAY_OVERDUE_MAX,소비자 대출 상품 현재 연체일수 최댓값,타 금융기관 대출 이력에서 소비자 대출 상품 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,CONSUMER,DAY_OVERDUE,max,사용,bureau_CONSUMER,L0 Tier2 후보 (bureau),bureau,9
+BUR_CONSUMER_OVERDUE_FLAG_MEAN,소비자 대출 상품 연체 중 대출 평균,타 금융기관 대출 이력에서 소비자 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,CONSUMER,OVERDUE_FLAG,mean,사용,bureau_CONSUMER,L0 Tier2 후보 (bureau),bureau,9
+BUR_CONSUMER_OVERDUE_FLAG_SUM,소비자 대출 상품 연체 중 대출 횟수,타 금융기관 대출 이력에서 소비자 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,CONSUMER,OVERDUE_FLAG,sum,사용,bureau_CONSUMER,L0 Tier2 후보 (bureau),bureau,9
+BUR_CARD_CNT,신용카드 상품 건수,타 금융기관 대출 이력에서 신용카드 상품에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,CARD,CNT,CNT,사용,bureau_CARD,L0 Tier2 후보 (bureau),bureau,9
+BUR_CARD_DEBT_SUM_SUM,신용카드 상품 대출 잔액 합계,타 금융기관 대출 이력에서 신용카드 상품 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,CARD,DEBT_SUM,sum,사용,bureau_CARD,L0 Tier2 후보 (bureau),bureau,9
+BUR_CARD_DEBT_RATIO_MEAN,신용카드 상품 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 신용카드 상품 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,CARD,DEBT_RATIO,mean,사용,bureau_CARD,L0 Tier2 후보 (bureau),bureau,9
+BUR_CARD_DAY_OVERDUE_MAX,신용카드 상품 현재 연체일수 최댓값,타 금융기관 대출 이력에서 신용카드 상품 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,CARD,DAY_OVERDUE,max,사용,bureau_CARD,L0 Tier2 후보 (bureau),bureau,9
+BUR_CARD_OVERDUE_FLAG_MEAN,신용카드 상품 연체 중 대출 평균,타 금융기관 대출 이력에서 신용카드 상품 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,CARD,OVERDUE_FLAG,mean,사용,bureau_CARD,L0 Tier2 후보 (bureau),bureau,9
+BUR_CARD_OVERDUE_FLAG_SUM,신용카드 상품 연체 중 대출 횟수,타 금융기관 대출 이력에서 신용카드 상품 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,CARD,OVERDUE_FLAG,sum,사용,bureau_CARD,L0 Tier2 후보 (bureau),bureau,9
+BUR_CAR_CNT,자동차 대출 상품 건수,타 금융기관 대출 이력에서 자동차 대출 상품에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,CAR,CNT,CNT,사용,bureau_CAR,L0 Tier2 후보 (bureau),bureau,9
+BUR_CAR_DEBT_SUM_SUM,자동차 대출 상품 대출 잔액 합계,타 금융기관 대출 이력에서 자동차 대출 상품 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,CAR,DEBT_SUM,sum,사용,bureau_CAR,L0 Tier2 후보 (bureau),bureau,9
+BUR_CAR_DEBT_RATIO_MEAN,자동차 대출 상품 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 자동차 대출 상품 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,CAR,DEBT_RATIO,mean,사용,bureau_CAR,L0 Tier2 후보 (bureau),bureau,9
+BUR_CAR_DAY_OVERDUE_MAX,자동차 대출 상품 현재 연체일수 최댓값,타 금융기관 대출 이력에서 자동차 대출 상품 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,CAR,DAY_OVERDUE,max,사용,bureau_CAR,L0 Tier2 후보 (bureau),bureau,9
+BUR_CAR_OVERDUE_FLAG_MEAN,자동차 대출 상품 연체 중 대출 평균,타 금융기관 대출 이력에서 자동차 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,CAR,OVERDUE_FLAG,mean,사용,bureau_CAR,L0 Tier2 후보 (bureau),bureau,9
+BUR_CAR_OVERDUE_FLAG_SUM,자동차 대출 상품 연체 중 대출 횟수,타 금융기관 대출 이력에서 자동차 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,CAR,OVERDUE_FLAG,sum,사용,bureau_CAR,L0 Tier2 후보 (bureau),bureau,9
+BUR_MORTGAGE_CNT,주택담보 대출 상품 건수,타 금융기관 대출 이력에서 주택담보 대출 상품에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,MORTGAGE,CNT,CNT,사용,bureau_MORTGAGE,L0 Tier2 후보 (bureau),bureau,9
+BUR_MORTGAGE_DEBT_SUM_SUM,주택담보 대출 상품 대출 잔액 합계,타 금융기관 대출 이력에서 주택담보 대출 상품 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,MORTGAGE,DEBT_SUM,sum,사용,bureau_MORTGAGE,L0 Tier2 후보 (bureau),bureau,9
+BUR_MORTGAGE_DEBT_RATIO_MEAN,주택담보 대출 상품 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 주택담보 대출 상품 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,MORTGAGE,DEBT_RATIO,mean,사용,bureau_MORTGAGE,L0 Tier2 후보 (bureau),bureau,9
+BUR_MORTGAGE_DAY_OVERDUE_MAX,주택담보 대출 상품 현재 연체일수 최댓값,타 금융기관 대출 이력에서 주택담보 대출 상품 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,MORTGAGE,DAY_OVERDUE,max,사용,bureau_MORTGAGE,L0 Tier2 후보 (bureau),bureau,9
+BUR_MORTGAGE_OVERDUE_FLAG_MEAN,주택담보 대출 상품 연체 중 대출 평균,타 금융기관 대출 이력에서 주택담보 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,MORTGAGE,OVERDUE_FLAG,mean,사용,bureau_MORTGAGE,L0 Tier2 후보 (bureau),bureau,9
+BUR_MORTGAGE_OVERDUE_FLAG_SUM,주택담보 대출 상품 연체 중 대출 횟수,타 금융기관 대출 이력에서 주택담보 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,MORTGAGE,OVERDUE_FLAG,sum,사용,bureau_MORTGAGE,L0 Tier2 후보 (bureau),bureau,9
+BUR_MICRO_CNT,소액 대출 상품 건수,타 금융기관 대출 이력에서 소액 대출 상품에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,MICRO,CNT,CNT,사용,bureau_MICRO,L0 Tier2 후보 (bureau),bureau,9
+BUR_MICRO_DEBT_SUM_SUM,소액 대출 상품 대출 잔액 합계,타 금융기관 대출 이력에서 소액 대출 상품 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,MICRO,DEBT_SUM,sum,사용,bureau_MICRO,L0 Tier2 후보 (bureau),bureau,9
+BUR_MICRO_DEBT_RATIO_MEAN,소액 대출 상품 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 소액 대출 상품 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,MICRO,DEBT_RATIO,mean,사용,bureau_MICRO,L0 Tier2 후보 (bureau),bureau,9
+BUR_MICRO_DAY_OVERDUE_MAX,소액 대출 상품 현재 연체일수 최댓값,타 금융기관 대출 이력에서 소액 대출 상품 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,MICRO,DAY_OVERDUE,max,사용,bureau_MICRO,L0 Tier2 후보 (bureau),bureau,9
+BUR_MICRO_OVERDUE_FLAG_MEAN,소액 대출 상품 연체 중 대출 평균,타 금융기관 대출 이력에서 소액 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,MICRO,OVERDUE_FLAG,mean,사용,bureau_MICRO,L0 Tier2 후보 (bureau),bureau,9
+BUR_MICRO_OVERDUE_FLAG_SUM,소액 대출 상품 연체 중 대출 횟수,타 금융기관 대출 이력에서 소액 대출 상품 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,MICRO,OVERDUE_FLAG,sum,사용,bureau_MICRO,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_L12M_CNT,진행 중이면서 최근 12개월 개설 건수,타 금융기관 대출 이력에서 진행 중이면서 최근 12개월 개설에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,ACTIVE_L12M,CNT,CNT,사용,bureau_ACTIVE_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_L12M_DEBT_SUM_SUM,진행 중이면서 최근 12개월 개설 대출 잔액 합계,타 금융기관 대출 이력에서 진행 중이면서 최근 12개월 개설 기록만 모아 계산한 대출 잔액의 합계이다 (해당 기록이 없으면 비어 있음).,통화 단위,ACTIVE_L12M,DEBT_SUM,sum,사용,bureau_ACTIVE_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월 개설 잔액/대출금액 비율 평균,타 금융기관 대출 이력에서 진행 중이면서 최근 12개월 개설 기록만 모아 계산한 잔액/대출금액 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,ACTIVE_L12M,DEBT_RATIO,mean,사용,bureau_ACTIVE_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_L12M_DAY_OVERDUE_MAX,진행 중이면서 최근 12개월 개설 현재 연체일수 최댓값,타 금융기관 대출 이력에서 진행 중이면서 최근 12개월 개설 기록만 모아 계산한 현재 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ACTIVE_L12M,DAY_OVERDUE,max,사용,bureau_ACTIVE_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_L12M_OVERDUE_FLAG_MEAN,진행 중이면서 최근 12개월 개설 연체 중 대출 평균,타 금융기관 대출 이력에서 진행 중이면서 최근 12개월 개설 기록만 모아 계산한 연체 중 대출의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,ACTIVE_L12M,OVERDUE_FLAG,mean,사용,bureau_ACTIVE_L12M,L0 Tier2 후보 (bureau),bureau,9
+BUR_ACTIVE_L12M_OVERDUE_FLAG_SUM,진행 중이면서 최근 12개월 개설 연체 중 대출 횟수,타 금융기관 대출 이력에서 진행 중이면서 최근 12개월 개설 기록만 모아 계산한 연체 중 대출의 발생 횟수이다.,건,ACTIVE_L12M,OVERDUE_FLAG,sum,사용,bureau_ACTIVE_L12M,L0 Tier2 후보 (bureau),bureau,9

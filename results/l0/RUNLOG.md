@@ -106,3 +106,7 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `10:47:20` POS_CASH_balance: IV 상위 5 POS_L24M_DPD_FLAG_SUM 0.034, POS_L24M_DPD_MEAN 0.033, POS_L24M_DPD_MAX 0.033, POS_L24M_DPD_FLAG_MEAN 0.033, POS_L24M_DPD_DEF_MAX 0.029. IV>=0.02 18개, 단독 train AUC 최대 0.533
 - `10:47:21` 커밋: L0 Tier2 8단계(POS_CASH_balance): 상관 중복 제거·증분 AUC·변수 선택 9개 (test 보기 전) (fdf06b6)
 - `10:58:16` 8단계(+POS_CASH_balance) 학습 10.1분: 입력 163개(+9), best_iter 957, valid AUC 0.7878, **test AUC 0.7895** (직전 대비 +0.0008 [-0.0007, +0.0023]), KS 0.4416, 보정 전 ECE 0.0027 → 후 0.0024, PD-연령 순위상관 -0.274, 연령구간 AUC 0.602
+- `10:58:17` 커밋: L0 Tier2 8단계(POS_CASH_balance): 선택 9개 누적, test AUC 0.7895 (034008f)
+- `10:58:32` bureau: 타깃 EDA 저장 (슬라이스 14개 중 유지 13개: ALL, L3M, L6M, L12M, L24M, ACTIVE, CLOSED, CONSUMER, CARD, CAR, MORTGAGE, MICRO, ACTIVE_L12M)
+- `10:58:32` bureau: EDA에서 신호가 약해 후보를 만들지 않은 슬라이스: BADDEBT
+- `10:59:05` bureau: 후보 94개 생성, 키 307,511개 (중복 없음), 0.8분
