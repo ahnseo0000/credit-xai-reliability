@@ -126,3 +126,5 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `11:32:50` previous_application: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 270열) train 3-fold 0.7834, valid 0.7877
 - `11:50:16` previous_application: 선택 8개 / 후보 124개 (21.8분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
 - `11:50:16` previous_application: IV 상위 5 PRV_ALL_CREDIT_APP_RATIO_MEAN 0.071, PRV_ALL_REFUSED_FLAG_MEAN 0.070, PRV_L24M_REFUSED_FLAG_MEAN 0.069, PRV_L24M_REFUSED_FLAG_SUM 0.067, PRV_REFUSED_L24M_CNT 0.066. IV>=0.02 65개, 단독 train AUC 최대 0.572
+- `11:50:18` 커밋: L0 Tier2 10단계(previous_application): 상관 중복 제거·증분 AUC·변수 선택 8개 (test 보기 전) (a8188ad)
+- `17:27:26` 10단계(+previous_application) 학습 335.4분: 입력 190개(+8), best_iter 1406, valid AUC 0.7908, **test AUC 0.7930** (직전 대비 +0.0002 [-0.0008, +0.0013]), KS 0.4464, 보정 전 ECE 0.0027 → 후 0.0024, PD-연령 순위상관 -0.268, 연령구간 AUC 0.599
