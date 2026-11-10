@@ -1,0 +1,61 @@
+﻿variable,korean_name,description,unit,slice,measure,stat,use,var_group,note,source,stage
+POS_ALL_CNT,전체 기간 건수,POS·현금대출 월별 잔액 이력에서 전체 기간에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,ALL,CNT,CNT,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_MAX,전체 기간 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ALL,DPD,max,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_MEAN,전체 기간 연체일수 평균,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,ALL,DPD,mean,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_DEF_MAX,전체 기간 유의미 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 유의미 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ALL,DPD_DEF,max,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_DEF_MEAN,전체 기간 유의미 연체일수 평균,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 유의미 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,ALL,DPD_DEF,mean,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_FLAG_MEAN,전체 기간 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,ALL,DPD_FLAG,mean,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_FLAG_SUM,전체 기간 연체 발생 월 횟수,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 연체 발생 월의 발생 횟수이다.,개월,ALL,DPD_FLAG,sum,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_DPD_DEF_FLAG_SUM,전체 기간 유의미 연체 발생 월 횟수,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 유의미 연체 발생 월의 발생 횟수이다.,개월,ALL,DPD_DEF_FLAG,sum,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_FUT_RATIO_MEAN,전체 기간 남은 회차/전체 회차 비율 평균,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 남은 회차/전체 회차 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,ALL,FUT_RATIO,mean,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_FUT_RATIO_MIN,전체 기간 남은 회차/전체 회차 비율 최솟값,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 남은 회차/전체 회차 비율의 최솟값이다 (해당 기록이 없으면 비어 있음).,비율,ALL,FUT_RATIO,min,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_CNT_INST_MEAN,전체 기간 전체 약정 회차 평균,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 전체 약정 회차의 평균이다 (해당 기록이 없으면 비어 있음).,회,ALL,CNT_INST,mean,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ALL_CNT_INST_MAX,전체 기간 전체 약정 회차 최댓값,POS·현금대출 월별 잔액 이력에서 전체 기간 기록만 모아 계산한 전체 약정 회차의 최댓값이다 (해당 기록이 없으면 비어 있음).,회,ALL,CNT_INST,max,사용,POS_CASH_balance_ALL,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_CNT,최근 3개월 건수,POS·현금대출 월별 잔액 이력에서 최근 3개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L3M,CNT,CNT,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_DPD_MAX,최근 3개월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 3개월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L3M,DPD,max,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_DPD_MEAN,최근 3개월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 최근 3개월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,L3M,DPD,mean,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_DPD_FLAG_MEAN,최근 3개월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 최근 3개월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L3M,DPD_FLAG,mean,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_DPD_FLAG_SUM,최근 3개월 연체 발생 월 횟수,POS·현금대출 월별 잔액 이력에서 최근 3개월 기록만 모아 계산한 연체 발생 월의 발생 횟수이다.,개월,L3M,DPD_FLAG,sum,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_DPD_DEF_MAX,최근 3개월 유의미 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 3개월 기록만 모아 계산한 유의미 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L3M,DPD_DEF,max,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L3M_FUT_RATIO_MEAN,최근 3개월 남은 회차/전체 회차 비율 평균,POS·현금대출 월별 잔액 이력에서 최근 3개월 기록만 모아 계산한 남은 회차/전체 회차 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L3M,FUT_RATIO,mean,사용,POS_CASH_balance_L3M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_CNT,최근 6개월 건수,POS·현금대출 월별 잔액 이력에서 최근 6개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L6M,CNT,CNT,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_DPD_MAX,최근 6개월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 6개월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L6M,DPD,max,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_DPD_MEAN,최근 6개월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 최근 6개월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,L6M,DPD,mean,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_DPD_FLAG_MEAN,최근 6개월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 최근 6개월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L6M,DPD_FLAG,mean,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_DPD_FLAG_SUM,최근 6개월 연체 발생 월 횟수,POS·현금대출 월별 잔액 이력에서 최근 6개월 기록만 모아 계산한 연체 발생 월의 발생 횟수이다.,개월,L6M,DPD_FLAG,sum,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_DPD_DEF_MAX,최근 6개월 유의미 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 6개월 기록만 모아 계산한 유의미 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L6M,DPD_DEF,max,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L6M_FUT_RATIO_MEAN,최근 6개월 남은 회차/전체 회차 비율 평균,POS·현금대출 월별 잔액 이력에서 최근 6개월 기록만 모아 계산한 남은 회차/전체 회차 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L6M,FUT_RATIO,mean,사용,POS_CASH_balance_L6M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_CNT,최근 12개월 건수,POS·현금대출 월별 잔액 이력에서 최근 12개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L12M,CNT,CNT,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_DPD_MAX,최근 12개월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 12개월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L12M,DPD,max,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_DPD_MEAN,최근 12개월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 최근 12개월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,L12M,DPD,mean,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_DPD_FLAG_MEAN,최근 12개월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 최근 12개월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L12M,DPD_FLAG,mean,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_DPD_FLAG_SUM,최근 12개월 연체 발생 월 횟수,POS·현금대출 월별 잔액 이력에서 최근 12개월 기록만 모아 계산한 연체 발생 월의 발생 횟수이다.,개월,L12M,DPD_FLAG,sum,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_DPD_DEF_MAX,최근 12개월 유의미 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 12개월 기록만 모아 계산한 유의미 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L12M,DPD_DEF,max,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L12M_FUT_RATIO_MEAN,최근 12개월 남은 회차/전체 회차 비율 평균,POS·현금대출 월별 잔액 이력에서 최근 12개월 기록만 모아 계산한 남은 회차/전체 회차 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L12M,FUT_RATIO,mean,사용,POS_CASH_balance_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_CNT,최근 24개월 건수,POS·현금대출 월별 잔액 이력에서 최근 24개월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,L24M,CNT,CNT,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_DPD_MAX,최근 24개월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 24개월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L24M,DPD,max,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_DPD_MEAN,최근 24개월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 최근 24개월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,L24M,DPD,mean,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_DPD_FLAG_MEAN,최근 24개월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 최근 24개월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,L24M,DPD_FLAG,mean,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_DPD_FLAG_SUM,최근 24개월 연체 발생 월 횟수,POS·현금대출 월별 잔액 이력에서 최근 24개월 기록만 모아 계산한 연체 발생 월의 발생 횟수이다.,개월,L24M,DPD_FLAG,sum,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_DPD_DEF_MAX,최근 24개월 유의미 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 24개월 기록만 모아 계산한 유의미 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,L24M,DPD_DEF,max,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_L24M_FUT_RATIO_MEAN,최근 24개월 남은 회차/전체 회차 비율 평균,POS·현금대출 월별 잔액 이력에서 최근 24개월 기록만 모아 계산한 남은 회차/전체 회차 비율의 평균이다 (해당 기록이 없으면 비어 있음).,비율,L24M,FUT_RATIO,mean,사용,POS_CASH_balance_L24M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ACTIVE_CNT,진행 중 상태 월 건수,POS·현금대출 월별 잔액 이력에서 진행 중 상태 월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,ACTIVE,CNT,CNT,사용,POS_CASH_balance_ACTIVE,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ACTIVE_DPD_MAX,진행 중 상태 월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 진행 중 상태 월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,ACTIVE,DPD,max,사용,POS_CASH_balance_ACTIVE,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ACTIVE_DPD_MEAN,진행 중 상태 월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 진행 중 상태 월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,ACTIVE,DPD,mean,사용,POS_CASH_balance_ACTIVE,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_ACTIVE_DPD_FLAG_MEAN,진행 중 상태 월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 진행 중 상태 월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,ACTIVE,DPD_FLAG,mean,사용,POS_CASH_balance_ACTIVE,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_COMPLETED_CNT,종료 상태 월 건수,POS·현금대출 월별 잔액 이력에서 종료 상태 월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,COMPLETED,CNT,CNT,사용,POS_CASH_balance_COMPLETED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_COMPLETED_DPD_MAX,종료 상태 월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 종료 상태 월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,COMPLETED,DPD,max,사용,POS_CASH_balance_COMPLETED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_COMPLETED_DPD_MEAN,종료 상태 월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 종료 상태 월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,COMPLETED,DPD,mean,사용,POS_CASH_balance_COMPLETED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_COMPLETED_DPD_FLAG_MEAN,종료 상태 월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 종료 상태 월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,COMPLETED,DPD_FLAG,mean,사용,POS_CASH_balance_COMPLETED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_RETURNED_CNT,반품 상태 월 건수,POS·현금대출 월별 잔액 이력에서 반품 상태 월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,RETURNED,CNT,CNT,사용,POS_CASH_balance_RETURNED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_RETURNED_DPD_MAX,반품 상태 월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 반품 상태 월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,RETURNED,DPD,max,사용,POS_CASH_balance_RETURNED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_RETURNED_DPD_MEAN,반품 상태 월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 반품 상태 월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,RETURNED,DPD,mean,사용,POS_CASH_balance_RETURNED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_RETURNED_DPD_FLAG_MEAN,반품 상태 월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 반품 상태 월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,RETURNED,DPD_FLAG,mean,사용,POS_CASH_balance_RETURNED,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_CNT,연체 발생 월 건수,POS·현금대출 월별 잔액 이력에서 연체 발생 월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,DPD,CNT,CNT,사용,POS_CASH_balance_DPD,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_DPD_MAX,연체 발생 월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 연체 발생 월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,DPD,DPD,max,사용,POS_CASH_balance_DPD,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_DPD_MEAN,연체 발생 월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 연체 발생 월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,DPD,DPD,mean,사용,POS_CASH_balance_DPD,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_DPD_FLAG_MEAN,연체 발생 월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 연체 발생 월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,DPD,DPD_FLAG,mean,사용,POS_CASH_balance_DPD,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_L12M_CNT,최근 12개월 중 연체 발생 월 건수,POS·현금대출 월별 잔액 이력에서 최근 12개월 중 연체 발생 월에 해당하는 기록의 건수이다 (기록이 없으면 0).,건,DPD_L12M,CNT,CNT,사용,POS_CASH_balance_DPD_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_L12M_DPD_MAX,최근 12개월 중 연체 발생 월 연체일수 최댓값,POS·현금대출 월별 잔액 이력에서 최근 12개월 중 연체 발생 월 기록만 모아 계산한 연체일수의 최댓값이다 (해당 기록이 없으면 비어 있음).,일,DPD_L12M,DPD,max,사용,POS_CASH_balance_DPD_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_L12M_DPD_MEAN,최근 12개월 중 연체 발생 월 연체일수 평균,POS·현금대출 월별 잔액 이력에서 최근 12개월 중 연체 발생 월 기록만 모아 계산한 연체일수의 평균이다 (해당 기록이 없으면 비어 있음).,일,DPD_L12M,DPD,mean,사용,POS_CASH_balance_DPD_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8
+POS_DPD_L12M_DPD_FLAG_MEAN,최근 12개월 중 연체 발생 월 연체 발생 월 평균,POS·현금대출 월별 잔액 이력에서 최근 12개월 중 연체 발생 월 기록만 모아 계산한 연체 발생 월의 발생 비율이다 (해당 기록이 없으면 비어 있음).,비율,DPD_L12M,DPD_FLAG,mean,사용,POS_CASH_balance_DPD_L12M,L0 Tier2 후보 (POS_CASH_balance),POS_CASH_balance,8

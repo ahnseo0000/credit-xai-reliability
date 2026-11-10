@@ -96,3 +96,6 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `10:13:29` credit_card_balance: IV 상위 5 CCB_L12M_UTIL_MAX 0.088, CCB_L6M_UTIL_MAX 0.085, CCB_L3M_UTIL_MAX 0.084, CCB_L24M_UTIL_MAX 0.082, CCB_L3M_UTIL_MEAN 0.075. IV>=0.02 35개, 단독 train AUC 최대 0.552
 - `10:13:30` 커밋: L0 Tier2 7단계(credit_card_balance): 상관 중복 제거·증분 AUC·변수 선택 28개 (test 보기 전) (8fb8478)
 - `10:36:22` 7단계(+credit_card_balance) 학습 21.2분: 입력 154개(+28), best_iter 1649, valid AUC 0.7855, **test AUC 0.7887** (직전 대비 +0.0033 [+0.0016, +0.0050]), KS 0.4361, 보정 전 ECE 0.0030 → 후 0.0027, PD-연령 순위상관 -0.268, 연령구간 AUC 0.600
+- `10:36:23` 커밋: L0 Tier2 7단계(credit_card_balance): 선택 28개 누적, test AUC 0.7887 (756cf50)
+- `10:37:10` POS_CASH_balance: 타깃 EDA 저장 (슬라이스 10개 중 유지 10개: ALL, L3M, L6M, L12M, L24M, ACTIVE, COMPLETED, RETURNED, DPD, DPD_L12M)
+- `10:38:06` POS_CASH_balance: 후보 60개 생성, 키 307,511개 (중복 없음), 1.7분
