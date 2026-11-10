@@ -117,3 +117,7 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `11:10:19` bureau: IV 상위 5 BUR_ALL_DEBT_RATIO_MAX 0.148, BUR_ALL_DEBT_RATIO_MEAN 0.138, BUR_ALL_AGE_DAYS_MEAN 0.121, BUR_CARD_DEBT_RATIO_MEAN 0.101, BUR_ACTIVE_DEBT_RATIO_MEAN 0.093. IV>=0.02 53개, 단독 train AUC 최대 0.596
 - `11:10:20` 커밋: L0 Tier2 9단계(bureau): 상관 중복 제거·증분 AUC·변수 선택 19개 (test 보기 전) (e21437a)
 - `11:27:42` 9단계(+bureau) 학습 16.7분: 입력 182개(+19), best_iter 1414, valid AUC 0.7912, **test AUC 0.7927** (직전 대비 +0.0032 [+0.0014, +0.0050]), KS 0.4428, 보정 전 ECE 0.0029 → 후 0.0028, PD-연령 순위상관 -0.268, 연령구간 AUC 0.599
+- `11:27:42` 커밋: L0 Tier2 9단계(bureau): 선택 19개 누적, test AUC 0.7927 (eb62e53)
+- `11:27:58` previous_application: 타깃 EDA 저장 (슬라이스 26개 중 유지 22개: ALL, L3M, L6M, L12M, L24M, REFUSED, CASH, CONSUMER, REVOLVING, NEWCLI, REPEAT, RJ_HC, RJ_LIMIT, RJ_SCO, RJ_SCOFR, RJ_VERIF, PF_POS, PF_CASHP, PF_CARDS, REFUSED_L6M, REFUSED_L12M, REFUSED_L24M)
+- `11:27:58` previous_application: EDA에서 신호가 약해 후보를 만들지 않은 슬라이스: APPROVED, CANCELED, UNUSED, APPROVED_L12M
+- `11:28:27` previous_application: 후보 124개 생성, 키 307,511개 (중복 없음), 0.7분
