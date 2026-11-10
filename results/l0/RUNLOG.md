@@ -121,3 +121,8 @@ ead87ba L0 Tier 1: 보조 테이블 집계 피처 모듈과 단계별 ablation �
 - `11:27:58` previous_application: 타깃 EDA 저장 (슬라이스 26개 중 유지 22개: ALL, L3M, L6M, L12M, L24M, REFUSED, CASH, CONSUMER, REVOLVING, NEWCLI, REPEAT, RJ_HC, RJ_LIMIT, RJ_SCO, RJ_SCOFR, RJ_VERIF, PF_POS, PF_CASHP, PF_CARDS, REFUSED_L6M, REFUSED_L12M, REFUSED_L24M)
 - `11:27:58` previous_application: EDA에서 신호가 약해 후보를 만들지 않은 슬라이스: APPROVED, CANCELED, UNUSED, APPROVED_L12M
 - `11:28:27` previous_application: 후보 124개 생성, 키 307,511개 (중복 없음), 0.7분
+- `11:28:28` 커밋: L0 Tier2 10단계(previous_application): 타깃 EDA, 후보 124개 생성 (6d13733)
+- `11:28:50` previous_application: 후보 124개 → 상관 중복 제거 17개 → 증분 AUC 대상 107개 (IV는 train)
+- `11:32:50` previous_application: 증분 AUC 기준(신청서+Tier1+앞서 선택된 변수 270열) train 3-fold 0.7834, valid 0.7877
+- `11:50:16` previous_application: 선택 8개 / 후보 124개 (21.8분). 선택 규칙(사전 고정): 상관 0.95 초과 중복이 아니고(테이블 안, IV 높은 쪽을 남김) AND train IV >= 0.02 AND train 3-fold 증분 AUC > 0 AND valid 증분 AUC > 0.
+- `11:50:16` previous_application: IV 상위 5 PRV_ALL_CREDIT_APP_RATIO_MEAN 0.071, PRV_ALL_REFUSED_FLAG_MEAN 0.070, PRV_L24M_REFUSED_FLAG_MEAN 0.069, PRV_L24M_REFUSED_FLAG_SUM 0.067, PRV_REFUSED_L24M_CNT 0.066. IV>=0.02 65개, 단독 train AUC 최대 0.572

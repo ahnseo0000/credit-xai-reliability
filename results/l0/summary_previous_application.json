@@ -1,1 +1,1 @@
-{"stage": 10, "table": "previous_application", "n_slices": 26, "n_keep": 22, "n_cand": 124}
+{"stage": 10, "table": "previous_application", "n_slices": 26, "n_keep": 22, "n_cand": 124, "n_dup": 17, "n_eval": 107, "n_selected": 8}
