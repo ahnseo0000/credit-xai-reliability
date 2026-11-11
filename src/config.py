@@ -7,7 +7,8 @@ DOCS_DIR = ROOT / "docs"
 RESULTS_DIR = ROOT / "results"
 
 # 결과는 모델 버전별 폴더에 저장한다. 버전을 올릴 때(새 피처·연령 제외 등) 이 값만 바꾼다.
-MODEL_VERSION = "v0_baseline"
+MODEL_VERSION = "v2"  # v2 동결 (v0_baseline, v1_*는 비교·재현용으로 보존). 동결 산출물은 FROZEN_DIR
+FROZEN_DIR = RESULTS_DIR / "v2_frozen"
 VERSION_DIR = RESULTS_DIR / MODEL_VERSION
 EDA_DIR = VERSION_DIR / "eda"
 MODELING_DIR = VERSION_DIR / "modeling"

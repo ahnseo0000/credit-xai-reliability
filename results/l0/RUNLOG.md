@@ -180,3 +180,21 @@ fdf06b6 L0 Tier2 8단계(POS_CASH_balance): 상관 중복 제거·증분 AUC·�
 - `17:27:41` K=100: 변수 24+76, 학습 6.2분, valid AUC 0.7898, 보정 전 ECE 0.0024
 - `17:27:41` **[결정]** K 선택(valid만): 최고 valid AUC 0.7908, 0.002 이내 가장 작은 K = 100
 - `17:27:41` v2 후보: K=100, 신청서 24 + L0 76 = 100개. L0 제외 63개는 변수 사전 use 열에 사유 기록(지우지 않음). 제외된 신청서 변수 ['NAME_CONTRACT_TYPE', 'FLAG_OWN_CAR', 'FLAG_OWN_REALTY', 'CNT_CHILDREN', 'NAME_HOUSING_TYPE', 'FLAG_EMP_PHONE', 'FLAG_WORK_PHONE', 'FLAG_CONT_MOBILE', 'FLAG_PHONE', 'FLAG_EMAIL', 'CNT_FAM_MEMBERS', 'REGION_RATING_CLIENT', 'REG_REGION_NOT_LIVE_REGION', 'REG_REGION_NOT_WORK_REGION', 'LIVE_REGION_NOT_WORK_REGION', 'REG_CITY_NOT_LIVE_CITY', 'REG_CITY_NOT_WORK_CITY', 'LIVE_CITY_NOT_WORK_CITY', 'OBS_30_CNT_SOCIAL_CIRCLE', 'DEF_30_CNT_SOCIAL_CIRCLE', 'OBS_60_CNT_SOCIAL_CIRCLE', 'AMT_REQ_CREDIT_BUREAU_HOUR', 'AMT_REQ_CREDIT_BUREAU_DAY', 'AMT_REQ_CREDIT_BUREAU_WEEK', 'AMT_REQ_CREDIT_BUREAU_MON', 'AMT_REQ_CREDIT_BUREAU_QRT', 'AMT_REQ_CREDIT_BUREAU_YEAR']
+- `17:27:42` 커밋: L0 v2: gain 중요도 K-sweep, valid 기준 K=100 후보 확정 (test 미사용) (5231203)
+- `18:59:50` 절전 방지 설정 (SetThreadExecutionState)
+
+
+# L0 v2 정리·동결 (final, 2026-11-11 18:59)
+
+- `19:00:06` v2 후보 K=100: 신청서 24 + L0 76 = 100개 입력
+- `19:00:17` 저장된 모형 무결성 확인: valid 예측 일치, valid AUC 0.7898
+- `19:00:18` **[결정]** Platt 필요 여부(valid): 보정 전 ECE 0.0024, Platt in-sample 0.0022, cross-fit 0.0026; Brier 0.0657 → 0.0657. 규칙: cross-fit ECE가 0.001 이상 낮을 때만 사용 → **사용 안 함(원 확률 그대로)**
+- `19:00:53` 로지스틱 C=1e+06: valid AUC 0.7740
+- `19:01:05` 로지스틱 C=1: valid AUC 0.7741
+- `19:01:18` 로지스틱 C=0.1: valid AUC 0.7742
+- `19:01:29` 로지스틱 C=0.01: valid AUC 0.7743
+- `19:01:30` **[결정]** 로지스틱 챔피언: C=0.01, valid AUC 0.7743, 입력 100개 + 결측 표시 54개(패턴 중복 합침)
+- `20:03:20` **[결정]** 보고 코드 dry run(valid) 통과. 이제 test를 처음으로 최종 1회 평가한다. 이후 test로 아무 결정도 하지 않는다.
+- `20:04:07` **[결정]** **test 최종 1회**: xgb_v2 AUC 0.7900, 로지스틱 AUC 0.7757
+- `20:04:07` interface.md 채움: q70 0.082282, q90 0.194800, 18칸 최소 크기 133 (합 46,127)
+- `20:04:09` 동결 파일 저장: results/v2_frozen/
