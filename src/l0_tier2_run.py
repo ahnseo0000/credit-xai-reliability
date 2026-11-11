@@ -222,7 +222,9 @@ def rebuild_dict():
         else:
             reg["use"], reg["note"] = "사용", "L0 Tier2 후보 (" + t + ", 선택 전)"
         parts.append(reg[cols])
-    pd.concat([d_old] + parts, ignore_index=True).to_csv(C.DOCS_DIR / "variable_dict_l0.csv", index=False, encoding="utf-8-sig")
+    from .l0_family import add_family
+    d = add_family(pd.concat([d_old[cols]] + parts, ignore_index=True))
+    d.to_csv(C.DOCS_DIR / "variable_dict_l0.csv", index=False, encoding="utf-8-sig")
 
 
 def write_rules():
