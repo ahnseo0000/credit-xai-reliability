@@ -159,3 +159,24 @@ e7dd303 L0 Tier2 9단계(bureau): 타깃 EDA, 후보 94개 생성
 fdf06b6 L0 Tier2 8단계(POS_CASH_balance): 상관 중복 제거·증분 AUC·변수 선택 9개 (test 보기 전)
 ```
 - `17:27:27` 커밋: L0 Tier2: RUNLOG 갱신 (4c732bf)
+- `16:49:43` 절전 방지 설정 (SetThreadExecutionState)
+
+
+# L0 v2 정리·동결 (timing, 2026-11-11 16:49)
+
+- `16:50:00` 190개 모형(신청서 51 + L0 139) 정상 속도 점검: 학습 1회, valid만 평가 (test 미사용)
+- `17:07:31` 학습 1회 17.4분 (best_iter 1406, 입력 열 278), valid AUC 0.7908 (Tier2 10단계 기록 valid 0.7908과 비교). 모형은 C:\Users\안서영\Desktop\kubig\credit-xai-llm\results\l0_v2\raw\model_190.json에 저장
+- `17:08:14` 절전 방지 설정 (SetThreadExecutionState)
+
+
+# L0 v2 정리·동결 (sweep, 2026-11-11 17:08)
+
+- `17:08:45` **[결정]** K-sweep 시작: 190개 모형 1회 17.4분 → K = [40, 70, 100] + 190(재사용). test는 쓰지 않는다.
+- `17:08:46` gain 중요도(train, total_gain 변수 단위): 상위 5 EXT_SOURCE_MEAN 19.1%, EXT_SOURCE_MIN 4.1%, EXT_SOURCE_MAX 3.4%, CREDIT_TERM 3.0%, DAYS_EMPLOYED 2.5%. gain 0인 변수 2개, 상위 40개가 69.9%, 70개 84.5%, 100개 92.4%
+- `17:08:50` family 안 상관 중복 제거: L0 139개 중 1개 (family별 {'연체이력': 1})
+- `17:08:50` 순위 대상 변수 189개 (신청서 51 + L0 138)
+- `17:15:03` K=40: 변수 15+25, 학습 6.0분, valid AUC 0.7840, 보정 전 ECE 0.0020
+- `17:21:20` K=70: 변수 20+50, 학습 6.1분, valid AUC 0.7868, 보정 전 ECE 0.0018
+- `17:27:41` K=100: 변수 24+76, 학습 6.2분, valid AUC 0.7898, 보정 전 ECE 0.0024
+- `17:27:41` **[결정]** K 선택(valid만): 최고 valid AUC 0.7908, 0.002 이내 가장 작은 K = 100
+- `17:27:41` v2 후보: K=100, 신청서 24 + L0 76 = 100개. L0 제외 63개는 변수 사전 use 열에 사유 기록(지우지 않음). 제외된 신청서 변수 ['NAME_CONTRACT_TYPE', 'FLAG_OWN_CAR', 'FLAG_OWN_REALTY', 'CNT_CHILDREN', 'NAME_HOUSING_TYPE', 'FLAG_EMP_PHONE', 'FLAG_WORK_PHONE', 'FLAG_CONT_MOBILE', 'FLAG_PHONE', 'FLAG_EMAIL', 'CNT_FAM_MEMBERS', 'REGION_RATING_CLIENT', 'REG_REGION_NOT_LIVE_REGION', 'REG_REGION_NOT_WORK_REGION', 'LIVE_REGION_NOT_WORK_REGION', 'REG_CITY_NOT_LIVE_CITY', 'REG_CITY_NOT_WORK_CITY', 'LIVE_CITY_NOT_WORK_CITY', 'OBS_30_CNT_SOCIAL_CIRCLE', 'DEF_30_CNT_SOCIAL_CIRCLE', 'OBS_60_CNT_SOCIAL_CIRCLE', 'AMT_REQ_CREDIT_BUREAU_HOUR', 'AMT_REQ_CREDIT_BUREAU_DAY', 'AMT_REQ_CREDIT_BUREAU_WEEK', 'AMT_REQ_CREDIT_BUREAU_MON', 'AMT_REQ_CREDIT_BUREAU_QRT', 'AMT_REQ_CREDIT_BUREAU_YEAR']

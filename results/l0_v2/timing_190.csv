@@ -1,0 +1,2 @@
+﻿model,n_inputs,best_iter,minutes,valid_AUC,raw_ECE,raw_Brier,platt_insample_ECE,platt_insample_Brier,platt_crossfit_ECE,platt_crossfit_Brier
+190개(Tier2 10단계),278,1406,17.4,0.7908337859786536,0.0020737177358303577,0.06553175799410851,0.0020305919715481466,0.06552941764128137,0.002209205181825361,0.06553632363444369
