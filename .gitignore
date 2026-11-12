@@ -19,3 +19,7 @@ results/*/raw/
 
 # OS
 .DS_Store
+
+# 행 단위 신청자 데이터 (L2 300건 추출·LLM 입력) - 로컬에만 둔다
+results/l2/sample_300*
+results/l2/llm_input_300*
