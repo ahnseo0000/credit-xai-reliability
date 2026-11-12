@@ -1,0 +1,4 @@
+﻿기법 A,기법 B,Spearman(전체 100),Spearman(A 상위20)
+mean_abs_shap,xgb_total_gain,0.783114311431143,0.4451127819548871
+mean_abs_shap,perm_auc_drop,0.8316471647164715,0.8661654135338346
+xgb_total_gain,perm_auc_drop,0.6639063906390639,0.24060150375939846
