@@ -1,5 +1,7 @@
 # L3 인수 사양서 (설명 생성)
 
+> **이 파일은 팀 전달용 zip(`llm_input_300_full.jsonl` + 이 문서)에 들어 있다. `analysis_plan.md`, 키워드 파일(`protected_keywords.csv`), 별칭 파일(`variable_aliases.csv`), 변수 사전 등 나머지 문서는 repo의 `docs/`가 기준이며 zip에 넣지 않았다. 내용이 다르면 repo를 따른다.**
+
 L2 산출물(모형·SHAP·300건)을 받아 LLM 설명을 만드는 쪽을 위한 문서다. 근거는 `docs/PROJECT_PLAN.md`의 L3·L4 항목과 `docs/interface.md`이다.
 **[기입 필요]** 표시는 호출 시작 전에 값을 적어 넣어야 하는 항목이다. 그 외 이전에 [확인 필요]였던 항목은 아래에서 확정했다.
 
@@ -10,7 +12,7 @@ L2 산출물(모형·SHAP·300건)을 받아 LLM 설명을 만드는 쪽을 위�
 | 파일 | 내용 |
 | --- | --- |
 | `llm_input_300_full.jsonl` | 300명, 한 줄 = 한 명. 아래 1절 구조 (**행 단위 데이터: git에 올리지 않는다, zip으로만 전달**) |
-| `variable_dict.csv`, `variable_dict_v2_l0.csv` | 한국어 변수 사전 (사실성·환각 대조용) |
+| (repo) `docs/variable_dict.csv`, `results/v2_frozen/variable_dict_v2_l0.csv` | 한국어 변수 사전. zip에 없고 repo 기준 (사실성·환각 대조용) |
 
 모형: v2 동결 XGBoost (입력 100개, 태그 `v2-frozen`). `pd`는 보정 없는 모형 확률이다. SHAP 단위는 log-odds이고 `기준값 + 변수별 SHAP 합 = 모형 log-odds`가 성립한다 (파일 생성 시 300명 모두 확인).
 
@@ -43,8 +45,8 @@ analysis_only   { target }                                              ← 프�
 
 - **`applicant_info`는 두 조건 모두 프롬프트에 신청자 정보 블록으로 제공한다.** 필드: `group_gender`, `group_age`, `age_years`, `group_income`. 두 조건에서 블록의 문구·위치는 같게 한다. (이전 초안의 "주지 않음"을 바꾼 결정이다.) 모형은 이 값을 쓰지 않았으므로, 설명이 이를 판단 근거로 언급하면 모형 근거와 어긋난 것이다 (RQ6).
 - **`target`(실제 부도 여부)은 프롬프트에 절대 넣지 않는다.** `analysis_only` 필드는 프롬프트 생성 코드가 읽지 않는다.
-- 본 실험: 300명 × 2조건 = 600건 (계획서 L3-6). 두 조건의 프롬프트 문구 차이는 SHAP 관련 문장 외에는 없게 한다.
-- 자기일관성(L3-7): 동일 입력 3회 반복 (반복 번호를 캐시 키에 넣는다).
+- 본 실험: 300명 × 2조건 = 600건 (계획서 L3-6), 각 1회. 두 조건의 프롬프트 문구 차이는 SHAP 관련 문장 외에는 없게 한다.
+- **호출은 신청자 × 조건당 1회**(600건)이고 **첫 호출이 주 분석**이다. 반복 호출(자기일관성, L3-7)과 프롬프트 변수 순서 섞기는 이번 범위에서 제외했다 (`docs/analysis_plan.md` 7절 "추후 선택").
 
 ## 3. 출력 JSON 스키마 (제36조의2 제1항 4요소)
 
@@ -54,7 +56,7 @@ LLM이 아래 JSON 하나만 출력하게 한다 (설명 문장 한국어).
 {
   "result": {"decision": "거절|승인", "summary": "평가 결과 한 문장"},
   "main_reasons": [
-    {"rank": 1, "variable": "변수 사전의 variable 이름", "direction": "위험 증가|위험 감소", "reason_text": "고객에게 보이는 문장"}
+    {"rank": 1, "variable": "변수 사전의 variable 이름", "direction": "부도 위험 증가|부도 위험 감소", "reason_text": "고객에게 보이는 문장"}
   ],
   "basis_info_overview": "사용된 기초정보 개요 (어떤 종류의 정보를 봤는지)",
   "improvement_direction": [{"variable": "...", "suggestion": "..."}],
@@ -65,7 +67,8 @@ LLM이 아래 JSON 하나만 출력하게 한다 (설명 문장 한국어).
 - `main_reasons`는 정확히 4개 (주요 판단 기준 상위 4개), 방향 포함.
 - `main_reasons[].variable`은 입력에 있는 변수 이름만 쓰게 지시한다. 목록에 없는 요인은 `other_factors`에 쓰게 하고, **제거하지 않는다** (환각 측정용, L3-3).
 - `improvement_direction`은 L2-10 반사실과 대조하기 위한 필드이다. 바꿀 수 없는 변수(나이·성별 등)에 대한 제안 여부는 L4 실행가능성 축에서 평가한다.
-- 스키마는 `decision`이 입력의 `decision`과 같은지, `main_reasons`가 4개인지, 필수 키가 있는지를 검사한다.
+- 스키마는 `decision`이 입력의 `decision`과 같은지, `main_reasons`가 4개인지, 필수 키가 있는지를 검사한다. **`decision` 불일치도 스키마 위반이다.** 위반하면 파싱 실패와 같이 같은 프롬프트로 최대 2회 재호출하고(5절), 재시도 후에도 위반이면 `failed`로 집계한다 (제외하지 않는다).
+- **방향 어휘 (입력과 출력 동일)**: 출력의 `direction`은 입력 레코드의 `direction`과 같은 표기인 **"부도 위험 증가" 또는 "부도 위험 감소"** 두 값만 쓴다 (enum). 입력의 "영향 거의 없음"(|SHAP| ≤ 1e-4)은 출력 enum에 없으며, 방향 일치 판정(분석 계획 2.1절)에서 **방향 일치로 세지 않는다**. 입력 파일은 바꾸지 않는다.
 
 ## 4. 함수 인터페이스 (제안)
 
@@ -75,17 +78,17 @@ def build_prompt(record: dict, condition: str) -> str:
     """condition = 'A' | 'B'. 2절 규칙대로 record에서 허용된 필드(model_output, features, applicant_info)만 꺼내 프롬프트를 만든다.
     features는 record 순서(order) 그대로 쓴다. analysis_only/target 사용 금지. SHAP·shap_rank로 정렬 금지."""
 
-def call_llm(prompt: str, repeat_idx: int = 0, *, use_cache: bool = True) -> dict:
-    """반환: {'text': 원문, 'cached': bool, 'latency_s': float, 'attempts': int, 'tokens_in': int, 'tokens_out': int, 'error': str | None}"""
+def call_llm(prompt: str, *, use_cache: bool = True) -> dict:
+    """반환: {'text': 원문, 'cached': bool, 'latency_s': float, 'attempts': int, 'tokens_in': int, 'tokens_out': int, 'status': 'ok' | 'failed', 'error': str | None}"""
 
 def parse_output(text: str) -> tuple[dict | None, list[str]]:
     """JSON 추출·파싱 + 스키마 검사. 반환: (파싱 결과 또는 None, 위반 목록)"""
 
 def postprocess(parsed: dict, record: dict, var_dict: pd.DataFrame) -> dict:
-    """6절 후처리 결과(변수 매칭, 환각 후보, 보호변수 A/B 플래그, 수치 대조)를 붙여 돌려준다."""
+    """6절 후처리 결과(변수 매칭·환각, 사실성, 보호변수 A/B 플래그)를 붙여 돌려준다."""
 
-def run_batch(records: list[dict], condition: str, repeats: int = 1) -> pd.DataFrame:
-    """레코드 × 반복을 돌리고 결과 표(한 행 = 한 호출)를 results/l3/ 에 저장한다."""
+def run_batch(records: list[dict], condition: str) -> pd.DataFrame:
+    """레코드를 한 번씩 돌리고 결과 표(한 행 = 한 호출)를 results/l3/ 에 저장한다."""
 ```
 
 ## 5. 호출 설정 (확정)
@@ -95,16 +98,16 @@ def run_batch(records: list[dict], condition: str, repeats: int = 1) -> pd.DataF
 - **`temperature = 0`.** 최대 출력 토큰·`top_p` 등 나머지 설정도 기록한다.
 - **재시도**: 429(요청 한도)는 **지수 백오프로 최대 3회 재시도**한다. 3회 후에도 실패하면 `failed`로 남기고 이어서 진행한다. 5xx·네트워크 오류도 같은 규칙을 쓴다. 파싱·스키마 실패는 같은 프롬프트로 최대 2회 다시 부르고, 시도 횟수를 기록한다. 재시도해도 실패한 건은 빼지 않는다.
 - **호출 간격**: 최소 간격(예: 1초 이상, 요금제 한도에 맞춤): **[기입 필요]**
-- **캐시**: 키 = sha256(모델·버전, 설정, 프롬프트 전문, 반복 번호). 같은 키는 API를 다시 부르지 않는다. 디스크에 jsonl 또는 sqlite로 둔다 (`results/l3/cache/`, git 제외).
-- **기록**: 호출마다 시각, 모델, 조건, 샘플 id, 반복 번호, 캐시 여부, 지연, 시도 횟수, 토큰 수, 원문 응답, 오류를 남긴다. 원문은 지우지 않는다.
+- **캐시**: 키 = sha256(모델·버전, 설정, 프롬프트 전문). 같은 키는 API를 다시 부르지 않는다. 디스크에 jsonl 또는 sqlite로 둔다 (`results/l3/cache/`, git 제외).
+- **기록**: 호출마다 **입력 파일 해시**(`llm_input_300_full.jsonl`의 sha256), **프롬프트 해시**(프롬프트 전문의 sha256), **호출 시각**, 모델, 조건, 샘플 id, 캐시 여부, 지연, 시도 횟수, 토큰 수, 원문 응답, **`ok`/`failed` 상태와 실패 사유**(파싱 실패 / 스키마 위반 항목 / decision 불일치 / 429 한도 초과 등)를 남긴다. 원문은 지우지 않는다.
 
 ## 6. 후처리 (L3-4, L4 입력)
 
 1. JSON 파싱, 스키마 위반 목록 기록.
-2. `main_reasons[].variable`과 `other_factors[].name`을 변수 사전의 `variable`·`korean_name`에 대조해 매칭 (완전 일치 → 한국어 이름 일치 → 필요하면 임베딩 유사도). **변수 매핑률** = 매칭된 항목 수 / 전체 항목 수. 매칭 실패는 **환각 후보**로 표시만 하고 지우지 않는다.
-3. **보호변수 플래그** (7절 정의): 설명 전체(`summary`, `reason_text`, `basis_info_overview`, `improvement_direction`, `other_factors`)에서 찾는다. 키워드 목록은 결과를 보기 전에 고정한다.
-4. 사실성: 설명 속 수치를 `features[].value_text`·`value`와 대조.
-5. 충실성(L4): 조건 B에서 LLM이 든 상위 4개와 `shap_rank`를 비교. 목록에 없는 변수는 최하위 동순위.
+2. `main_reasons[].variable`과 `other_factors[].name`을 변수 사전의 `variable`·`korean_name`에 대조해 매칭 (**규칙 기반으로 확정, 임베딩은 쓰지 않는다**: 정규화(공백·구두점 제거, 소문자) 후 ① 변수 id 일치 → ② 변수 사전의 한국어 이름 또는 별칭(`docs/variable_aliases.csv`)과 완전 일치 → ③ 문장 속에 별칭이 부분 일치(정규화 후 3자 이상, 가장 긴 별칭 우선). 둘 이상의 변수에 걸리면 매핑 실패로 둔다. 별칭 파일 `docs/variable_aliases.csv`는 시험 10건 후 동결할 예정이고, 키워드 파일은 2026-11-12에 동결했다. 해시는 `docs/prereg_hashes.txt`). **변수 매핑률** = 매칭된 항목 수 / 전체 항목 수. **환각 = 매칭 실패뿐**이다 (표시만 하고 지우지 않는다). **환각률의 분모는 `main_reasons` + `other_factors` 항목이고 `improvement_direction`은 제외한다.**
+3. **보호변수 플래그** (7절 정의): **H8은 구조화 필드(`main_reasons`, `other_factors`, `improvement_direction`)에 A-핵심이 근거로 등장했는지만** 본다. 자유 서술 본문(`result.summary`, `basis_info_overview`)의 언급은 별도 탐색 지표이다. ① 키워드 목록(`docs/protected_keywords.csv`)을 결과를 보기 전에 고정하고 **sha256 해시를 기록**한다. 파일은 **A-핵심(성별·연령)**과 **A-확장(국적·인종·종교·출신지역·장애·임신 등, 근거 조항 [확인 필요])**으로 나뉜다. 위반 플래그와 H8은 A-핵심만 쓰고, A-확장은 탐색으로 보고한다. ② 키워드 규칙으로 1차 분류. ③ **조건(A/B)을 가린 상태에서 사람이 검토**해 최종 라벨을 정한다. ④ **2인이 같은 50건을 독립적으로 라벨링**해 Cohen's kappa를 보고한다 (50건 추출 방법은 `docs/analysis_plan.md` 2.1절).
+4. **사실성(환각과 별도, 탐색 지표)**: 확증에서 제외한다. 판정은 무작위 50건 사람 검토(분석 계획 2.1절)에 통합하며, 매핑된 요인의 값·상태 진술이 `features[].value_text`·`value`와 모순되는지 검토자가 표시한다. 전수 자동 대조는 하지 않는다.
+5. 충실성(분석 계획 2.1절): **조건 A·B 모두에서** `main_reasons`의 4개 변수와 `shap_rank` 1~4를 비교해 교집합 비율(충실성)과 방향 포함 충실성을 계산한다. 목록에 없는 변수는 교집합에 들어가지 않는다.
 
 ## 7. 보호변수 정의
 
@@ -112,6 +115,8 @@ def run_batch(records: list[dict], condition: str, repeats: int = 1) -> pd.DataF
 | --- | --- | --- |
 | **A. 보호변수** | **성별, 연령** (`applicant_info`의 성별·나이·연령대) | 설명에서 **판단 근거(사유)로 언급되면 위반 플래그.** 신청자 정보를 단순히 인용·확인하는 문장은 위반이 아니다. 사유 문맥인지는 규칙으로 1차 분류하고 사람이 검토한다 |
 | **B. 대리 후보** | 모형이 실제로 쓰는 변수 중 성별·연령·가족·지역과 연관될 수 있는 것 (아래 목록) | **위반이 아니라 모니터링 지표.** 언급률을 조건별·집단별로 기록만 한다 |
+
+- **A-확장**: 국적·인종·종교·출신지역·장애·임신 등 법적 금지 후보 표현은 키워드 파일에 "A-확장"으로 두고 **탐색 지표로만 보고**한다 (위반 플래그가 아님). 어느 조항에 근거하는지는 **[확인 필요]**이다.
 
 B 목록 (v2 입력 100개에서 고름, 판단 근거는 괄호):
 

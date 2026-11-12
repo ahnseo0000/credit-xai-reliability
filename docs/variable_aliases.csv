@@ -1,0 +1,791 @@
+﻿variable,alias,source
+CREDIT_TERM,대출 기간,manual
+CREDIT_TERM,대출 상환 속도,manual
+CREDIT_TERM,상환 속도 비율,manual
+CREDIT_TERM,상환기간,manual
+DAYS_EMPLOYED,근무 기간,manual
+DAYS_EMPLOYED,근무 연수,manual
+DAYS_EMPLOYED,근속 년수,manual
+DAYS_EMPLOYED,근속 연수,manual
+DAYS_EMPLOYED,재직 기간,manual
+DAYS_EMPLOYED,재직 연수,manual
+DAYS_REGISTRATION,등록정보 변경 경과 일수,auto
+DAYS_REGISTRATION,등록정보 변경 이후 일수,auto
+DAYS_REGISTRATION,등록 변경 경과일,manual
+DAYS_REGISTRATION,등록 정보 변경 시점,manual
+DAYS_REGISTRATION,등록정보 변경 후 경과일,manual
+DAYS_REGISTRATION,등록정보 변경일,manual
+DAYS_ID_PUBLISH,신분증 재발급 경과 일수,auto
+DAYS_ID_PUBLISH,신분증 재발급 이후 일수,auto
+DAYS_ID_PUBLISH,신분증 발급 경과일,manual
+DAYS_ID_PUBLISH,신분증 재발급 시점,manual
+DAYS_ID_PUBLISH,신분증 재발급 후 경과일,manual
+DAYS_ID_PUBLISH,신분증 재발급일,manual
+OWN_CAR_AGE,보유 차량 연식,manual
+OWN_CAR_AGE,자동차 사용 기간,manual
+OWN_CAR_AGE,자동차 연식,manual
+OWN_CAR_AGE,차량 사용 연수,manual
+OWN_CAR_AGE,차량 연수,manual
+DAYS_LAST_PHONE_CHANGE,휴대폰 변경 경과 일수,auto
+DAYS_LAST_PHONE_CHANGE,휴대폰 변경 이후 일수,auto
+DAYS_LAST_PHONE_CHANGE,핸드폰 변경 경과일,manual
+DAYS_LAST_PHONE_CHANGE,휴대전화 변경 경과일,manual
+DAYS_LAST_PHONE_CHANGE,휴대폰 변경 시점,manual
+DAYS_LAST_PHONE_CHANGE,휴대폰 변경 후 경과일,manual
+DAYS_LAST_PHONE_CHANGE,휴대폰 변경일,manual
+BUREAU_CREDIT_SUM,타 금융기관 대출 금액 합계,auto
+BUREAU_CREDIT_SUM,다른 기관 대출 금액 합계,manual
+BUREAU_CREDIT_SUM,타 금융기관 대출 총액,manual
+BUREAU_CREDIT_SUM,타기관 대출 합계,manual
+BUREAU_CREDIT_SUM,타기관 대출액 합계,manual
+BUREAU_DEBT_SUM,타 금융기관 대출 잔액 합계,auto
+BUREAU_DEBT_SUM,다른 기관 대출 잔액 합계,manual
+BUREAU_DEBT_SUM,타 금융기관 대출 잔액 총액,manual
+BUREAU_DEBT_SUM,타기관 대출 잔액,manual
+BUREAU_DEBT_SUM,타기관 잔액 합계,manual
+INS_ALL_INST_AMT_MEAN,전 기간 약정 납부액 평균,auto
+INS_ALL_INST_AMT_MEAN,전체 약정 납부액 평균,auto
+INS_ALL_INST_AMT_MAX,전 기간 약정 납부액 최대,auto
+INS_ALL_INST_AMT_MAX,전 기간 약정 납부액 최대값,auto
+INS_ALL_INST_AMT_MAX,전 기간 약정 납부액 최댓값,auto
+INS_ALL_INST_AMT_MAX,전체 기간 약정 납부액 최대,auto
+INS_ALL_INST_AMT_MAX,전체 기간 약정 납부액 최대값,auto
+INS_ALL_INST_AMT_MAX,전체 약정 납부액 최대,auto
+INS_ALL_INST_AMT_MAX,전체 약정 납부액 최대값,auto
+INS_ALL_INST_AMT_MAX,전체 약정 납부액 최댓값,auto
+CCB_ALL_BALANCE_MAX,전 기간 카드 잔액 최대,auto
+CCB_ALL_BALANCE_MAX,전 기간 카드 잔액 최대값,auto
+CCB_ALL_BALANCE_MAX,전 기간 카드 잔액 최댓값,auto
+CCB_ALL_BALANCE_MAX,전체 기간 카드 잔액 최대,auto
+CCB_ALL_BALANCE_MAX,전체 기간 카드 잔액 최대값,auto
+CCB_ALL_BALANCE_MAX,전체 카드 잔액 최대,auto
+CCB_ALL_BALANCE_MAX,전체 카드 잔액 최대값,auto
+CCB_ALL_BALANCE_MAX,전체 카드 잔액 최댓값,auto
+CCB_ALL_BALANCE_MAX,신용카드 잔액 최댓값,manual
+CCB_ALL_BALANCE_MAX,전체 기간 카드 최대 잔액,manual
+CCB_ALL_BALANCE_MAX,카드 잔액 최대,manual
+CCB_ALL_BALANCE_MAX,카드 최대 잔액,manual
+BUR_ALL_CREDIT_SUM_MAX,전 기간 대출 금액 최대,auto
+BUR_ALL_CREDIT_SUM_MAX,전 기간 대출 금액 최대값,auto
+BUR_ALL_CREDIT_SUM_MAX,전 기간 대출 금액 최댓값,auto
+BUR_ALL_CREDIT_SUM_MAX,전체 기간 대출 금액 최대,auto
+BUR_ALL_CREDIT_SUM_MAX,전체 기간 대출 금액 최대값,auto
+BUR_ALL_CREDIT_SUM_MAX,전체 대출 금액 최대,auto
+BUR_ALL_CREDIT_SUM_MAX,전체 대출 금액 최대값,auto
+BUR_ALL_CREDIT_SUM_MAX,전체 대출 금액 최댓값,auto
+BUR_L6M_DEBT_SUM_SUM,최근 6개월간 대출 잔액 합계,auto
+BUR_L6M_DEBT_SUM_SUM,최근 반년 대출 잔액 합계,auto
+BUR_L12M_DEBT_SUM_SUM,최근 12개월간 대출 잔액 합계,auto
+BUR_L12M_DEBT_SUM_SUM,최근 1년 대출 잔액 합계,auto
+INS_ALL_PAY_RATIO_MEAN,전 기간 납부 비율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전 기간 납부액 약정액 비율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전 기간 납부율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전체 기간 납부 비율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전체 기간 납부율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전체 납부 비율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전체 납부액 약정액 비율 평균,auto
+INS_ALL_PAY_RATIO_MEAN,전체 납부율 평균,auto
+INS_ALL_PAY_RATIO_MIN,전 기간 납부 비율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전 기간 납부액 약정액 비율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전 기간 납부액/약정액 비율 최소,auto
+INS_ALL_PAY_RATIO_MIN,전 기간 납부액/약정액 비율 최소값,auto
+INS_ALL_PAY_RATIO_MIN,전 기간 납부율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부 비율 최소,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부 비율 최소값,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부 비율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부액 약정액 비율 최소,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부액/약정액 비율 최소값,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부율 최소,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부율 최소값,auto
+INS_ALL_PAY_RATIO_MIN,전체 기간 납부율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전체 납부 비율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전체 납부액 약정액 비율 최솟값,auto
+INS_ALL_PAY_RATIO_MIN,전체 납부액/약정액 비율 최소,auto
+INS_ALL_PAY_RATIO_MIN,전체 납부액/약정액 비율 최소값,auto
+INS_ALL_PAY_RATIO_MIN,전체 납부율 최솟값,auto
+INS_ALL_SHORT_AMT_MAX,전 기간 납부액 부족분 최대,auto
+INS_ALL_SHORT_AMT_MAX,전 기간 납부액 부족분 최대값,auto
+INS_ALL_SHORT_AMT_MAX,전 기간 납부액 부족분 최댓값,auto
+INS_ALL_SHORT_AMT_MAX,전체 기간 납부액 부족분 최대,auto
+INS_ALL_SHORT_AMT_MAX,전체 기간 납부액 부족분 최대값,auto
+INS_ALL_SHORT_AMT_MAX,전체 납부액 부족분 최대,auto
+INS_ALL_SHORT_AMT_MAX,전체 납부액 부족분 최대값,auto
+INS_ALL_SHORT_AMT_MAX,전체 납부액 부족분 최댓값,auto
+INS_ALL_SHORT_FLAG_MEAN,전 기간 납부 부족 비율,auto
+INS_ALL_SHORT_FLAG_MEAN,전 기간 납부액 부족 회차 비율,auto
+INS_ALL_SHORT_FLAG_MEAN,전 기간 납부액 부족 회차 평균,auto
+INS_ALL_SHORT_FLAG_MEAN,전체 기간 납부 부족 비율,auto
+INS_ALL_SHORT_FLAG_MEAN,전체 기간 납부액 부족 회차 비율,auto
+INS_ALL_SHORT_FLAG_MEAN,전체 납부 부족 비율,auto
+INS_ALL_SHORT_FLAG_MEAN,전체 납부액 부족 회차 비율,auto
+INS_ALL_SHORT_FLAG_MEAN,전체 납부액 부족 회차 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 24개월 납부 비율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 24개월 납부율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 24개월간 납부 비율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 24개월간 납부액/약정액 비율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 24개월간 납부율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 2년 납부 비율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 2년 납부액 약정액 비율 평균,auto
+INS_L24M_PAY_RATIO_MEAN,최근 2년 납부율 평균,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 24개월 납부 부족 비율,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 24개월 납부액 부족 회차 비율,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 24개월간 납부 부족 비율,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 24개월간 납부액 부족 회차 비율,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 24개월간 납부액 부족 회차 평균,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 2년 납부 부족 비율,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 2년 납부액 부족 회차 비율,auto
+INS_L24M_SHORT_FLAG_MEAN,최근 2년 납부액 부족 회차 평균,auto
+INS_LATE_PAY_RATIO_MEAN,연체 납부 회차 납부 비율 평균,auto
+INS_LATE_PAY_RATIO_MEAN,연체 납부 회차 납부율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 12개월 중 연체 납부 회차 납부 비율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 12개월 중 연체 납부 회차 납부율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 12개월간 중 연체 납부 회차 납부 비율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 12개월간 중 연체 납부 회차 납부액 약정액 비율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 12개월간 중 연체 납부 회차 납부율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 1년 중 연체 납부 회차 납부 비율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 1년 중 연체 납부 회차 납부액/약정액 비율 평균,auto
+INS_LATE_L12M_PAY_RATIO_MEAN,최근 1년 중 연체 납부 회차 납부율 평균,auto
+CCB_L3M_PAY_MIN_RATIO_MEAN,최근 3개월 최소 납부액 대비 납부 비율 평균,auto
+CCB_L3M_PAY_MIN_RATIO_MEAN,최근 3개월간 최소 납부액 대비 납부 비율 평균,auto
+CCB_L3M_PAY_MIN_RATIO_MEAN,최근 3개월간 최소납부액 대비 납부액 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전 기간 남은 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전 기간 남은 회차/전체 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전 기간 잔여 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전체 기간 남은 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전체 기간 잔여 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전체 남은 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전체 남은 회차/전체 회차 비율 평균,auto
+POS_ALL_FUT_RATIO_MEAN,전체 잔여 회차 비율 평균,auto
+AMT_INCOME_TOTAL,소득 총액,manual
+AMT_INCOME_TOTAL,연 수입,manual
+AMT_INCOME_TOTAL,연간 소득,manual
+AMT_INCOME_TOTAL,연소득 규모,manual
+AMT_CREDIT,대출 규모,manual
+AMT_CREDIT,대출 신청 금액,manual
+AMT_CREDIT,대출금,manual
+AMT_CREDIT,대출액,manual
+AMT_ANNUITY,상환 금액,manual
+AMT_ANNUITY,연부금,manual
+AMT_ANNUITY,월 상환액,manual
+AMT_ANNUITY,정기 상환 금액,manual
+AMT_GOODS_PRICE,구매 상품가,manual
+AMT_GOODS_PRICE,구입 상품 가격,manual
+AMT_GOODS_PRICE,상품 가격,manual
+AMT_GOODS_PRICE,상품 금액,manual
+AMT_GOODS_PRICE,상품가,manual
+CREDIT_INCOME_RATIO,대출 소득 비율,manual
+CREDIT_INCOME_RATIO,대출액 소득 비율,manual
+CREDIT_INCOME_RATIO,소득 대비 대출 비율,manual
+CREDIT_INCOME_RATIO,소득 대비 대출액,manual
+ANNUITY_INCOME_RATIO,DSR,manual
+ANNUITY_INCOME_RATIO,상환액 소득 비율,manual
+ANNUITY_INCOME_RATIO,소득 대비 상환 부담,manual
+ANNUITY_INCOME_RATIO,소득 대비 상환액,manual
+ANNUITY_INCOME_RATIO,총부채상환비율,manual
+INCOME_PER_PERSON,1인 소득,manual
+INCOME_PER_PERSON,가구원당 소득,manual
+INCOME_PER_PERSON,인당 소득,manual
+INCOME_PER_PERSON,일인당 소득,manual
+CREDIT_GOODS_RATIO,대출 상품가 비율,manual
+CREDIT_GOODS_RATIO,상품 가격 대비 대출 금액,manual
+CREDIT_GOODS_RATIO,상품 대비 대출 금액,manual
+CREDIT_GOODS_RATIO,상품가 대비 대출액,manual
+BUREAU_DEBT_RATIO,다른 기관 대출 소진율,auto
+BUREAU_DEBT_RATIO,타 금융기관 대출 소진율,manual
+BUREAU_DEBT_RATIO,타기관 대출 잔액 비율,manual
+BUREAU_DEBT_RATIO,타기관 부채 소진율,manual
+BUREAU_DEBT_RATIO,타기관 소진율,manual
+BUREAU_ACTIVE_DEBT_RATIO,다른 기관 진행 중 대출 소진율,auto
+BUREAU_ACTIVE_DEBT_RATIO,타 금융기관 진행 중 대출 소진율,auto
+BUREAU_ACTIVE_DEBT_RATIO,진행 중 대출 소진율,manual
+BUREAU_ACTIVE_DEBT_RATIO,타기관 진행 대출 소진율,manual
+BUREAU_ACTIVE_DEBT_RATIO,타기관 진행 중 소진율,manual
+CCB_ALL_ATM_SHARE_MEAN,전 기간 현금서비스 인출 비중 평균,auto
+CCB_ALL_ATM_SHARE_MEAN,전체 현금서비스 인출 비중 평균,auto
+CCB_ALL_ATM_SHARE_MEAN,전체 기간 현금서비스 비중,manual
+CCB_ALL_ATM_SHARE_MEAN,카드 현금서비스 비율,manual
+CCB_ALL_ATM_SHARE_MEAN,현금서비스 비중,manual
+CCB_ALL_ATM_SHARE_MEAN,현금서비스 인출 비중,manual
+CCB_L3M_UTIL_MAX,최근 3개월 카드 한도 대비 잔액 비율 최대,auto
+CCB_L3M_UTIL_MAX,최근 3개월 카드 한도 대비 잔액 비율 최대값,auto
+CCB_L3M_UTIL_MAX,최근 3개월 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L3M_UTIL_MAX,최근 3개월 카드 한도 소진율 최대,auto
+CCB_L3M_UTIL_MAX,최근 3개월 카드 한도 소진율 최대값,auto
+CCB_L3M_UTIL_MAX,최근 3개월 카드 한도 소진율 최댓값,auto
+CCB_L3M_UTIL_MAX,최근 3개월 한도 대비 잔액 비율 최대,auto
+CCB_L3M_UTIL_MAX,최근 3개월 한도 대비 잔액 비율 최대값,auto
+CCB_L3M_UTIL_MAX,최근 3개월 한도 소진율 최대,auto
+CCB_L3M_UTIL_MAX,최근 3개월 한도 소진율 최대값,auto
+CCB_L3M_UTIL_MAX,최근 3개월 한도 소진율 최댓값,auto
+CCB_L3M_UTIL_MAX,최근 3개월간 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L3M_UTIL_MAX,최근 3개월간 카드 한도 소진율 최댓값,auto
+CCB_L3M_UTIL_MAX,최근 3개월간 한도 대비 잔액 비율 최대,auto
+CCB_L3M_UTIL_MAX,최근 3개월간 한도 대비 잔액 비율 최대값,auto
+CCB_L3M_UTIL_MAX,최근 3개월간 한도 대비 잔액 비율 최댓값,auto
+CCB_L3M_UTIL_MAX,최근 3개월간 한도 소진율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 카드 한도 대비 잔액 비율 최대,auto
+CCB_L6M_UTIL_MAX,최근 6개월 카드 한도 대비 잔액 비율 최대값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 카드 한도 소진율 최대,auto
+CCB_L6M_UTIL_MAX,최근 6개월 카드 한도 소진율 최대값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 카드 한도 소진율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 한도 대비 잔액 비율 최대,auto
+CCB_L6M_UTIL_MAX,최근 6개월 한도 대비 잔액 비율 최대값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 한도 소진율 최대,auto
+CCB_L6M_UTIL_MAX,최근 6개월 한도 소진율 최대값,auto
+CCB_L6M_UTIL_MAX,최근 6개월 한도 소진율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월간 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월간 카드 한도 소진율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월간 한도 대비 잔액 비율 최대,auto
+CCB_L6M_UTIL_MAX,최근 6개월간 한도 대비 잔액 비율 최대값,auto
+CCB_L6M_UTIL_MAX,최근 6개월간 한도 대비 잔액 비율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 6개월간 한도 소진율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 반년 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 반년 카드 한도 소진율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 반년 한도 대비 잔액 비율 최대,auto
+CCB_L6M_UTIL_MAX,최근 반년 한도 대비 잔액 비율 최대값,auto
+CCB_L6M_UTIL_MAX,최근 반년 한도 대비 잔액 비율 최댓값,auto
+CCB_L6M_UTIL_MAX,최근 반년 한도 소진율 최댓값,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 6개월 카드 한도 대비 인출 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 6개월 한도 대비 인출 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 6개월간 카드 한도 대비 인출 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 6개월간 한도 대비 인출 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 6개월간 한도 대비 인출액 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 반년 카드 한도 대비 인출 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 반년 한도 대비 인출 비율 평균,auto
+CCB_L6M_DRAW_RATIO_MEAN,최근 반년 한도 대비 인출액 비율 평균,auto
+CCB_L12M_UTIL_MAX,최근 12개월 카드 한도 대비 잔액 비율 최대,auto
+CCB_L12M_UTIL_MAX,최근 12개월 카드 한도 대비 잔액 비율 최대값,auto
+CCB_L12M_UTIL_MAX,최근 12개월 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 12개월 카드 한도 소진율 최대,auto
+CCB_L12M_UTIL_MAX,최근 12개월 카드 한도 소진율 최대값,auto
+CCB_L12M_UTIL_MAX,최근 12개월 카드 한도 소진율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 12개월 한도 대비 잔액 비율 최대,auto
+CCB_L12M_UTIL_MAX,최근 12개월 한도 대비 잔액 비율 최대값,auto
+CCB_L12M_UTIL_MAX,최근 12개월 한도 소진율 최대,auto
+CCB_L12M_UTIL_MAX,최근 12개월 한도 소진율 최대값,auto
+CCB_L12M_UTIL_MAX,최근 12개월 한도 소진율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 12개월간 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 12개월간 카드 한도 소진율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 12개월간 한도 대비 잔액 비율 최대,auto
+CCB_L12M_UTIL_MAX,최근 12개월간 한도 대비 잔액 비율 최대값,auto
+CCB_L12M_UTIL_MAX,최근 12개월간 한도 대비 잔액 비율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 12개월간 한도 소진율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 1년 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 1년 카드 한도 소진율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 1년 한도 대비 잔액 비율 최대,auto
+CCB_L12M_UTIL_MAX,최근 1년 한도 대비 잔액 비율 최대값,auto
+CCB_L12M_UTIL_MAX,최근 1년 한도 대비 잔액 비율 최댓값,auto
+CCB_L12M_UTIL_MAX,최근 1년 한도 소진율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 카드 한도 대비 잔액 비율 최대,auto
+CCB_L24M_UTIL_MAX,최근 24개월 카드 한도 대비 잔액 비율 최대값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 카드 한도 소진율 최대,auto
+CCB_L24M_UTIL_MAX,최근 24개월 카드 한도 소진율 최대값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 카드 한도 소진율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 한도 대비 잔액 비율 최대,auto
+CCB_L24M_UTIL_MAX,최근 24개월 한도 대비 잔액 비율 최대값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 한도 소진율 최대,auto
+CCB_L24M_UTIL_MAX,최근 24개월 한도 소진율 최대값,auto
+CCB_L24M_UTIL_MAX,최근 24개월 한도 소진율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월간 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월간 카드 한도 소진율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월간 한도 대비 잔액 비율 최대,auto
+CCB_L24M_UTIL_MAX,최근 24개월간 한도 대비 잔액 비율 최대값,auto
+CCB_L24M_UTIL_MAX,최근 24개월간 한도 대비 잔액 비율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 24개월간 한도 소진율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 2년 카드 한도 대비 잔액 비율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 2년 카드 한도 소진율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 2년 한도 대비 잔액 비율 최대,auto
+CCB_L24M_UTIL_MAX,최근 2년 한도 대비 잔액 비율 최대값,auto
+CCB_L24M_UTIL_MAX,최근 2년 한도 대비 잔액 비율 최댓값,auto
+CCB_L24M_UTIL_MAX,최근 2년 한도 소진율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MEAN,전 기간 대출 잔액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전 기간 부채 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전 기간 잔액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전 기간 잔액/대출금액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 기간 대출 잔액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 기간 부채 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 기간 잔액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 대출 잔액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 부채 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 잔액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MEAN,전체 잔액/대출금액 비율 평균,auto
+BUR_ALL_DEBT_RATIO_MAX,전 기간 대출 잔액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전 기간 부채 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전 기간 잔액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전 기간 잔액/대출금액 비율 최대,auto
+BUR_ALL_DEBT_RATIO_MAX,전 기간 잔액/대출금액 비율 최대값,auto
+BUR_ALL_DEBT_RATIO_MAX,전 기간 잔액/대출금액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 대출 잔액 비율 최대,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 대출 잔액 비율 최대값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 대출 잔액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 부채 비율 최대,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 부채 비율 최대값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 부채 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액 비율 최대,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액 비율 최대값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액/대출금액 비율 최대,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액/대출금액 비율 최대값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 대출 잔액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 부채 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 잔액 비율 최댓값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 잔액/대출금액 비율 최대,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 잔액/대출금액 비율 최대값,auto
+BUR_ALL_DEBT_RATIO_MAX,전체 잔액/대출금액 비율 최댓값,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월 대출 잔액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월 부채 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월 잔액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월간 대출 잔액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월간 부채 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월간 잔액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 6개월간 잔액/대출금액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 반년 대출 잔액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 반년 부채 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 반년 잔액 비율 평균,auto
+BUR_L6M_DEBT_RATIO_MEAN,최근 반년 잔액/대출금액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월 대출 잔액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월 부채 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월 잔액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월간 대출 잔액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월간 부채 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월간 잔액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 12개월간 잔액/대출금액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 1년 대출 잔액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 1년 부채 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 1년 잔액 비율 평균,auto
+BUR_L12M_DEBT_RATIO_MEAN,최근 1년 잔액/대출금액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월 대출 잔액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월 부채 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월 잔액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월간 대출 잔액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월간 부채 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월간 잔액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 24개월간 잔액/대출금액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 2년 대출 잔액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 2년 부채 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 2년 잔액 비율 평균,auto
+BUR_L24M_DEBT_RATIO_MEAN,최근 2년 잔액/대출금액 비율 평균,auto
+BUR_ACTIVE_DEBT_RATIO_MEAN,진행 중 상태 대출 잔액 비율 평균,auto
+BUR_ACTIVE_DEBT_RATIO_MEAN,진행 중 상태 부채 비율 평균,auto
+BUR_ACTIVE_DEBT_RATIO_MEAN,진행 중 상태 잔액 비율 평균,auto
+BUR_CARD_DEBT_RATIO_MEAN,신용카드 상품 대출 잔액 비율 평균,auto
+BUR_CARD_DEBT_RATIO_MEAN,신용카드 상품 부채 비율 평균,auto
+BUR_CARD_DEBT_RATIO_MEAN,신용카드 상품 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월 개설 대출 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월 개설 부채 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월 개설 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월간 개설 대출 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월간 개설 부채 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월간 개설 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 12개월간 개설 잔액/대출금액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 1년 개설 대출 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 1년 개설 부채 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 1년 개설 잔액 비율 평균,auto
+BUR_ACTIVE_L12M_DEBT_RATIO_MEAN,진행 중이면서 최근 1년 개설 잔액/대출금액 비율 평균,auto
+BUREAU_OLDEST_DAYS,최초 대출 개설 경과 일수,auto
+BUREAU_OLDEST_DAYS,최초 대출 개설 이후 일수,auto
+BUREAU_OLDEST_DAYS,가장 오래된 대출 경과일,manual
+BUREAU_OLDEST_DAYS,첫 대출 개설 경과일,manual
+BUREAU_OLDEST_DAYS,최초 대출 개설 후 경과일,manual
+BUREAU_OLDEST_DAYS,최초 대출 경과일,manual
+NAME_INCOME_TYPE,소득 구분,manual
+NAME_INCOME_TYPE,소득 유형 구분,manual
+NAME_INCOME_TYPE,소득 종류,manual
+NAME_INCOME_TYPE,소득원,manual
+NAME_EDUCATION_TYPE,교육 수준,manual
+NAME_EDUCATION_TYPE,교육 수준 학력,manual
+NAME_EDUCATION_TYPE,최종 학력 수준,manual
+NAME_EDUCATION_TYPE,학력,manual
+NAME_FAMILY_STATUS,가족 상태,manual
+NAME_FAMILY_STATUS,결혼 여부,manual
+NAME_FAMILY_STATUS,혼인 상태 구분,manual
+NAME_FAMILY_STATUS,혼인 여부,manual
+REGION_POPULATION_RELATIVE,거주지 인구 규모,manual
+REGION_POPULATION_RELATIVE,거주지역 인구,manual
+REGION_POPULATION_RELATIVE,지역 인구 규모,manual
+OCCUPATION_TYPE,직군,manual
+OCCUPATION_TYPE,직업 유형,manual
+OCCUPATION_TYPE,직업군,manual
+OCCUPATION_TYPE,직종,manual
+REGION_RATING_CLIENT_W_CITY,거주지역 등급,manual
+REGION_RATING_CLIENT_W_CITY,도시 반영 지역 등급,manual
+REGION_RATING_CLIENT_W_CITY,지역 등급,manual
+ORGANIZATION_TYPE,근무처 업종,manual
+ORGANIZATION_TYPE,직장 업종 유형,manual
+ORGANIZATION_TYPE,직장 유형,manual
+ORGANIZATION_TYPE,회사 업종,manual
+DEF_60_CNT_SOCIAL_CIRCLE,주변 사람 60일 연체,manual
+DEF_60_CNT_SOCIAL_CIRCLE,주변인 60일 연체 건수,manual
+DEF_60_CNT_SOCIAL_CIRCLE,주변인 연체 발생 수,manual
+DEF_60_CNT_SOCIAL_CIRCLE,지인 연체 발생 수,manual
+FLAG_DOCUMENT_3,3번 서류 제출,manual
+FLAG_DOCUMENT_3,서류 3 제출 여부,manual
+FLAG_DOCUMENT_3,제출 서류 3,manual
+PREV_REFUSED_RATIO,과거 거절 비율,manual
+PREV_REFUSED_RATIO,과거 거절률,manual
+PREV_REFUSED_RATIO,과거 신청 거절률,manual
+PREV_REFUSED_RATIO,이전 신청 거절 비율,manual
+PREV_APPROVED_AMT_RATIO,과거 승인액 비율,manual
+PREV_APPROVED_AMT_RATIO,승인 금액 비율,manual
+PREV_APPROVED_AMT_RATIO,요청 대비 승인 금액,manual
+PREV_APPROVED_AMT_RATIO,요청액 대비 승인액 비율,manual
+PREV_DAYS_SINCE_LAST,마지막 과거 신청 경과 일수,auto
+PREV_DAYS_SINCE_LAST,마지막 과거 신청 이후 일수,auto
+PREV_DAYS_SINCE_LAST,마지막 과거 신청 후 경과 일수,manual
+PREV_DAYS_SINCE_LAST,마지막 신청 경과일,manual
+PREV_DAYS_SINCE_LAST,직전 신청 경과일,manual
+PREV_DAYS_SINCE_LAST,최근 과거 신청 경과일,manual
+PREV_MEAN_GAP_DAYS,과거 신청 간격,manual
+PREV_MEAN_GAP_DAYS,과거 신청 평균 기간,manual
+PREV_MEAN_GAP_DAYS,신청 간 평균 간격,manual
+PREV_MEAN_GAP_DAYS,신청 평균 간격,manual
+PRV_L12M_APPROVED_FLAG_MEAN,최근 12개월간 승인 평균,auto
+PRV_L12M_APPROVED_FLAG_MEAN,최근 12개월 승인 비율,manual
+PRV_L12M_APPROVED_FLAG_MEAN,최근 12개월 승인률,manual
+PRV_L12M_APPROVED_FLAG_MEAN,최근 1년 승인 비율,manual
+PRV_L12M_APPROVED_FLAG_MEAN,최근 1년 승인 평균,manual
+PRV_RJ_LIMIT_CREDIT_APP_RATIO_MEAN,거절 사유 한도 초과(LIMIT) 승인 비율 평균,auto
+PRV_RJ_LIMIT_CREDIT_APP_RATIO_MEAN,거절 사유 한도 초과(LIMIT) 승인액 신청액 비율 평균,auto
+PRV_RJ_LIMIT_CREDIT_APP_RATIO_MEAN,거절 사유 한도 초과 승인 비율,manual
+PRV_RJ_LIMIT_CREDIT_APP_RATIO_MEAN,한도 초과 거절 승인 비율 평균,manual
+PRV_RJ_LIMIT_CREDIT_APP_RATIO_MEAN,한도 초과 거절 승인금액 신청금액 비율 평균,manual
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 경과 일수 최소,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 경과 일수 최소값,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 경과 일수 최솟값,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 경과일 최소,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 경과일 최소값,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 이후 일수 최소,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 이후 일수 최소값,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과(LIMIT) 결정 이후 일수 최솟값,auto
+PRV_RJ_LIMIT_RECENCY_MIN,거절 사유 한도 초과 결정 경과일 최소,manual
+PRV_RJ_LIMIT_RECENCY_MIN,한도 초과 거절 결정 경과일,manual
+PRV_RJ_LIMIT_RECENCY_MIN,한도 초과 거절 경과일 최솟값,manual
+PRV_RJ_LIMIT_RECENCY_MIN,한도 초과 거절 최근 경과일,manual
+BUREAU_MAX_OVERDUE_AMT,타 금융기관 최대 연체금액,auto
+BUREAU_MAX_OVERDUE_AMT,다른 기관 최대 연체금액,manual
+BUREAU_MAX_OVERDUE_AMT,타 금융기관 최대 연체액,manual
+BUREAU_MAX_OVERDUE_AMT,타기관 연체 최대 금액,manual
+BUREAU_MAX_OVERDUE_AMT,타기관 최대 연체액,manual
+INS_ALL_LATE_DAYS_MEAN,전 기간 납부 지연일수 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전 기간 납부 지연일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전 기간 연체일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전 기간 지연일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 기간 납부 지연일수 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 기간 연체일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 기간 지연일수 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 기간 지연일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 납부 지연일수 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 납부 지연일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 연체일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MEAN,전체 지연일수(납부일−약정일) 평균,auto
+INS_ALL_LATE_DAYS_MAX,전 기간 납부 지연일수 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전 기간 납부 지연일수(납부일−약정일) 최대,auto
+INS_ALL_LATE_DAYS_MAX,전 기간 납부 지연일수(납부일−약정일) 최대값,auto
+INS_ALL_LATE_DAYS_MAX,전 기간 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전 기간 연체일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전 기간 지연일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 납부 지연일수 최대,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 납부 지연일수 최대값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 납부 지연일수 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 납부 지연일수(납부일−약정일) 최대,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 납부 지연일수(납부일−약정일) 최대값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 연체일수 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 연체일수(납부일−약정일) 최대,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 연체일수(납부일−약정일) 최대값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 연체일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 지연일수 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 지연일수(납부일−약정일) 최대,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 지연일수(납부일−약정일) 최대값,auto
+INS_ALL_LATE_DAYS_MAX,전체 기간 지연일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 납부 지연일수 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 납부 지연일수(납부일−약정일) 최대,auto
+INS_ALL_LATE_DAYS_MAX,전체 납부 지연일수(납부일−약정일) 최대값,auto
+INS_ALL_LATE_DAYS_MAX,전체 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 연체일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_DAYS_MAX,전체 지연일수(납부일−약정일) 최댓값,auto
+INS_ALL_LATE_FLAG_MEAN,전 기간 연체 납부 비율,auto
+INS_ALL_LATE_FLAG_MEAN,전 기간 연체 납부 평균,auto
+INS_ALL_LATE_FLAG_MEAN,전 기간 연체 납부율,auto
+INS_ALL_LATE_FLAG_MEAN,전체 기간 연체 납부 비율,auto
+INS_ALL_LATE_FLAG_MEAN,전체 기간 연체 납부율,auto
+INS_ALL_LATE_FLAG_MEAN,전체 연체 납부 비율,auto
+INS_ALL_LATE_FLAG_MEAN,전체 연체 납부 평균,auto
+INS_ALL_LATE_FLAG_MEAN,전체 연체 납부율,auto
+INS_ALL_LATE7_FLAG_MEAN,전 기간 7일 초과 연체 납부 비율,auto
+INS_ALL_LATE7_FLAG_MEAN,전 기간 7일 초과 연체 납부 평균,auto
+INS_ALL_LATE7_FLAG_MEAN,전 기간 7일 초과 연체 납부율,auto
+INS_ALL_LATE7_FLAG_MEAN,전체 7일 초과 연체 납부 비율,auto
+INS_ALL_LATE7_FLAG_MEAN,전체 7일 초과 연체 납부 평균,auto
+INS_ALL_LATE7_FLAG_MEAN,전체 7일 초과 연체 납부율,auto
+INS_ALL_LATE7_FLAG_MEAN,전체 기간 7일 초과 연체 납부 비율,auto
+INS_ALL_LATE7_FLAG_MEAN,전체 기간 7일 초과 연체 납부율,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월 납부 지연일수 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월 연체일수 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월 연체일수(납부일−약정일) 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월 지연일수 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월 지연일수(납부일−약정일) 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월간 납부 지연일수 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월간 납부 지연일수(납부일−약정일) 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월간 연체일수(납부일−약정일) 평균,auto
+INS_L3M_LATE_DAYS_MEAN,최근 3개월간 지연일수(납부일−약정일) 평균,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 납부 지연일수 최대,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 납부 지연일수 최대값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 납부 지연일수 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 납부 지연일수(납부일−약정일) 최대,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 연체일수 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 연체일수(납부일−약정일) 최대,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 연체일수(납부일−약정일) 최대값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 연체일수(납부일−약정일) 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 지연일수 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 지연일수(납부일−약정일) 최대,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 지연일수(납부일−약정일) 최대값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월 지연일수(납부일−약정일) 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월간 납부 지연일수 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월간 납부 지연일수(납부일−약정일) 최대,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월간 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월간 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월간 연체일수(납부일−약정일) 최댓값,auto
+INS_L3M_LATE_DAYS_MAX,최근 3개월간 지연일수(납부일−약정일) 최댓값,auto
+INS_L3M_LATE_FLAG_MEAN,최근 3개월 연체 납부 비율,auto
+INS_L3M_LATE_FLAG_MEAN,최근 3개월 연체 납부율,auto
+INS_L3M_LATE_FLAG_MEAN,최근 3개월간 연체 납부 비율,auto
+INS_L3M_LATE_FLAG_MEAN,최근 3개월간 연체 납부 평균,auto
+INS_L3M_LATE_FLAG_MEAN,최근 3개월간 연체 납부율,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 납부 지연일수 최대,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 납부 지연일수 최대값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 납부 지연일수 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 납부 지연일수(납부일−약정일) 최대,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 연체일수 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 연체일수(납부일−약정일) 최대,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 연체일수(납부일−약정일) 최대값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 연체일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 지연일수 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 지연일수(납부일−약정일) 최대,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 지연일수(납부일−약정일) 최대값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월 지연일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월간 납부 지연일수 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월간 납부 지연일수(납부일−약정일) 최대,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월간 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월간 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월간 연체일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 6개월간 지연일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 반년 납부 지연일수 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 반년 납부 지연일수(납부일−약정일) 최대,auto
+INS_L6M_LATE_DAYS_MAX,최근 반년 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L6M_LATE_DAYS_MAX,최근 반년 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 반년 연체일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_DAYS_MAX,최근 반년 지연일수(납부일−약정일) 최댓값,auto
+INS_L6M_LATE_FLAG_MEAN,최근 6개월 연체 납부 비율,auto
+INS_L6M_LATE_FLAG_MEAN,최근 6개월 연체 납부율,auto
+INS_L6M_LATE_FLAG_MEAN,최근 6개월간 연체 납부 비율,auto
+INS_L6M_LATE_FLAG_MEAN,최근 6개월간 연체 납부 평균,auto
+INS_L6M_LATE_FLAG_MEAN,최근 6개월간 연체 납부율,auto
+INS_L6M_LATE_FLAG_MEAN,최근 반년 연체 납부 비율,auto
+INS_L6M_LATE_FLAG_MEAN,최근 반년 연체 납부 평균,auto
+INS_L6M_LATE_FLAG_MEAN,최근 반년 연체 납부율,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 납부 지연일수 최대,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 납부 지연일수 최대값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 납부 지연일수 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 납부 지연일수(납부일−약정일) 최대,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 연체일수 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 연체일수(납부일−약정일) 최대,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 연체일수(납부일−약정일) 최대값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 연체일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 지연일수 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 지연일수(납부일−약정일) 최대,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 지연일수(납부일−약정일) 최대값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월 지연일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월간 납부 지연일수 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월간 납부 지연일수(납부일−약정일) 최대,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월간 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월간 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월간 연체일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 12개월간 지연일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 1년 납부 지연일수 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 1년 납부 지연일수(납부일−약정일) 최대,auto
+INS_L12M_LATE_DAYS_MAX,최근 1년 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L12M_LATE_DAYS_MAX,최근 1년 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 1년 연체일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_DAYS_MAX,최근 1년 지연일수(납부일−약정일) 최댓값,auto
+INS_L12M_LATE_FLAG_MEAN,최근 12개월 연체 납부 비율,auto
+INS_L12M_LATE_FLAG_MEAN,최근 12개월 연체 납부율,auto
+INS_L12M_LATE_FLAG_MEAN,최근 12개월간 연체 납부 비율,auto
+INS_L12M_LATE_FLAG_MEAN,최근 12개월간 연체 납부 평균,auto
+INS_L12M_LATE_FLAG_MEAN,최근 12개월간 연체 납부율,auto
+INS_L12M_LATE_FLAG_MEAN,최근 1년 연체 납부 비율,auto
+INS_L12M_LATE_FLAG_MEAN,최근 1년 연체 납부 평균,auto
+INS_L12M_LATE_FLAG_MEAN,최근 1년 연체 납부율,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월 납부 지연일수 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월 연체일수 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월 연체일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월 지연일수 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월 지연일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월간 납부 지연일수 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월간 납부 지연일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월간 연체일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 24개월간 지연일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 2년 납부 지연일수 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 2년 납부 지연일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 2년 연체일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MEAN,최근 2년 지연일수(납부일−약정일) 평균,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 납부 지연일수 최대,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 납부 지연일수 최대값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 납부 지연일수 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 납부 지연일수(납부일−약정일) 최대,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 연체일수(납부일−약정일) 최대,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 연체일수(납부일−약정일) 최대값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 연체일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 지연일수 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 지연일수(납부일−약정일) 최대,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 지연일수(납부일−약정일) 최대값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월 지연일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월간 납부 지연일수 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월간 납부 지연일수(납부일−약정일) 최대,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월간 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월간 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월간 연체일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 24개월간 지연일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 2년 납부 지연일수 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 2년 납부 지연일수(납부일−약정일) 최대,auto
+INS_L24M_LATE_DAYS_MAX,최근 2년 납부 지연일수(납부일−약정일) 최대값,auto
+INS_L24M_LATE_DAYS_MAX,최근 2년 납부 지연일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 2년 연체일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_DAYS_MAX,최근 2년 지연일수(납부일−약정일) 최댓값,auto
+INS_L24M_LATE_FLAG_MEAN,최근 24개월 연체 납부 비율,auto
+INS_L24M_LATE_FLAG_MEAN,최근 24개월 연체 납부율,auto
+INS_L24M_LATE_FLAG_MEAN,최근 24개월간 연체 납부 비율,auto
+INS_L24M_LATE_FLAG_MEAN,최근 24개월간 연체 납부 평균,auto
+INS_L24M_LATE_FLAG_MEAN,최근 24개월간 연체 납부율,auto
+INS_L24M_LATE_FLAG_MEAN,최근 2년 연체 납부 비율,auto
+INS_L24M_LATE_FLAG_MEAN,최근 2년 연체 납부 평균,auto
+INS_L24M_LATE_FLAG_MEAN,최근 2년 연체 납부율,auto
+INS_LATE_LATE_DAYS_MEAN,연체 납부 회차 납부 지연일수 평균,auto
+INS_LATE_LATE_DAYS_MEAN,연체 납부 회차 연체일수 평균,auto
+INS_LATE_LATE_DAYS_MEAN,연체 납부 회차 연체일수(납부일−약정일) 평균,auto
+INS_LATE_LATE_DAYS_MEAN,연체 납부 회차 지연일수 평균,auto
+INS_LATE_LATE_DAYS_MEAN,연체 납부 회차 지연일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월 중 연체 납부 회차 납부 지연일수 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월 중 연체 납부 회차 연체일수 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월 중 연체 납부 회차 연체일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월 중 연체 납부 회차 지연일수 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월 중 연체 납부 회차 지연일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월간 중 연체 납부 회차 납부 지연일수 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월간 중 연체 납부 회차 납부 지연일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월간 중 연체 납부 회차 연체일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 12개월간 중 연체 납부 회차 지연일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 1년 중 연체 납부 회차 납부 지연일수 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 1년 중 연체 납부 회차 납부 지연일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 1년 중 연체 납부 회차 연체일수(납부일−약정일) 평균,auto
+INS_LATE_L12M_LATE_DAYS_MEAN,최근 1년 중 연체 납부 회차 지연일수(납부일−약정일) 평균,auto
+INS_SHORT_LATE_DAYS_MEAN,납부액 부족 회차 납부 지연일수 평균,auto
+INS_SHORT_LATE_DAYS_MEAN,납부액 부족 회차 연체일수 평균,auto
+INS_SHORT_LATE_DAYS_MEAN,납부액 부족 회차 연체일수(납부일−약정일) 평균,auto
+INS_SHORT_LATE_DAYS_MEAN,납부액 부족 회차 지연일수 평균,auto
+INS_SHORT_LATE_DAYS_MEAN,납부액 부족 회차 지연일수(납부일−약정일) 평균,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 납부 지연일수 최대,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 납부 지연일수 최대값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 납부 지연일수 최댓값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 납부 지연일수(납부일−약정일) 최대,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 납부 지연일수(납부일−약정일) 최대값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 연체일수 최댓값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 연체일수(납부일−약정일) 최대,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 연체일수(납부일−약정일) 최대값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 연체일수(납부일−약정일) 최댓값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 지연일수 최댓값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 지연일수(납부일−약정일) 최대,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 지연일수(납부일−약정일) 최대값,auto
+INS_SHORT_LATE_DAYS_MAX,납부액 부족 회차 지연일수(납부일−약정일) 최댓값,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월 중 납부액 부족 회차 납부 지연일수 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월 중 납부액 부족 회차 연체일수 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월 중 납부액 부족 회차 연체일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월 중 납부액 부족 회차 지연일수 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월 중 납부액 부족 회차 지연일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월간 중 납부액 부족 회차 납부 지연일수 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월간 중 납부액 부족 회차 납부 지연일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월간 중 납부액 부족 회차 연체일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 12개월간 중 납부액 부족 회차 지연일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 1년 중 납부액 부족 회차 납부 지연일수 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 1년 중 납부액 부족 회차 납부 지연일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 1년 중 납부액 부족 회차 연체일수(납부일−약정일) 평균,auto
+INS_SHORT_L12M_LATE_DAYS_MEAN,최근 1년 중 납부액 부족 회차 지연일수(납부일−약정일) 평균,auto
+POS_ALL_DPD_DEF_MEAN,전 기간 연체일수 평균,auto
+POS_ALL_DPD_DEF_MEAN,전 기간 유의미 연체일수 평균,auto
+POS_ALL_DPD_DEF_MEAN,전 기간 유의미한 연체일수 평균,auto
+POS_ALL_DPD_DEF_MEAN,전체 기간 유의미한 연체일수 평균,auto
+POS_ALL_DPD_DEF_MEAN,전체 연체일수 평균,auto
+POS_ALL_DPD_DEF_MEAN,전체 유의미 연체일수 평균,auto
+POS_ALL_DPD_DEF_MEAN,전체 유의미한 연체일수 평균,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 연체일수 최대,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 연체일수 최대값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 유의미 연체일수 최대,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 유의미 연체일수 최대값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 유의미한 연체일수 최대,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 유의미한 연체일수 최대값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월 유의미한 연체일수 최댓값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월간 연체일수 최댓값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월간 유의미 연체일수 최대,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월간 유의미 연체일수 최대값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월간 유의미 연체일수 최댓값,auto
+POS_L24M_DPD_DEF_MAX,최근 24개월간 유의미한 연체일수 최댓값,auto
+POS_L24M_DPD_DEF_MAX,최근 2년 연체일수 최댓값,auto
+POS_L24M_DPD_DEF_MAX,최근 2년 유의미 연체일수 최대,auto
+POS_L24M_DPD_DEF_MAX,최근 2년 유의미 연체일수 최대값,auto
+POS_L24M_DPD_DEF_MAX,최근 2년 유의미 연체일수 최댓값,auto
+POS_L24M_DPD_DEF_MAX,최근 2년 유의미한 연체일수 최댓값,auto
+EXT_SOURCE_1,외부 신용점수 1,auto
+EXT_SOURCE_1,외부 점수 1,auto
+EXT_SOURCE_2,외부 신용점수 2,auto
+EXT_SOURCE_2,외부 점수 2,auto
+EXT_SOURCE_3,외부 신용점수 3,auto
+EXT_SOURCE_3,외부 점수 3,auto
+EXT_SOURCE_MEAN,외부 신용점수 평균,auto
+EXT_SOURCE_MEAN,외부 점수 평균,auto
+EXT_SOURCE_MIN,외부 신용점수 최소,auto
+EXT_SOURCE_MIN,외부 신용점수 최소값,auto
+EXT_SOURCE_MIN,외부 신용점수 최솟값,auto
+EXT_SOURCE_MIN,외부 신용평가 점수 최소,auto
+EXT_SOURCE_MIN,외부 신용평가 점수 최소값,auto
+EXT_SOURCE_MIN,외부 점수 최소,auto
+EXT_SOURCE_MIN,외부 점수 최소값,auto
+EXT_SOURCE_MIN,외부 점수 최솟값,auto
+EXT_SOURCE_MAX,외부 신용점수 최대,auto
+EXT_SOURCE_MAX,외부 신용점수 최대값,auto
+EXT_SOURCE_MAX,외부 신용점수 최댓값,auto
+EXT_SOURCE_MAX,외부 신용평가 점수 최대,auto
+EXT_SOURCE_MAX,외부 신용평가 점수 최대값,auto
+EXT_SOURCE_MAX,외부 점수 최대,auto
+EXT_SOURCE_MAX,외부 점수 최대값,auto
+EXT_SOURCE_MAX,외부 점수 최댓값,auto
+EXT_SOURCE_PROD,외부 신용점수 곱,manual
+EXT_SOURCE_PROD,외부 점수 곱,manual
+BUREAU_CNT,다른 기관 대출 건수,manual
+BUREAU_CNT,타 금융기관 대출 건수,manual
+BUREAU_CNT,타기관 대출 개수,manual
+BUREAU_CNT,타기관 대출 수,manual
+BUREAU_ACTIVE_CNT,타 금융기관 진행 중 대출 수,auto
+BUREAU_ACTIVE_CNT,다른 기관 진행 중 대출 수,manual
+BUREAU_ACTIVE_CNT,타기관 진행 대출 수,manual
+BUREAU_ACTIVE_CNT,타기관 진행 중 대출 건수,manual
+BUREAU_CLOSED_CNT,타 금융기관 종료 대출 수,auto
+BUREAU_CLOSED_CNT,다른 기관 종료 대출 수,manual
+BUREAU_CLOSED_CNT,타기관 상환 완료 대출 수,manual
+BUREAU_CLOSED_CNT,타기관 종료 대출 건수,manual
+BUREAU_CLOSED_CNT,타기관 종료된 대출 수,manual
+BUREAU_ACTIVE_RATIO,타 금융기관 진행 중 대출 비율,auto
+BUREAU_ACTIVE_RATIO,다른 기관 진행 중 대출 비율,manual
+BUREAU_ACTIVE_RATIO,타기관 진행 대출 비율,manual
+CCB_ALL_DRAW_CNT_MEAN,전 기간 월 인출 횟수 평균,auto
+CCB_ALL_DRAW_CNT_MEAN,전체 월 인출 횟수 평균,auto
+CCB_ALL_DRAW_CNT_MEAN,월 인출 횟수,manual
+CCB_ALL_DRAW_CNT_MEAN,월평균 카드 인출 횟수,manual
+CCB_ALL_DRAW_CNT_MEAN,전체 기간 월평균 인출 횟수,manual
+CCB_ALL_DRAW_CNT_MEAN,카드 월 인출 횟수,manual
+POS_ACTIVE_CNT,진행 중 상태 건수,manual
+POS_ACTIVE_CNT,진행 중 월 건수,manual
+POS_ACTIVE_CNT,진행 중인 할부 월 건수,manual

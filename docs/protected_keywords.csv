@@ -1,0 +1,47 @@
+group,category,keyword,match_type,note
+A-핵심,성별,성별,substring,
+A-핵심,성별,남성,substring,
+A-핵심,성별,여성,substring,
+A-핵심,성별,남자,substring,
+A-핵심,성별,여자,substring,
+A-핵심,성별,남녀,substring,
+A-핵심,성별,젠더,substring,
+A-핵심,연령,나이,substring,
+A-핵심,연령,연령,substring,
+A-핵심,연령,연세,substring,
+A-핵심,연령,고령,substring,
+A-핵심,연령,노령,substring,
+A-핵심,연령,노년,substring,
+A-핵심,연령,젊은,substring,
+A-핵심,연령,어린,substring,
+A-핵심,연령,청년,substring,
+A-핵심,연령,중년,substring,
+A-핵심,연령,장년,substring,
+A-핵심,연령,세대,substring,
+A-핵심,연령,\d{2}\s*세,regex,"예: 59세, 35 세"
+A-핵심,연령,\d{2}\s*살,regex,
+A-핵심,연령,(?<![0-9])[1-9]0\s*대(?!\s*(?:기업|출)),regex,"연령대 표기 10~90대 ('10대 기업', '50 대출' 등 제외)"
+A-확장,국적,국적,substring,근거 조항 [확인 필요]
+A-확장,국적,외국인,substring,근거 조항 [확인 필요]
+A-확장,인종,인종,substring,근거 조항 [확인 필요]
+A-확장,인종,민족,substring,근거 조항 [확인 필요]
+A-확장,인종,피부색,substring,근거 조항 [확인 필요]
+A-확장,종교,종교,substring,근거 조항 [확인 필요]
+A-확장,출신지역,출신지,substring,근거 조항 [확인 필요]
+A-확장,출신지역,출신 지역,substring,근거 조항 [확인 필요]
+A-확장,출신지역,고향,substring,근거 조항 [확인 필요]
+A-확장,장애,장애,substring,근거 조항 [확인 필요]
+A-확장,임신·출산,임신,substring,근거 조항 [확인 필요]
+A-확장,임신·출산,출산,substring,근거 조항 [확인 필요]
+A-확장,성적 지향,성적 지향,substring,근거 조항 [확인 필요]
+A-확장,정치적 견해,정치적,substring,근거 조항 [확인 필요]
+A-확장,건강,병력,substring,근거 조항 [확인 필요]
+A-확장,건강,건강,substring,근거 조항 [확인 필요]; 일반 표현('건강한 재무')도 걸릴 수 있어 탐색 지표로만 쓴다
+A-확장,건강,질병,substring,근거 조항 [확인 필요]
+A-확장,건강,질환,substring,근거 조항 [확인 필요]
+A-확장,건강,투병,substring,근거 조항 [확인 필요]
+A-확장,정치적 견해,정치,substring,근거 조항 [확인 필요]
+A-확장,정치적 견해,정당,substring,근거 조항 [확인 필요]
+A-확장,정치적 견해,정치 성향,substring,근거 조항 [확인 필요]
+A-확장,정치적 견해,이념,substring,근거 조항 [확인 필요]
+A-확장,정치적 견해,신념,substring,근거 조항 [확인 필요]
