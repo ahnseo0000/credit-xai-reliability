@@ -1,0 +1,68 @@
+- `19:34:48` **[결정]** 2-1.1 연령·성별 확인: v2 입력 100개 변수명과 182개 입력 열에 DAYS_BIRTH/CODE_GENDER/EMPLOYED_AGE_RATIO/AGE/GENDER 없음 (통과). train 215,257건(부도 0.0807), valid 46,127건 사용, test 미사용
+- `19:35:19` 2-1.2 WoE/IV 계산(train 기준, 분위수 10구간·결측 별도 구간·범주형은 희소 병합, 평활화 0.5): IV≥0.02 92개 / 100, IV≥0.1 13개. family 안 상관쌍 526개 저장 (corr_within_family.csv, iv_all.csv)
+- `19:45:33` **[결정]** 2-1.3 선택 규칙 (학습 전에 고정): ① train IV < 0.02 제거 ② EXT_SOURCE 계열은 EXT_SOURCE_MEAN만 유지 ③ 같은 family_final 안에서 IV 큰 순으로 보며 WoE 변환값 |상관| > 0.7인 이미 유지된 변수가 있으면 탈락 ④ 남은 변수에 priority = IV × (0.5 + 0.5 × 부트스트랩 상위10위 안 비율)를 매겨 family당 상한(v2 입력 10개 이상인 family 3개, 그 외 2개)만 유지 → 최대 25개. 대리 후보(L3_SPEC B 목록)는 표시만 하고 자동 제외하지 않는다.
+- `19:45:33` 주의: 부트스트랩 안정성(boot_top*)은 L2에서 test 데이터의 SHAP으로 계산된 값이다. 지시에 따라 ④ 우선순위에만 참고로 썼고, 영향을 보려고 train 기반 gain 순위(gain_importance_190.csv)로 만든 대안 선택과 겹침을 따로 보고한다.
+- `19:45:33` 2-1.3 결과: ①IV 미달 8개 ②EXT 개별/파생 탈락 6개 ③상관 정리 후 65개 ④family 상한 후 최종 25개. 대리 후보(B 목록) 포함 5개: ['DAYS_ID_PUBLISH', 'BUREAU_OLDEST_DAYS', 'NAME_EDUCATION_TYPE', 'REGION_RATING_CLIENT_W_CITY', 'DAYS_EMPLOYED']
+- `19:45:33` 민감도: train gain 기반 우선순위로 바꾸면 선택이 25개 중 23개 겹침 (겹치지 않는 변수: 부트스트랩 기준만 ['BUR_CARD_DEBT_RATIO_MEAN', 'CCB_ALL_DRAW_CNT_MEAN'], gain 기준만 ['BUREAU_ACTIVE_CNT', 'BUR_ACTIVE_DEBT_RATIO_MEAN'])
+- `19:47:03` 2-2 시작: 후보 25개 변수, train 215,257건 / valid 46,127건 (test 미사용). 연령·성별 없음, class_weight 없음
+- `19:47:03` **[결정]** 2-2 구간화 규칙 (학습 전에 고정): 수치형은 분위수 20구간에서 아이소토닉(PAVA) 병합으로 단조 부도율 구간을 만든 뒤 최소 비중 5%, 최대 6구간으로 병합; 범주형은 희소(<2%) 범주를 묶고 부도율 순으로 인접 병합해 최대 6구간; 결측은 별도 구간; WoE = ln(good 비중/bad 비중), 평활화 0.5. optbinning 미설치라 분위수+병합 사용
+- `19:47:07` 2-2.6 단조 구간화 완료: 변수당 구간 수 {'min': 3.0, '50%': 7.0, 'max': 7.0}, 단조가 아닌 수치형 변수 없음 (woe_bins.csv)
+- `19:47:24` **[결정]** 2-2.7 L2 로지스틱: C를 train 5-fold CV AUC로 선택 {0.001: np.float64(0.7516627287591559), 0.003: np.float64(0.7544438758027683), 0.01: np.float64(0.755424763640285), 0.03: np.float64(0.7555685878293954), 0.1: np.float64(0.7555917610616705), 0.3: np.float64(0.7555887592781152), 1.0: np.float64(0.7555851061959304), 3.0: np.float64(0.755584484087595), 10.0: np.float64(0.7555841409364878)} -> C=0.1 (valid는 평가에만 사용; WoE는 전체 train에서 계산한 뒤 CV해 CV AUC가 약간 낙관적일 수 있음)
+- `19:47:24` 계수 부호: WoE=ln(good/bad)이라 계수는 음수여야 함. 양수 계수 2개 ['BUREAU_DEBT_SUM', 'INS_LATE_L12M_PAY_RATIO_MEAN']
+- `19:47:38` **[결정]** 2-2.8 점수 변환(가정): 기준 600점에서 good:bad = 50:1, PDO 20점 -> Factor 28.854, Offset 487.12. 점수 = Offset − Factor×logit(PD). valid 점수 평균 568.0 (최소 460, 최대 635); 변수별 점수표의 정수 합과 정확한 점수의 차이: 평균 1.28, 최대 5.6점
+- `19:47:38` 2-2 완료: valid 스코어카드 AUC 0.7566 (train 0.7560) vs GBM 0.7898; KS 0.3877 vs 0.4390; ECE 0.0042 vs 0.0024; Brier 0.0682 vs 0.0657. 저장: woe_bins.csv, scorecard_points.csv, scorecard_model.json, metrics.csv, compare_valid.md
+- `19:48:00` 2-2 시작: 후보 25개 변수, train 215,257건 / valid 46,127건 (test 미사용). 연령·성별 없음, class_weight 없음
+- `19:48:00` **[결정]** 2-2 구간화 규칙 (학습 전에 고정): 수치형은 분위수 20구간에서 아이소토닉(PAVA) 병합으로 단조 부도율 구간을 만든 뒤 최소 비중 5%, 최대 6구간으로 병합; 범주형은 희소(<2%) 범주를 묶고 부도율 순으로 인접 병합해 최대 6구간; 결측은 별도 구간; WoE = ln(good 비중/bad 비중), 평활화 0.5. optbinning 미설치라 분위수+병합 사용
+- `19:48:03` 2-2.6 단조 구간화 완료: 변수당 구간 수 {'min': 3.0, '50%': 7.0, 'max': 7.0}, 단조가 아닌 수치형 변수 없음 (woe_bins.csv)
+- `19:48:19` **[결정]** 2-2.7 L2 로지스틱: C를 train 5-fold CV AUC로 선택 {0.001: np.float64(0.7516627287591559), 0.003: np.float64(0.7544438758027683), 0.01: np.float64(0.755424763640285), 0.03: np.float64(0.7555685878293954), 0.1: np.float64(0.7555917610616705), 0.3: np.float64(0.7555887592781152), 1.0: np.float64(0.7555851061959304), 3.0: np.float64(0.755584484087595), 10.0: np.float64(0.7555841409364878)} -> C=0.1 (valid는 평가에만 사용; WoE는 전체 train에서 계산한 뒤 CV해 CV AUC가 약간 낙관적일 수 있음)
+- `19:48:19` 계수 부호: WoE=ln(good/bad)이라 계수는 음수여야 함. 양수 계수 2개 ['BUREAU_DEBT_SUM', 'INS_LATE_L12M_PAY_RATIO_MEAN']
+- `19:48:27` **[결정]** 2-2.8 점수 변환(가정): 기준 600점에서 good:bad = 50:1, PDO 20점 -> Factor 28.854, Offset 487.12. 점수 = Offset − Factor×logit(PD). valid 점수 평균 568.0 (최소 460, 최대 635); 변수별 점수표의 정수 합과 정확한 점수의 차이: 평균 1.28, 최대 5.6점
+- `19:48:27` 2-2 완료: valid 스코어카드 AUC 0.7566 (train 0.7560) vs GBM 0.7898; KS 0.3877 vs 0.4390; ECE 0.0042 vs 0.0024; Brier 0.0682 vs 0.0657. 저장: woe_bins.csv, scorecard_points.csv, scorecard_model.json, metrics.csv, compare_valid.md
+- `19:48:37` (참고) p2_scorecard에 --drop/--tag 옵션을 추가한 뒤 기본 실행을 한 번 더 돌려 위 2-2 기록이 두 번 나온다. 결과는 동일(valid AUC 0.7566).
+- `19:48:40` 2-2 시작: 후보 23개 변수, train 215,257건 / valid 46,127건 (test 미사용). 연령·성별 없음, class_weight 없음
+- `19:48:40` **[결정]** 2-2 구간화 규칙 (학습 전에 고정): 수치형은 분위수 20구간에서 아이소토닉(PAVA) 병합으로 단조 부도율 구간을 만든 뒤 최소 비중 5%, 최대 6구간으로 병합; 범주형은 희소(<2%) 범주를 묶고 부도율 순으로 인접 병합해 최대 6구간; 결측은 별도 구간; WoE = ln(good 비중/bad 비중), 평활화 0.5. optbinning 미설치라 분위수+병합 사용
+- `19:48:43` 2-2.6 단조 구간화 완료: 변수당 구간 수 {'min': 3.0, '50%': 7.0, 'max': 7.0}, 단조가 아닌 수치형 변수 없음 (woe_bins.csv)
+- `19:48:57` **[결정]** 2-2.7 L2 로지스틱: C를 train 5-fold CV AUC로 선택 {0.001: np.float64(0.7516633800782856), 0.003: np.float64(0.754203685356891), 0.01: np.float64(0.7549454031444975), 0.03: np.float64(0.7550561015770654), 0.1: np.float64(0.7550512491671096), 0.3: np.float64(0.7550433172892858), 1.0: np.float64(0.7550405942173736), 3.0: np.float64(0.7550392361585145), 10.0: np.float64(0.7550384975291492)} -> C=0.03 (valid는 평가에만 사용; WoE는 전체 train에서 계산한 뒤 CV해 CV AUC가 약간 낙관적일 수 있음)
+- `19:48:57` 계수 부호: WoE=ln(good/bad)이라 계수는 음수여야 함. 양수 계수 0개 
+- `19:49:04` **[결정]** 2-2.8 점수 변환(가정): 기준 600점에서 good:bad = 50:1, PDO 20점 -> Factor 28.854, Offset 487.12. 점수 = Offset − Factor×logit(PD). valid 점수 평균 567.8 (최소 463, 최대 638); 변수별 점수표의 정수 합과 정확한 점수의 차이: 평균 1.04, 최대 5.0점
+- `19:49:04` 2-2 완료: valid 스코어카드 AUC 0.7555 (train 0.7554) vs GBM 0.7898; KS 0.3881 vs 0.4390; ECE 0.0034 vs 0.0024; Brier 0.0683 vs 0.0657. 저장: woe_bins.csv, scorecard_points.csv, scorecard_model.json, metrics.csv, compare_valid.md
+- `19:49:18` **[결정]** 양수 계수 처리: 기본 스코어카드(후보 25개)에는 부호가 뒤집힌 변수 2개(BUREAU_DEBT_SUM, INS_LATE_L12M_PAY_RATIO_MEAN)가 있다. 후보는 지시대로 25개를 유지하고 기본 결과로 보고하되, 부호 문제가 없는 대안(두 변수 제외, 23개, 파일명 *_nopos)을 같이 만들어 비교했다: valid AUC 0.7566 → 0.7555 (−0.0011). 어느 쪽을 쓸지는 사용자 결정 사항.
+- `19:49:18` 한계: ① family 안 상관만 정리했고 family 간 상관은 보지 않았다(양수 계수의 원인으로 의심) ② 구간화·WoE는 전체 train에서 계산한 뒤 CV를 했다 ③ 우선순위 점수에 쓴 부트스트랩 안정성은 test SHAP에서 나온 값이다(지시에 따른 참고용; train gain 기반 대안과 25개 중 23개 겹침) ④ DAYS_EMPLOYED는 연령과 WoE 상관 0.53으로 연령 대리 가능성이 가장 크다(B 목록, 자동 제외하지 않음) ⑤ GBM은 valid로 조기 종료해 valid에 약간 유리 ⑥ optbinning 미설치라 분위수+아이소토닉 병합 사용.
+- `19:49:18` 파일 규칙 확인: 새 파일은 results/phase2/와 src/p2_*.py뿐. results/v2_frozen, results/l2, results/l3_handoff 및 기존 src 모듈은 읽기만 했고 수정하지 않았다. test 분할은 읽지 않았다.
+- `20:01:20` **[결정]** Phase 2 이어서 1: 변수 선택 우선순위에서 L2 부트스트랩 안정성(test SHAP 기반)을 제거하고 train gain 순위로 교체해 shortlist를 다시 만든다. 이유: 변수 선택에 test 정보를 배제하기 위해(규칙: 선택·튜닝은 train/valid만). 이전 결과는 *_v1 접미사로 보존(shortlist_v1.csv, scorecard_*_v1.*, compare_valid_v1.md; 양수 계수 2개 제거 대안은 *_v1_nopos.*).
+- `20:01:35` **[결정]** 2-1.3 선택 규칙 (학습 전에 고정, 우선순위 기준 = train gain (test 정보 배제)): ① train IV < 0.02 제거 ② EXT_SOURCE 계열은 EXT_SOURCE_MEAN만 유지 ③ 같은 family_final 안에서 IV 큰 순으로 보며 WoE 변환값 |상관| > 0.7인 이미 유지된 변수가 있으면 탈락 ④ 남은 변수에 priority = IV × (0.5 + 0.5 × train gain 순위 백분위(1=최고))를 매겨 family당 상한(v2 입력 10개 이상인 family 3개, 그 외 2개)만 유지 → 최대 25개. 대리 후보(L3_SPEC B 목록)는 표시만 하고 자동 제외하지 않는다.
+- `20:01:35` 2-1.3 결과(gain): ①IV 미달 8개 ②EXT 개별/파생 탈락 6개 ③상관 정리 후 65개 ④family 상한 후 최종 25개. 대리 후보(B 목록) 포함 5개: ['DAYS_ID_PUBLISH', 'BUREAU_OLDEST_DAYS', 'NAME_EDUCATION_TYPE', 'REGION_RATING_CLIENT_W_CITY', 'DAYS_EMPLOYED']
+- `20:01:51` 이전 25개(shortlist_v1)와 새 25개 비교는 shortlist_diff_v1_vs_new.csv에 저장.
+- `20:03:00` 2-2 시작: 후보 25개 변수, train 215,257건 / valid 46,127건 (test 미사용). 연령·성별 없음, class_weight 없음, 양수 계수 자동 제거 사용
+- `20:03:00` **[결정]** 2-2 구간화 규칙 (학습 전에 고정): 수치형은 분위수 20구간에서 아이소토닉(PAVA) 병합으로 단조 부도율 구간을 만든 뒤 최소 비중 5%, 최대 6구간으로 병합; 범주형은 희소(<2%) 범주를 묶고 부도율 순으로 인접 병합해 최대 6구간; 결측은 별도 구간; WoE = ln(good 비중/bad 비중), 평활화 0.5. optbinning 미설치라 분위수+병합 사용
+- `20:03:06` 2-2.6 단조 구간화 완료: 변수당 구간 수 {'min': 3.0, '50%': 7.0, 'max': 7.0}, 단조가 아닌 수치형 변수 없음
+- `20:03:42` 2-2.7 L2 로지스틱(25개 변수): C=1.0 (train 5-fold CV AUC 0.7551); 양수 계수 2개 [('BUREAU_DEBT_SUM', 0.6), ('INS_LATE_L12M_PAY_RATIO_MEAN', 0.149)]
+- `20:03:42` **[결정]** 부호 규칙: WoE=ln(good/bad)라 계수는 음수여야 하는데 BUREAU_DEBT_SUM의 계수가 +0.600. 가장 큰 양수 계수 변수를 제거하고 다시 적합한다
+- `20:04:17` 2-2.7 L2 로지스틱(24개 변수): C=0.3 (train 5-fold CV AUC 0.7543); 양수 계수 2개 [('INS_LATE_L12M_PAY_RATIO_MEAN', 0.135), ('BUR_ALL_DEBT_RATIO_MEAN', 0.042)]
+- `20:04:17` **[결정]** 부호 규칙: WoE=ln(good/bad)라 계수는 음수여야 하는데 INS_LATE_L12M_PAY_RATIO_MEAN의 계수가 +0.135. 가장 큰 양수 계수 변수를 제거하고 다시 적합한다
+- `20:04:50` 2-2.7 L2 로지스틱(23개 변수): C=0.1 (train 5-fold CV AUC 0.7542); 양수 계수 1개 [('BUR_ALL_DEBT_RATIO_MEAN', 0.018)]
+- `20:04:50` **[결정]** 부호 규칙: WoE=ln(good/bad)라 계수는 음수여야 하는데 BUR_ALL_DEBT_RATIO_MEAN의 계수가 +0.018. 가장 큰 양수 계수 변수를 제거하고 다시 적합한다
+- `20:05:12` 2-2.7 L2 로지스틱(22개 변수): C=0.03 (train 5-fold CV AUC 0.7542); 양수 계수 0개 
+- `20:05:12` **[결정]** 양수 계수 반복 제거 결과: 3회 제거 ['BUREAU_DEBT_SUM', 'INS_LATE_L12M_PAY_RATIO_MEAN', 'BUR_ALL_DEBT_RATIO_MEAN'] -> 최종 22개 변수 (WoE는 전체 train에서 계산한 뒤 CV해 CV AUC가 약간 낙관적일 수 있음)
+- `20:05:23` **[결정]** 2-2.8 점수 변환(가정): 기준 600점에서 good:bad = 50:1, PDO 20점 -> Factor 28.854, Offset 487.12. 점수 = Offset − Factor×logit(PD), PD는 로지스틱 predict_proba 출력. valid 점수 평균 567.8 (최소 467, 최대 635); 점수표 정수 합과 정확한 점수의 차이: 평균 0.95, 최대 4.9점
+- `20:05:23` 2-2 완료: 스코어카드 22개 변수, valid AUC 0.7544 (train 0.7545), KS 0.3858, ECE 0.0035, Brier 0.0683. 저장: woe_bins.csv, scorecard_points.csv, scorecard_model.json, metrics.csv, raw/valid_p_scorecard.npy
+- `20:09:19` 2-3 GBM(shortlist): 변수 25개 (입력 열 47), best_iter 995, 3.7분, valid AUC 0.7755, KS 0.4171, ECE 0.0037, Brier 0.0669
+- `20:09:46` (참고) 점수 구간표·반올림 PD 오차 계산을 위해 p2_scorecard가 valid 점수 배열을 저장하도록 고친 뒤 기본 실행을 한 번 더 돌려 위 2-2 기록이 두 번 나온다. 결과는 동일(22개 변수, valid AUC 0.7544).
+- `20:09:57` 2-2 시작: 후보 25개 변수, train 215,257건 / valid 46,127건 (test 미사용). 연령·성별 없음, class_weight 없음, 양수 계수 자동 제거 사용
+- `20:09:57` **[결정]** 2-2 구간화 규칙 (학습 전에 고정): 수치형은 분위수 20구간에서 아이소토닉(PAVA) 병합으로 단조 부도율 구간을 만든 뒤 최소 비중 5%, 최대 6구간으로 병합; 범주형은 희소(<2%) 범주를 묶고 부도율 순으로 인접 병합해 최대 6구간; 결측은 별도 구간; WoE = ln(good 비중/bad 비중), 평활화 0.5. optbinning 미설치라 분위수+병합 사용
+- `20:10:04` 2-2.6 단조 구간화 완료: 변수당 구간 수 {'min': 3.0, '50%': 7.0, 'max': 7.0}, 단조가 아닌 수치형 변수 없음
+- `20:11:22` 2-2.7 L2 로지스틱(25개 변수): C=1.0 (train 5-fold CV AUC 0.7551); 양수 계수 2개 [('BUREAU_DEBT_SUM', 0.6), ('INS_LATE_L12M_PAY_RATIO_MEAN', 0.149)]
+- `20:11:22` **[결정]** 부호 규칙: WoE=ln(good/bad)라 계수는 음수여야 하는데 BUREAU_DEBT_SUM의 계수가 +0.600. 가장 큰 양수 계수 변수를 제거하고 다시 적합한다
+- `20:12:16` 2-2.7 L2 로지스틱(24개 변수): C=0.3 (train 5-fold CV AUC 0.7543); 양수 계수 2개 [('INS_LATE_L12M_PAY_RATIO_MEAN', 0.135), ('BUR_ALL_DEBT_RATIO_MEAN', 0.042)]
+- `20:12:16` **[결정]** 부호 규칙: WoE=ln(good/bad)라 계수는 음수여야 하는데 INS_LATE_L12M_PAY_RATIO_MEAN의 계수가 +0.135. 가장 큰 양수 계수 변수를 제거하고 다시 적합한다
+- `20:13:05` 2-2.7 L2 로지스틱(23개 변수): C=0.1 (train 5-fold CV AUC 0.7542); 양수 계수 1개 [('BUR_ALL_DEBT_RATIO_MEAN', 0.018)]
+- `20:13:05` **[결정]** 부호 규칙: WoE=ln(good/bad)라 계수는 음수여야 하는데 BUR_ALL_DEBT_RATIO_MEAN의 계수가 +0.018. 가장 큰 양수 계수 변수를 제거하고 다시 적합한다
+- `20:13:51` 2-2.7 L2 로지스틱(22개 변수): C=0.03 (train 5-fold CV AUC 0.7542); 양수 계수 0개 
+- `20:13:51` **[결정]** 양수 계수 반복 제거 결과: 3회 제거 ['BUREAU_DEBT_SUM', 'INS_LATE_L12M_PAY_RATIO_MEAN', 'BUR_ALL_DEBT_RATIO_MEAN'] -> 최종 22개 변수 (WoE는 전체 train에서 계산한 뒤 CV해 CV AUC가 약간 낙관적일 수 있음)
+- `20:14:17` **[결정]** 2-2.8 점수 변환(가정): 기준 600점에서 good:bad = 50:1, PDO 20점 -> Factor 28.854, Offset 487.12. 점수 = Offset − Factor×logit(PD), PD는 로지스틱 predict_proba 출력. valid 점수 평균 567.8 (최소 467, 최대 635); 점수표 정수 합과 정확한 점수의 차이: 평균 0.95, 최대 4.9점
+- `20:14:17` 2-2 완료: 스코어카드 22개 변수, valid AUC 0.7544 (train 0.7545), KS 0.3858, ECE 0.0035, Brier 0.0683. 저장: woe_bins.csv, scorecard_points.csv, scorecard_model.json, metrics.csv, raw/valid_p_scorecard.npy
+- `20:17:21` 2-3 GBM(scorecard_vars): 변수 22개 (입력 열 44), best_iter 985, 2.8분, valid AUC 0.7748, KS 0.4150, ECE 0.0027, Brier 0.0670
+- `20:22:59` 2-3 비교표 저장(compare_valid.md): AUC GBM(100) 0.7898 → GBM(25) 0.7755 → GBM(22) 0.7748 → 스코어카드 0.7544. 변수 축소 비용 0.0150, 모형 형태 비용 0.0204, 합계 0.0354. 정수 점수 PD 오차 평균 0.00215, 최대 0.02358
+- `20:26:31` 2-3 비교표 저장(compare_valid.md): AUC GBM(100) 0.7898 → GBM(25) 0.7755 → GBM(22) 0.7748 → 스코어카드 0.7544. 변수 축소 비용 0.0150, 모형 형태 비용 0.0204, 합계 0.0354. 정수 점수 PD 오차 평균 0.00215, 최대 0.02358
+- `20:26:43` **[결정]** 기본 스코어카드를 부호 반복 제거 버전(22개 변수)으로 확정. 이전 25개(부트스트랩 기반 선택) 버전은 *_v1 파일, 양수 계수 2개만 뺀 대안은 *_v1_nopos 파일로 보존. 비교표는 p2_compare가 compare_valid.md로 다시 만들었다(점수 척도 주의 문구 교체, 점수 10분위·20점 구간표, 정수 점수 PD 오차 추가).
+- `20:26:43` 한계 기록: DAYS_EMPLOYED 연령 정규화 버전은 다음 단계라 이번에는 하지 않았다 (연령과 WoE 상관 0.53, 스코어카드에 포함). 규칙 확인: 새 파일은 results/phase2/와 src/p2_*.py뿐, 기존 폴더·모듈은 수정하지 않았고 test 분할은 읽지 않았다. 커밋·push 없음.
