@@ -29,6 +29,7 @@ analysis_only   { target }                                              ← 프�
 ```
 
 - **변수 순서 (순서 누출 방지)**: `features`는 모든 고객에게 같은 고정 순서이다 — family(가나다순) → 변수 사전 행 순서. SHAP과 무관하다. SHAP 순위는 `shap_rank`(1 = |SHAP| 최대) 필드로만 남겼다. **프롬프트의 변수 순서는 SHAP과 무관해야 한다.** 프롬프트를 만들 때 `features`를 `shap_rank`·`abs(shap)`·`shap`으로 정렬하거나, 그 순서로 나열하면 안 된다. 조건 B에서도 변수는 `order` 순서로 나열하고 SHAP 값을 옆에 붙인다.
+- **`family` 필드**: 입력 jsonl의 `family`는 변수 **정렬용 구 분류**(2026-11-12 재분류 전 값)이다. 분석의 family 기준은 변수 사전의 `family_final`이며, 이 jsonl은 다시 만들지 않았다.
 - **임시 거절선**: test 전체(46,127건) `pd`의 q80 = `cutoff_pd`. `pd >= cutoff_pd`이면 `거절`, 아니면 `승인`. L5에서 손익 기반 거절선이 정해지면 바뀐다 (그때 `decision`만 다시 계산하면 된다).
 - **`value_text` 규칙**: 날짜 기준 변수(`DAYS_EMPLOYED` 등)는 "약 N년 전/후" (30일 미만 "N일", 1년 미만 "약 N개월"), 결측은 "정보 없음", `DAYS_EMPLOYED` 결측은 "재직 정보 없음". 지연일수·간격 같은 *기간* 변수는 시점이 아니므로 "N일 지연/일찍 납부"처럼 쓴다. 범주형은 원본 값(영문) 그대로이다.
 - **`DAYS_EMPLOYED` 결측의 뜻**: 원본의 무직·연금 수령 표시값(365243)을 결측으로 바꾼 것이다. 정말 정보가 없는 것이 아니다. 설명에 "재직 정보 없음"으로 나온다.
@@ -124,6 +125,8 @@ B 목록 (v2 입력 100개에서 고름, 판단 근거는 괄호):
 - 지역: `REGION_POPULATION_RELATIVE`, `REGION_RATING_CLIENT_W_CITY`
 - 연령과 함께 움직이는 변수 (train 신청자에서 나이와의 Spearman 순위상관): `EXT_SOURCE_1`(+0.60), `DAYS_EMPLOYED`(−0.31), `DAYS_REGISTRATION`(−0.29), `DAYS_ID_PUBLISH`(−0.27), `BUREAU_OLDEST_DAYS`(+0.23)
 - `NAME_INCOME_TYPE`(연금 수급자 같은 값이 연령과 직결됨)
+- 주변 정보: `DEF_60_CNT_SOCIAL_CIRCLE`(주변인 60일 연체 발생 수 — 신청자 본인이 아닌 주변 사람의 정보를 쓰는 변수). 2026-11-12에 추가했다 (변수 family를 "인구통계·주변(대리 후보)"로 재분류하면서 추가. L2 결과를 본 뒤의 추가이므로 이유를 기록한다). **모니터링 지표이며 위반이 아니다.**
+- 학력: `NAME_EDUCATION_TYPE`(최종 학력 — 사회경제적 배경과 연령에 연관될 수 있음). 같은 날 같은 이유로 추가했다 (L2 결과를 본 뒤의 추가이므로 기록). **모니터링 지표이며 위반이 아니다.**
 
 주의:
 - 자녀 수(`CNT_CHILDREN`)와 가구원 수(`CNT_FAM_MEMBERS`)는 v2 입력에 없다 (제외됨). 목록에도 없다.

@@ -20,6 +20,7 @@ from .l2_common import FROZEN, L2, L2RAW, family_map, load_cache, load_model, lo
 PERM_REPEATS = 5
 import sys
 REUSE_PERM = '--reuse-perm' in sys.argv
+REUSE_SHAP = '--reuse-shap' in sys.argv   # 저장된 shap_test.npy를 읽고 TreeSHAP을 다시 계산하지 않는다
 
 
 def aggregate(contrib: np.ndarray, col_names, variables, f2v):
@@ -47,16 +48,24 @@ def main():
     log(f"L2-1 시작: 캐시 입력 재현 확인 통과 (최대 차이 {np.abs(p - pr['pd_xgb_raw'].to_numpy()).max():.2e}), 입력 열 {len(col_names)} → 변수 {len(variables)}")
 
     # ---- L2-1 TreeSHAP (test 전체)
-    t0 = time.time()
-    contrib = booster.predict(dm, pred_contribs=True, iteration_range=ir)
-    S, base, idx = aggregate(contrib, col_names, variables, f2v)
-    margin = booster.predict(dm, output_margin=True, iteration_range=ir)
-    assert np.allclose(S.sum(axis=1) + base, margin, atol=1e-3), "SHAP 합이 log-odds와 다르다"
-    np.save(L2RAW / "shap_test.npy", S)
-    np.save(L2RAW / "shap_base_test.npy", base)
-    np.save(L2RAW / "shap_variables.npy", np.array(variables))
-    log(f"L2-1 TreeSHAP 완료: {S.shape}, {time.time() - t0:.0f}초. 가법성 확인(SHAP 합 + 기준값 = log-odds) 통과, 기준값 {float(base[0]):.4f}")
-    del contrib
+    idx = {v: [i for i, c in enumerate(col_names) if f2v[c] == v] for v in variables}
+    if REUSE_SHAP and (L2RAW / "shap_test.npy").exists():
+        S, base = np.load(L2RAW / "shap_test.npy"), np.load(L2RAW / "shap_base_test.npy")
+        assert [str(v) for v in np.load(L2RAW / "shap_variables.npy")] == variables
+        margin = booster.predict(dm, output_margin=True, iteration_range=ir)
+        assert np.allclose(S.sum(axis=1) + base, margin, atol=1e-3), "저장된 SHAP 합이 log-odds와 다르다"
+        log(f"L2-1 저장된 SHAP 재사용 (shap_test.npy {S.shape}), 가법성 확인 통과")
+    else:
+        t0 = time.time()
+        contrib = booster.predict(dm, pred_contribs=True, iteration_range=ir)
+        S, base, idx = aggregate(contrib, col_names, variables, f2v)
+        margin = booster.predict(dm, output_margin=True, iteration_range=ir)
+        assert np.allclose(S.sum(axis=1) + base, margin, atol=1e-3), "SHAP 합이 log-odds와 다르다"
+        np.save(L2RAW / "shap_test.npy", S)
+        np.save(L2RAW / "shap_base_test.npy", base)
+        np.save(L2RAW / "shap_variables.npy", np.array(variables))
+        log(f"L2-1 TreeSHAP 완료: {S.shape}, {time.time() - t0:.0f}초. 가법성 확인(SHAP 합 + 기준값 = log-odds) 통과, 기준값 {float(base[0]):.4f}")
+        del contrib
 
     # ---- L2-2/3 mean|SHAP|, 내장 FI
     msh = np.abs(S).mean(axis=0)
@@ -140,7 +149,8 @@ def main():
     md += [f"| {r['기법 A']} | {r['기법 B']} | {r['Spearman(전체 100)']:.3f} | {r['Spearman(A 상위20)']:.3f} |" for _, r in rc.iterrows()]
     md += ["", "## 기법 간 순위가 가장 엇갈리는 변수 10개 (원인 메모는 사람이 보고 채움)", "", "| 변수 | family | SHAP 순위 | 내장FI 순위 | Perm 순위 | 순위 차 |", "| --- | --- | --- | --- | --- | --- |"]
     md += [f"| {r.variable} | {r.family} | {r.rank_mean_abs_shap} | {r.rank_xgb_total_gain} | {r.rank_perm_auc_drop} | {r.rank_gap} |" for r in div.itertuples()]
-    md += ["", "## family 단위 SHAP 합산", "", "family 안 변수의 SHAP을 행마다 더한 값의 mean|·|이다 (같은 family 안에서 서로 상쇄되는 효과 반영). 비교용으로 변수별 mean|SHAP| 단순 합도 함께 둔다.", "",
+    md += ["", "## family 단위 SHAP 합산", "", "family 안 변수의 SHAP을 행마다 더한 값의 mean|·|이다 (같은 family 안에서 서로 상쇄되는 효과 반영). 비교용으로 변수별 mean|SHAP| 단순 합도 함께 둔다. **두 열은 서로 다른 양이다**: 앞의 것은 합산 후 절댓값, 뒤의 것은 절댓값 후 합산(상쇄 미반영)이라 뒤가 항상 같거나 크다.", "",
+           "family 분류는 2026-11-12 재분류(변수 사전 `family_final`)를 쓴다. SHAP 부트스트랩 구간(`shap_bootstrap_family_ci_B50.csv`)은 **옛 분류 기준**이며, 새 분류는 사람별 SHAP이 저장돼 있지 않아 구간 없이 동결 모형 값만 보고한다.", "",
            "| family | 변수 수 | mean|family SHAP| | 비중 | 변수별 합 | 내장FI 비중 | Perm AUC↓ 합 |", "| --- | --- | --- | --- | --- | --- | --- |"]
     md += [f"| {i} | {int(r.n_vars)} | {r.mean_abs_shap_of_family_sum:.4f} | {r.share_family_sum:.1%} | {r.sum_of_var_mean_abs_shap:.4f} | {r.gain_share:.1%} | {r.perm_auc_drop_sum:.4f} |" for i, r in ftab.iterrows()]
     (L2 / "l2_global_summary.md").write_text("\n".join(md) + "\n", encoding="utf-8")

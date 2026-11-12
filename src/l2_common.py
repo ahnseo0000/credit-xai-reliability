@@ -75,25 +75,31 @@ def load_model() -> xgb.XGBClassifier:
     return m
 
 
-# 신청서 변수의 family (L0 변수는 변수 사전 family 열을 쓴다). 사전에 고정하고 결과를 본 뒤 바꾸지 않는다. 판단이 들어간 것은 *를 RUNLOG에 적는다.
+# family 최종 분류 (2026-11-12 재분류). L0 변수는 docs/variable_dict_l0.csv의 family_final 열(옛 family 열은 그대로 둠)을 읽는다.
+# 신청서 변수는 L0 사전에 없어서 아래 상수로 둔다. 호출 결과를 보기 전에 정하고 이후 바꾸지 않는다.
 APP_FAMILY = {
     "EXT_SOURCE_1": "외부점수", "EXT_SOURCE_2": "외부점수", "EXT_SOURCE_3": "외부점수",
-    "AMT_INCOME_TOTAL": "소득부담", "AMT_CREDIT": "소득부담", "AMT_ANNUITY": "소득부담", "AMT_GOODS_PRICE": "소득부담",
-    "CREDIT_INCOME_RATIO": "소득부담", "ANNUITY_INCOME_RATIO": "소득부담",
-    "CREDIT_TERM": "계약기간",
-    "DAYS_EMPLOYED": "고용·생활안정", "DAYS_REGISTRATION": "고용·생활안정", "DAYS_ID_PUBLISH": "고용·생활안정",
-    "DAYS_LAST_PHONE_CHANGE": "고용·생활안정", "OWN_CAR_AGE": "고용·생활안정",
-    "NAME_INCOME_TYPE": "신청자 속성", "NAME_EDUCATION_TYPE": "신청자 속성", "NAME_FAMILY_STATUS": "신청자 속성",
-    "OCCUPATION_TYPE": "신청자 속성", "ORGANIZATION_TYPE": "신청자 속성",
-    "REGION_POPULATION_RELATIVE": "신청자 속성", "REGION_RATING_CLIENT_W_CITY": "신청자 속성",
-    "DEF_60_CNT_SOCIAL_CIRCLE": "신청자 속성",
+    # 대출조건
+    "AMT_CREDIT": "대출조건", "AMT_ANNUITY": "대출조건", "AMT_GOODS_PRICE": "대출조건", "CREDIT_TERM": "대출조건",
+    # 소득·상환부담
+    "AMT_INCOME_TOTAL": "소득·상환부담", "CREDIT_INCOME_RATIO": "소득·상환부담", "ANNUITY_INCOME_RATIO": "소득·상환부담",
+    # 직업·고용
+    "NAME_INCOME_TYPE": "직업·고용", "OCCUPATION_TYPE": "직업·고용", "ORGANIZATION_TYPE": "직업·고용", "DAYS_EMPLOYED": "직업·고용",
+    # 생활안정
+    "DAYS_REGISTRATION": "생활안정", "DAYS_ID_PUBLISH": "생활안정", "DAYS_LAST_PHONE_CHANGE": "생활안정", "OWN_CAR_AGE": "생활안정",
+    # 인구통계·주변 (대리 후보: L3_SPEC 7절 B 목록과 함께 모니터링)
+    "NAME_EDUCATION_TYPE": "인구통계·주변(대리 후보)", "NAME_FAMILY_STATUS": "인구통계·주변(대리 후보)",
+    "REGION_POPULATION_RELATIVE": "인구통계·주변(대리 후보)", "REGION_RATING_CLIENT_W_CITY": "인구통계·주변(대리 후보)",
+    "DEF_60_CNT_SOCIAL_CIRCLE": "인구통계·주변(대리 후보)",
     "FLAG_DOCUMENT_3": "신청행태",
 }
+FAMILY_NOTE = {"FLAG_DOCUMENT_3": "의미 불명, 해석 주의"}
 
 
 def family_map(variables: list[str]) -> dict[str, str]:
-    l0 = pd.read_csv(FROZEN / "variable_dict_v2_l0.csv", encoding="utf-8-sig").set_index("variable")["family"].to_dict()
-    out = {v: l0.get(v) or APP_FAMILY.get(v) for v in variables}
+    """변수 -> family(최종). L0는 docs/variable_dict_l0.csv의 family_final, 신청서는 APP_FAMILY."""
+    d = pd.read_csv(C.DOCS_DIR / "variable_dict_l0.csv", encoding="utf-8-sig").set_index("variable")["family_final"].to_dict()
+    out = {v: APP_FAMILY.get(v) or d.get(v) for v in variables}
     miss = [v for v, f in out.items() if not isinstance(f, str)]
     assert not miss, f"family 미분류: {miss}"
     return out

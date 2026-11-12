@@ -70,3 +70,11 @@
 - `16:39:14` L2-7 부트스트랩 50/100 완료 (5.8분, 이번 실행 누적 5.49시간, 1위 변수 mean|SHAP| 0.4227)
 - `16:39:15` **[결정]** L2-7 B=50 1차 요약 저장 (shap_bootstrap_B50.md). 계속해서 B=100까지 진행
 - `16:39:23` **[결정]** 사용자 요청으로 B=50에서 부트스트랩 중단 (B=50 요약 저장 후). 이어하기는 python -m src.l2_boot 로 51번부터 가능
+- `19:28:31` L2-1 시작: 캐시 입력 재현 확인 통과 (최대 차이 2.98e-08), 입력 열 182 → 변수 100
+- `19:28:31` L2-1 저장된 SHAP 재사용 (shap_test.npy (46127, 100)), 가법성 확인 통과
+- `19:28:31` L2-4 Permutation 결과 재사용 (이전 실행값, 내장 FI 열 이름 수정 후 표만 다시 만듦)
+- `19:28:31` L2-2~5 완료: 1위 EXT_SOURCE_MEAN (10.0%), Spearman SHAP–내장FI 0.783, SHAP–Perm 0.832, 내장FI–Perm 0.664, family 1위 외부점수 (25.9%)
+- `19:29:09` **[결정]** 변수 family 재분류 (2026-11-12, 재학습 없음, results/v2_frozen 미수정). 신청서 변수와 L0 두 변수(INCOME_PER_PERSON → 소득·상환부담, CREDIT_GOODS_RATIO → 대출조건)를 대출조건 / 소득·상환부담 / 직업·고용 / 생활안정 / 인구통계·주변(대리 후보)로 재분류하고 나머지 family(외부점수, 연체이력, 소진율, 상환비율, 부채규모, 이용규모, 신청행태, 신용이력길이)는 유지. FLAG_DOCUMENT_3은 신청행태에 두되 "의미 불명, 해석 주의". 이유: 기존 분류가 성격이 다른 변수를 섞어 해석이 흐렸고, 보호변수 B 목록(대리 후보)과 family를 맞추기 위해. 보호변수 B 목록에 DEF_60_CNT_SOCIAL_CIRCLE, NAME_EDUCATION_TYPE 추가(모니터링 지표, 위반 아님).
+- `19:29:09` 주의: L2 SHAP·부트스트랩 결과를 본 뒤의 분류 변경이다 (LLM 호출 전). 분석 계획 8절 이탈 기록에 적었고, 확증 가설은 변수 단위 지표라 영향이 없으며 기술 통계에만 적용한다.
+- `19:29:09` 산출물: 변수 사전 docs/variable_dict_l0.csv에 열 family_final 추가(옛 family 열 유지, 바뀐 변수 2개), 코드(l2_common.family_map)는 family_final을 읽고 신청서 변수만 APP_FAMILY 상수로 둔다. 요청의 docs/variable_dict_v2_l0.csv는 docs/에 없고 동결 사본(results/v2_frozen/variable_dict_v2_l0.csv)만 있어 동결 규칙에 따라 수정하지 않았다.
+- `19:29:09` family 산출물 재생성(저장된 shap_test.npy 재사용, 재학습·SHAP 재계산 없음): family_importance.csv, global_importance.csv, l2_global_summary.md. 기존 파일은 *_oldfamily 접미사로 보존. 숫자 열은 변수 단위라 바뀌지 않았고 family 값만 22개 변수에서 바뀜. 부트스트랩 family 파일(shap_bootstrap_family_ci_B50.*)은 재생성하지 않고 "옛 분류 기준, 새 분류는 구간 없이 동결 모형 값만 보고" 주석을 달았다. 새 분류의 부트스트랩 구간은 사람별 SHAP이 저장돼 있지 않아 같은 방식으로 낼 수 없다. 동결 모형의 family 합(행마다 합산 후 절댓값 평균, 상쇄 반영)과 변수별 합(절댓값 후 합산)은 서로 다른 양이다.
