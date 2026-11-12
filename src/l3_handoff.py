@@ -1,7 +1,7 @@
 """L3 인수 패키지: 300명 각각의 LLM 입력 전체본 (results/l3_handoff/llm_input_300_full.jsonl) + zip.
 
 행 단위 신청자 데이터라 git에 올리지 않는다 (results/l3_handoff/ 는 .gitignore). 팀원에게는 zip 하나로 전달한다.
-- features: 변수 100개 전부 (한국어 이름, 값, 읽기용 문자열, SHAP, 방향)를 |SHAP| 큰 순서로
+- features: 변수 100개 전부 (한국어 이름, 값, 읽기용 문자열, SHAP, 방향). 순서는 family(가나다)→변수 사전 순서로 고정, SHAP 순위는 shap_rank 필드
 - 임시 거절선: test 전체 PD(동결 모형, 보정 없음)의 q80. pd >= q80 이면 거절
 - 성별·연령·소득 집단은 applicant_info에 따로 둔다 (모형 입력이 아니며, 프롬프트 기본 입력에도 포함하지 않는다)
 실행: python -m src.l3_handoff
@@ -69,6 +69,12 @@ def main():
     for p in (C.VAR_DICT, FROZEN / "variable_dict_v2_l0.csv"):
         t = pd.read_csv(p, encoding="utf-8-sig").set_index("variable")["description"]
         desc.update({v: t[v] for v in variables if v in t.index and v not in desc})
+    # 고정 표시 순서: family(가나다) -> 변수 사전 행 순서. 모든 고객에게 같은 순서이고 SHAP·중요도와 무관하다.
+    dict_pos = {}
+    for p_ in (C.VAR_DICT, FROZEN / "variable_dict_v2_l0.csv"):
+        for v_ in pd.read_csv(p_, encoding="utf-8-sig")["variable"]:
+            dict_pos.setdefault(v_, len(dict_pos))
+    FIXED_ORDER = sorted(range(len(variables)), key=lambda j: (fam[variables[j]], dict_pos[variables[j]]))
     ids = d["test"]["ids"]
     S, base = np.load(L2RAW / "shap_test.npy"), np.load(L2RAW / "shap_base_test.npy")
     assert [str(v) for v in np.load(L2RAW / "shap_variables.npy")] == variables
@@ -89,16 +95,17 @@ def main():
             s = S[k]
             p = float(pr.loc[sid, "pd_xgb_v2"])
             assert abs(1 / (1 + np.exp(-(base[k] + s.sum()))) - p) < 1e-4
-            order = np.argsort(-np.abs(s))
+            shap_rank = {j: r_ for r_, j in enumerate(np.argsort(-np.abs(s)), 1)}
+            order = FIXED_ORDER   # 변수 순서는 SHAP과 무관한 고정 순서 (순서 누출 방지). SHAP 순위는 shap_rank 필드로만 둔다
             row = vals.loc[sid]
             feats = []
-            for rank, j in enumerate(order, 1):
+            for pos_, j in enumerate(order, 1):
                 v = variables[j]
                 x = row[v]
                 x = None if pd.isna(x) else (x.item() if hasattr(x, "item") else x)
                 if isinstance(x, float):
                     x = float(f"{x:.7g}")   # float32 잔여 자릿수 제거
-                feats.append({"abs_rank": rank, "variable": v, "korean_name": names[v]["korean_name"], "family": fam[v], "description": desc.get(v, ""),
+                feats.append({"order": pos_, "shap_rank": shap_rank[j], "variable": v, "korean_name": names[v]["korean_name"], "family": fam[v], "description": desc.get(v, ""),
                               "unit": names[v]["unit"], "value": x, "value_text": value_text(v, x, names[v]["unit"]),
                               "shap": round(float(s[j]), 5),
                               "direction": "부도 위험 증가" if s[j] > EPS else ("부도 위험 감소" if s[j] < -EPS else "영향 거의 없음")})
