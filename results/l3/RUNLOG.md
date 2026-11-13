@@ -1,0 +1,8 @@
+# L3 실행 기록 (feature/l3-llm)
+
+- `2026-11-12 15:01:23` src/l3/ 생성 (settings.py, llm.py, trial.py). docs/L3_SPEC.md 4절 인터페이스 그대로. 프롬프트 p1, 조건 A/B 차이는 SHAP 문장 2줄과 변수별 SHAP 표기뿐, 변수는 record order 순서, analysis_only 미사용. 보호변수 A 키워드는 src/l3/llm.py PROTECTED_A로 고정. API 없이 가짜 클라이언트로 파이프라인 시험 통과. 모델명·호출 간격은 L3-5 실행 때 기록
+- `2026-11-12 16:15:59` zip판 L3_SPEC(sha256 1d737f65…)에 맞춰 src/l3 수정, 프롬프트 p2: 방향 표기 '부도 위험 증가/감소', 반복 호출 제거(캐시 키에 반복 번호 없음), 호출 기록에 입력·프롬프트 sha256과 ok/failed·실패 사유 추가, decision 불일치는 스키마 위반으로 재호출, 매핑은 분석 계획 2.1절 규칙(별칭 파일 있으면 사용), 수치 자동 대조 제거. 실제 입력 300명 x 2조건 프롬프트 점검 통과(변수 순서 = order, target 누출 0, A/B 차이는 SHAP 문장 2줄과 변수별 SHAP 표기). API 호출 없음
+- `2026-11-14 05:50:24` L3-5 시험 10건 (가짜 SHAP, B): 모델 gemini-3.5-flash, 간격 6.5s, status ok 10/10, 매핑률 100.0% → results/l3/trial_L3-5.md
+- `2026-11-14 05:52:00` 모델 선택 경과: gemini-3.7-flash로 먼저 시도 → 2건 ok 후 503 UNAVAILABLE(high demand)로 진행 불가(SDK 내부 재시도로 수 분 대기). 진단 스크립트(repo 밖)로 503 확인 후 gemini-3.5-flash로 변경해 tag trial_35로 10건 실행. 3.7의 2건(tag trial)은 보고에서 제외.
+- `2026-11-14 05:52:00` 주의: --model gemini-3.5-flash로 호출했으나 응답 model_version이 10건 모두 gemini-3.6-flash. 별칭이 다른 버전으로 연결되는 것으로 보여 '버전 고정'(SPEC 5절) 확인 필요 → 팀 결정 대기. 코드·설정 변경 없음.
+- `2026-11-14 05:58:00` 본 호출 대비 코드 수정 (프롬프트·생성 설정·캐시 키 변경 없음): llm.py — SDK 자체 재시도 끔(HttpRetryOptions attempts=1)·HTTP 타임아웃 120초(settings.HTTP_TIMEOUT_MS), 타임아웃·httpx 오류를 재시도 대상으로 분류, 호출 기록 한 건마다 flush. 이유: 시험 중 503에 SDK가 자체 재시도해 수 분간 멈춤 → SPEC 5절 재시도 규칙(최대 3회)만 적용되게. run_main.py 추가 — 300명 x A/B, 신청자마다 A→B, 이어 하기, API 오류 연속 3건이면 중단(해당 건 미기록, 재실행 시 이어서). 가짜 클라이언트로 중단·재개 시험 통과. 모델은 gemini-3.5-flash로 고정(팀장 지시: 하나로 고정).
