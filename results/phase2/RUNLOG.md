@@ -66,3 +66,63 @@
 - `20:26:31` 2-3 비교표 저장(compare_valid.md): AUC GBM(100) 0.7898 → GBM(25) 0.7755 → GBM(22) 0.7748 → 스코어카드 0.7544. 변수 축소 비용 0.0150, 모형 형태 비용 0.0204, 합계 0.0354. 정수 점수 PD 오차 평균 0.00215, 최대 0.02358
 - `20:26:43` **[결정]** 기본 스코어카드를 부호 반복 제거 버전(22개 변수)으로 확정. 이전 25개(부트스트랩 기반 선택) 버전은 *_v1 파일, 양수 계수 2개만 뺀 대안은 *_v1_nopos 파일로 보존. 비교표는 p2_compare가 compare_valid.md로 다시 만들었다(점수 척도 주의 문구 교체, 점수 10분위·20점 구간표, 정수 점수 PD 오차 추가).
 - `20:26:43` 한계 기록: DAYS_EMPLOYED 연령 정규화 버전은 다음 단계라 이번에는 하지 않았다 (연령과 WoE 상관 0.53, 스코어카드에 포함). 규칙 확인: 새 파일은 results/phase2/와 src/p2_*.py뿐, 기존 폴더·모듈은 수정하지 않았고 test 분할은 읽지 않았다. 커밋·push 없음.
+- `22:38:54` 4a 시작: 스코어카드 22개 변수, train 215,257건의 WoE 변환값에서 상관·VIF 계산 (test 미사용)
+- `22:38:54` **[결정]** 4a 결과(vif_check.md): |상관|>0.7 쌍 1개 (family 간 1개), VIF 최대 3.27 (INS_ALL_PAY_RATIO_MEAN), 주의(≥5) 0개, 문제(≥10) 0개. 제거 제안(적용 안 함): 없음
+- `22:40:04` 4b 시작: 단조 제약 GBM, 변수 22개(스코어카드와 동일), 입력 열 22, train 215,257 / valid 46,127 (test 미사용)
+- `22:40:04` **[결정]** 4b 제약 방향 규칙(학습 전 고정): 스코어카드 구간화에서 결측을 뺀 구간의 train 부도율 추세가 오르면 +1, 내리면 -1. 스코어카드 계수 22개 전부 음수라 WoE 방향과 일치. 범주형은 스코어카드 범주 묶음 번호(부도율 낮은 순)를 서수로 넣고 +1. 결과 +1 17개, -1 5개 (mono_constraints.csv)
+- `22:40:04` **[결정]** 4b 튜닝 설정: Optuna TPE(seed 42) 40 trial, 목적 = train 5-fold CV 평균 AUC (valid 미사용), 튜닝 중 lr 0.05, 최대 1500그루, fold 내 조기 종료 100. 탐색: max_depth 2~6, min_child_weight 5~100(log), subsample 0.6~1, colsample_bytree 0.5~1, reg_lambda 0.1~30(log), reg_alpha 1e-3~5(log), gamma 0~2. trial 0은 v2 설정(depth 5, mcw 20, subsample 0.8, colsample 0.7, lambda 5)을 넣어 기준선으로 쓴다
+- `22:52:00` **[결정]** 4b 40 trial 첫 실행(탐색 lr 0.05, 조기 종료 100)은 사용자 요청으로 중단(완료된 trial 없음, 산출물 없음). 변경: trial 20, 탐색 lr 0.1 + 조기 종료 50, 최종 재학습 lr 0.03(범위 0.03~0.05 중 선택). 같은 설정을 제약 없는 GBM(22)에도 적용(--mode free). 위 시작 로그 3줄은 중단된 실행의 것.
+- `22:44:28` 4b[mono] 시작: 단조 제약 GBM, 변수 22개(스코어카드와 동일), 입력 열 22, train 215,257 / valid 46,127 (test 미사용)
+- `22:44:28` **[결정]** 4b 제약 방향 규칙(학습 전 고정): 스코어카드 구간화에서 결측을 뺀 구간의 train 부도율 추세가 오르면 +1, 내리면 -1. 스코어카드 계수 22개 전부 음수라 WoE 방향과 일치. 범주형은 스코어카드 범주 묶음 번호(부도율 낮은 순)를 서수로 넣고 +1. 결과 +1 17개, -1 5개 (mono_constraints.csv)
+- `22:44:28` **[결정]** 4b[mono] 튜닝 설정(사용자 지시로 40→20 trial, 탐색 lr 0.1 + 조기 종료): Optuna TPE sampler seed 42, fold 분할 StratifiedKFold(5, shuffle, seed 42), XGBoost seed 42, 20 trial, 목적 = train 5-fold CV 평균 AUC (valid 미사용), 탐색 중 lr 0.1, 최대 1000그루, fold 내 조기 종료 50(fold 검증 AUC). 탐색: max_depth 2~6, min_child_weight 5~100(log), subsample 0.6~1, colsample_bytree 0.5~1, reg_lambda 0.1~30(log), reg_alpha 1e-3~5(log), gamma 0~2. trial 0은 v2 설정(depth 5, mcw 20, subsample 0.8, colsample 0.7, lambda 5)을 넣어 기준선으로 쓴다
+- `23:21:44` 4b[mono] trial 0: CV AUC 0.76253 (sd 0.00306), depth 5, mcw 20.0, 평균 트리 265, 2236.2초
+- `23:24:16` 4b[mono] trial 1: CV AUC 0.76229 (sd 0.00289), depth 3, mcw 86.3, 평균 트리 450, 151.3초
+- `23:25:49` 4b[mono] trial 2: CV AUC 0.76268 (sd 0.00270), depth 6, mcw 30.3, 평균 트리 414, 93.0초
+- `23:27:24` 4b[mono] trial 3: CV AUC 0.76123 (sd 0.00323), depth 2, mcw 8.7, 평균 트리 441, 95.3초
+- `23:29:32` 4b[mono] trial 4: CV AUC 0.76163 (sd 0.00314), depth 2, mcw 12.0, 평균 트리 580, 127.5초
+- `23:31:16` 4b[mono] trial 5: CV AUC 0.76170 (sd 0.00311), depth 4, mcw 5.7, 평균 트리 309, 104.6초
+- `23:33:38` 4b[mono] trial 6: CV AUC 0.76215 (sd 0.00277), depth 6, mcw 12.5, 평균 트리 242, 141.7초
+- `23:35:34` 4b[mono] trial 7: CV AUC 0.76174 (sd 0.00301), depth 2, mcw 76.2, 평균 트리 635, 116.2초
+- `23:37:09` 4b[mono] trial 8: CV AUC 0.76108 (sd 0.00304), depth 2, mcw 91.3, 평균 트리 424, 94.3초
+- `23:38:49` 4b[mono] trial 9: CV AUC 0.76139 (sd 0.00286), depth 2, mcw 9.0, 평균 트리 414, 100.8초
+- `23:41:44` 4b[mono] trial 10: CV AUC 0.76270 (sd 0.00313), depth 5, mcw 54.2, 평균 트리 302, 174.8초
+- `23:44:59` 4b[mono] trial 11: CV AUC 0.76256 (sd 0.00280), depth 6, mcw 30.6, 평균 트리 367, 195.0초
+- `23:47:58` 4b[mono] trial 12: CV AUC 0.76228 (sd 0.00264), depth 4, mcw 41.4, 평균 트리 343, 178.4초
+- `23:51:15` 4b[mono] trial 13: CV AUC 0.76272 (sd 0.00294), depth 4, mcw 39.6, 평균 트리 381, 197.9초
+- `23:53:51` 4b[mono] trial 14: CV AUC 0.76275 (sd 0.00253), depth 5, mcw 56.1, 평균 트리 258, 155.4초
+- `23:54:55` 4b[mono] trial 15: CV AUC 0.76268 (sd 0.00302), depth 5, mcw 97.0, 평균 트리 255, 64.4초
+- `23:56:04` 4b[mono] trial 16: CV AUC 0.76277 (sd 0.00287), depth 4, mcw 60.7, 평균 트리 378, 68.8초
+- `23:57:09` 4b[mono] trial 17: CV AUC 0.76248 (sd 0.00269), depth 5, mcw 52.9, 평균 트리 255, 65.3초
+- `23:57:47` 4b[mono] trial 18: CV AUC 0.76143 (sd 0.00304), depth 5, mcw 57.0, 평균 트리 164, 37.7초
+- `00:00:34` 4b[mono] trial 19: CV AUC 0.76245 (sd 0.00300), depth 4, mcw 73.0, 평균 트리 369, 166.8초
+- `00:00:34` **[결정]** 4b[mono] 튜닝 끝: 최고 CV AUC 0.76277 (trial 16, v2 설정 trial 0은 0.76253), 최적 {"max_depth": 4, "min_child_weight": 60.72665218964866, "subsample": 0.8899252694618368, "colsample_bytree": 0.857699774092763, "reg_lambda": 0.12052614369800378, "reg_alpha": 2.164750255917221, "gamma": 0.5129013142685185}
+- `00:00:34` **[결정]** 4b[mono] 최종 재학습: 찾은 파라미터 + lr 0.03(범위 0.03~0.05 중 v2와 같은 값), 최대 3000그루, valid AUC 조기 종료 150, scale_pos_weight 없음
+- `00:03:16` 4b[mono] 최종: best_iter 1443, valid AUC 0.7649, KS 0.3991, ECE 0.0050, Brier 0.0678. 단조 위반 점검(mono만; 변수 22개 × 격자 15점 × 500행): 위반 0
+- `00:03:35` 4b[free22] 시작: 제약 없는 GBM(22, 튜닝), 변수 22개(스코어카드와 동일), 입력 열 22, train 215,257 / valid 46,127 (test 미사용)
+- `00:03:35` **[결정]** 4b[free22] 제약 없는 GBM(22): 단조 GBM과 입력 행렬(22열, 범주형은 bin 서수)·fold·탐색 범위·시드가 완전히 같고 monotone_constraints만 없다. 단조 제약 효과만 분리하기 위함
+- `00:03:35` **[결정]** 4b[free22] 튜닝 설정(사용자 지시로 40→20 trial, 탐색 lr 0.1 + 조기 종료): Optuna TPE sampler seed 42, fold 분할 StratifiedKFold(5, shuffle, seed 42), XGBoost seed 42, 20 trial, 목적 = train 5-fold CV 평균 AUC (valid 미사용), 탐색 중 lr 0.1, 최대 1000그루, fold 내 조기 종료 50(fold 검증 AUC). 탐색: max_depth 2~6, min_child_weight 5~100(log), subsample 0.6~1, colsample_bytree 0.5~1, reg_lambda 0.1~30(log), reg_alpha 1e-3~5(log), gamma 0~2. trial 0은 v2 설정(depth 5, mcw 20, subsample 0.8, colsample 0.7, lambda 5)을 넣어 기준선으로 쓴다
+- `00:05:49` 4b[free22] trial 0: CV AUC 0.77016 (sd 0.00352), depth 5, mcw 20.0, 평균 트리 206, 133.7초
+- `00:09:03` 4b[free22] trial 1: CV AUC 0.77123 (sd 0.00366), depth 3, mcw 86.3, 평균 트리 500, 194.6초
+- `00:09:53` 4b[free22] trial 2: CV AUC 0.77032 (sd 0.00351), depth 6, mcw 30.3, 평균 트리 191, 49.0초
+- `00:12:03` 4b[free22] trial 3: CV AUC 0.76988 (sd 0.00310), depth 2, mcw 8.7, 평균 트리 758, 130.9초
+- `00:14:10` 4b[free22] trial 4: CV AUC 0.77020 (sd 0.00367), depth 2, mcw 12.0, 평균 트리 688, 126.2초
+- `00:15:38` 4b[free22] trial 5: CV AUC 0.77150 (sd 0.00273), depth 4, mcw 5.7, 평균 트리 388, 88.2초
+- `00:16:25` 4b[free22] trial 6: CV AUC 0.76855 (sd 0.00261), depth 6, mcw 12.5, 평균 트리 124, 46.8초
+- `00:18:51` 4b[free22] trial 7: CV AUC 0.77090 (sd 0.00367), depth 2, mcw 76.2, 평균 트리 742, 146.0초
+- `00:21:31` 4b[free22] trial 8: CV AUC 0.77061 (sd 0.00326), depth 2, mcw 91.3, 평균 트리 789, 160.4초
+- `00:24:05` 4b[free22] trial 9: CV AUC 0.77001 (sd 0.00295), depth 2, mcw 9.0, 평균 트리 674, 153.6초
+- `00:25:01` 4b[free22] trial 10: CV AUC 0.76965 (sd 0.00319), depth 5, mcw 10.6, 평균 트리 230, 56.1초
+- `00:26:15` 4b[free22] trial 11: CV AUC 0.77097 (sd 0.00306), depth 4, mcw 19.3, 평균 트리 351, 74.3초
+- `00:27:32` 4b[free22] trial 12: CV AUC 0.77140 (sd 0.00332), depth 4, mcw 89.5, 평균 트리 309, 76.7초
+- `00:29:48` 4b[free22] trial 13: CV AUC 0.77167 (sd 0.00321), depth 3, mcw 9.3, 평균 트리 614, 135.9초
+- `00:31:01` 4b[free22] trial 14: CV AUC 0.77103 (sd 0.00333), depth 4, mcw 10.8, 평균 트리 277, 73.6초
+- `00:32:58` 4b[free22] trial 15: CV AUC 0.77158 (sd 0.00336), depth 3, mcw 7.6, 평균 트리 524, 117.1초
+- `00:34:15` 4b[free22] trial 16: CV AUC 0.77100 (sd 0.00328), depth 4, mcw 5.5, 평균 트리 299, 76.7초
+- `00:35:34` 4b[free22] trial 17: CV AUC 0.77069 (sd 0.00263), depth 4, mcw 11.1, 평균 트리 305, 79.0초
+- `00:36:36` 4b[free22] trial 18: CV AUC 0.76942 (sd 0.00333), depth 4, mcw 12.1, 평균 트리 238, 61.4초
+- `00:39:10` 4b[free22] trial 19: CV AUC 0.77022 (sd 0.00397), depth 2, mcw 11.3, 평균 트리 753, 154.7초
+- `00:39:10` **[결정]** 4b[free22] 튜닝 끝: 최고 CV AUC 0.77167 (trial 13, v2 설정 trial 0은 0.77016), 최적 {"max_depth": 3, "min_child_weight": 9.310400510696686, "subsample": 0.8530490633627384, "colsample_bytree": 0.5552122824919133, "reg_lambda": 0.1925329585713461, "reg_alpha": 4.478304919009887, "gamma": 1.923688590836933}
+- `00:39:10` **[결정]** 4b[free22] 최종 재학습: 찾은 파라미터 + lr 0.03(범위 0.03~0.05 중 v2와 같은 값), 최대 3000그루, valid AUC 조기 종료 150, scale_pos_weight 없음
+- `00:41:20` 4b[free22] 최종: best_iter 2975, valid AUC 0.7749, KS 0.4157, ECE 0.0042, Brier 0.0670. 단조 위반 점검(mono만; 변수 22개 × 격자 15점 × 500행): 위반 해당 없음
+- `00:42:11` 4c 비교표 저장(compare_valid_v2.md): AUC GBM(100) 0.7898, GBM(22) 0.7749, 단조 GBM(22) 0.7649, 스코어카드 0.7544. 격차 메움 비율 50.9% (95% [41.5%, 59.5%], KS 기준 44.4%)
+- `00:45:00` **[결정]** 4c 비교(compare_valid_v2.md) 완료: 단조 GBM이 스코어카드–튜닝 GBM(22) 격차 0.0205 중 0.0104(51%, 95% [42%, 60%])를 메움. 제약 없는 튜닝 GBM은 v2 설정 GBM(22)과 AUC 차이 +0.0001(구간이 0 포함)로 튜닝 효과가 없음. 주의: 튜닝 GBM(22)의 best_iteration 2975가 상한 3000에 근접해 트리 수가 충분히 수렴하지 않았을 수 있음(최적 depth 3 + lr 0.03). 단조 위반 점검 0건. 한 번도 test를 읽지 않았고 커밋·push 하지 않았다. optuna는 requirements.txt에 없어 스크래치패드(--target)에 설치해 PYTHONPATH로 사용(환경·requirements 변경 없음).
