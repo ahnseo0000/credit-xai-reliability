@@ -1,0 +1,8 @@
+﻿variable,korean_name,family_final,kind,reason
+EXT_SOURCE_1,,외부점수,원본 신청서 변수,이름에 EXT_SOURCE 포함
+EXT_SOURCE_2,,외부점수,원본 신청서 변수,이름에 EXT_SOURCE 포함
+EXT_SOURCE_3,,외부점수,원본 신청서 변수,이름에 EXT_SOURCE 포함
+EXT_SOURCE_MEAN,외부 신용평가 점수 평균,외부점수,EXT_SOURCE_1~3에서 만든 L0 집계 (평균/최소/최대/곱),이름에 EXT_SOURCE 포함
+EXT_SOURCE_MIN,외부 신용평가 점수 최솟값,외부점수,EXT_SOURCE_1~3에서 만든 L0 집계 (평균/최소/최대/곱),이름에 EXT_SOURCE 포함
+EXT_SOURCE_MAX,외부 신용평가 점수 최댓값,외부점수,EXT_SOURCE_1~3에서 만든 L0 집계 (평균/최소/최대/곱),이름에 EXT_SOURCE 포함
+EXT_SOURCE_PROD,외부 신용평가 점수 곱,외부점수,EXT_SOURCE_1~3에서 만든 L0 집계 (평균/최소/최대/곱),이름에 EXT_SOURCE 포함

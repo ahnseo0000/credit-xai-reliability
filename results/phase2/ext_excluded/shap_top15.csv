@@ -1,0 +1,31 @@
+﻿model,rank,variable,korean_name,family_final,mean_abs_shap,rank_in_other_model,excluded
+v2,1,EXT_SOURCE_MEAN,외부 신용평가 점수 평균,외부점수,0.36783737,,Y
+v2,2,CREDIT_TERM,,대출조건,0.11617154,3.0,
+v2,3,AMT_ANNUITY,,대출조건,0.10906763,8.0,
+v2,4,POS_ALL_FUT_RATIO_MEAN,전체 기간 남은 회차/전체 회차 비율 평균,상환비율,0.10797805,6.0,
+v2,5,DAYS_EMPLOYED,,직업·고용,0.107116684,1.0,
+v2,6,CREDIT_GOODS_RATIO,상품가 대비 대출 금액,대출조건,0.093651734,4.0,
+v2,7,EXT_SOURCE_1,,외부점수,0.08813738,,Y
+v2,8,PREV_APPROVED_AMT_RATIO,요청액 대비 승인액,신청행태,0.08745241,7.0,
+v2,9,NAME_EDUCATION_TYPE,,인구통계·주변(대리 후보),0.08685698,5.0,
+v2,10,EXT_SOURCE_MAX,외부 신용평가 점수 최댓값,외부점수,0.08409691,,Y
+v2,11,INS_ALL_INST_AMT_MEAN,전체 기간 약정 납부액 평균,부채규모,0.080802,14.0,
+v2,12,BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액/대출금액 비율 최댓값,소진율,0.07769435,2.0,
+v2,13,POS_ACTIVE_CNT,진행 중 상태 월 건수,이용규모,0.07289376,16.0,
+v2,14,OWN_CAR_AGE,,생활안정,0.072800115,18.0,
+v2,15,EXT_SOURCE_3,,외부점수,0.064185835,,Y
+ext_excluded,1,DAYS_EMPLOYED,,직업·고용,0.1610746,5.0,
+ext_excluded,2,BUR_ALL_DEBT_RATIO_MAX,전체 기간 잔액/대출금액 비율 최댓값,소진율,0.1297522,12.0,
+ext_excluded,3,CREDIT_TERM,,대출조건,0.123809904,2.0,
+ext_excluded,4,CREDIT_GOODS_RATIO,상품가 대비 대출 금액,대출조건,0.11642626,6.0,
+ext_excluded,5,NAME_EDUCATION_TYPE,,인구통계·주변(대리 후보),0.10927671,9.0,
+ext_excluded,6,POS_ALL_FUT_RATIO_MEAN,전체 기간 남은 회차/전체 회차 비율 평균,상환비율,0.103087805,4.0,
+ext_excluded,7,PREV_APPROVED_AMT_RATIO,요청액 대비 승인액,신청행태,0.094053246,8.0,
+ext_excluded,8,AMT_ANNUITY,,대출조건,0.09321727,3.0,
+ext_excluded,9,BUREAU_MAX_OVERDUE_AMT,타기관 최대 연체금액,연체이력,0.089376904,28.0,
+ext_excluded,10,DAYS_LAST_PHONE_CHANGE,,생활안정,0.08616701,54.0,
+ext_excluded,11,REGION_RATING_CLIENT_W_CITY,,인구통계·주변(대리 후보),0.084556036,27.0,
+ext_excluded,12,OCCUPATION_TYPE,,직업·고용,0.08451411,16.0,
+ext_excluded,13,PREV_REFUSED_RATIO,과거 신청 거절 비율,신청행태,0.082062304,19.0,
+ext_excluded,14,INS_ALL_INST_AMT_MEAN,전체 기간 약정 납부액 평균,부채규모,0.08000003,11.0,
+ext_excluded,15,BUREAU_OLDEST_DAYS,최초 대출 개설 경과일,신용이력길이,0.07997804,74.0,

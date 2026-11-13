@@ -126,3 +126,12 @@
 - `00:41:20` 4b[free22] 최종: best_iter 2975, valid AUC 0.7749, KS 0.4157, ECE 0.0042, Brier 0.0670. 단조 위반 점검(mono만; 변수 22개 × 격자 15점 × 500행): 위반 해당 없음
 - `00:42:11` 4c 비교표 저장(compare_valid_v2.md): AUC GBM(100) 0.7898, GBM(22) 0.7749, 단조 GBM(22) 0.7649, 스코어카드 0.7544. 격차 메움 비율 50.9% (95% [41.5%, 59.5%], KS 기준 44.4%)
 - `00:45:00` **[결정]** 4c 비교(compare_valid_v2.md) 완료: 단조 GBM이 스코어카드–튜닝 GBM(22) 격차 0.0205 중 0.0104(51%, 95% [42%, 60%])를 메움. 제약 없는 튜닝 GBM은 v2 설정 GBM(22)과 AUC 차이 +0.0001(구간이 0 포함)로 튜닝 효과가 없음. 주의: 튜닝 GBM(22)의 best_iteration 2975가 상한 3000에 근접해 트리 수가 충분히 수렴하지 않았을 수 있음(최적 depth 3 + lr 0.03). 단조 위반 점검 0건. 한 번도 test를 읽지 않았고 커밋·push 하지 않았다. optuna는 requirements.txt에 없어 스크래치패드(--target)에 설치해 PYTHONPATH로 사용(환경·requirements 변경 없음).
+- `13:42:48` 외부점수 제외 모델 시작 (v2 동결 파일 수정 안 함, test 미사용): 이 단계 기록은 모두 results/phase2/ext_excluded/ 에 저장
+- `13:42:48` **[결정]** **[해석 기준, 결과를 보기 전에 기록]** valid AUC 하락폭, 상위 SHAP 요인과 family 변화를 기술적으로 보고. 우열 판정이나 가설 검정은 하지 않음.
+- `13:42:48` **[결정]** 제외 대상 7개 (v2 입력 100개 중): ['EXT_SOURCE_1', 'EXT_SOURCE_2', 'EXT_SOURCE_3', 'EXT_SOURCE_MEAN', 'EXT_SOURCE_MIN', 'EXT_SOURCE_MAX', 'EXT_SOURCE_PROD']. 이름에 EXT_SOURCE가 들어간 변수가 전부이고, 변수 사전 설명에서 외부 점수를 재료로 쓴 다른 변수(비율/상호작용)는 없음. 남는 변수 93개 (신청서 21개 + L0 72개). 모형 입력 열 중 EXT 포함 7개 모두 제외
+- `13:42:48` **[결정]** 학습 조건: v2 config.json의 xgb_params 그대로(n_estimators 3000, lr 0.03, depth 5, min_child_weight 20, subsample 0.8, colsample 0.7, reg_lambda 5, 조기 종료 150 on valid AUC, 시드 42, n_jobs 4), scale_pos_weight 1.0, 보정 없음, 튜닝 없음. 조기 종료에 valid를 쓰는 것도 v2와 같다
+- `13:42:48` **[결정]** SHAP 방식 결정: v2 L2는 test에서 계산했지만 이번 작업은 test 사용 금지라, v2 동결 모형과 새 모형 모두 valid 46,127건에서 같은 방식(정확한 TreeSHAP pred_contribs, 조기 종료 지점까지 나무, 원-핫은 변수로 합산)으로 계산해 비교한다. L2의 test 기준 v2 순위는 참고로만 인용(이미 저장된 결과 파일, 데이터를 다시 읽지 않음)
+- `13:54:29` 새 모형 학습 끝: 입력 열 175, best_iteration 1154 (v2는 1405), valid AUC 0.7685
+- `13:54:33` v2 동결 모형 valid 예측 재현 확인 통과 (최대 차이 0.0e+00), best_iteration 1405
+- `14:00:42` 결과: valid AUC v2 0.7898 → 제외 0.7685 (차이 -0.0213, 95% [-0.0254, -0.0174]), KS 0.4390 → 0.4020, Brier 0.0657 → 0.0673, ECE 0.0024 → 0.0033. v2 상위 10위 중 새 상위 10위에 남은 변수 7/10 (제외된 것 3개 포함). 저장: ext_excluded/compare_valid.md, excluded_vars.csv, shap_top15.csv, family_shap.csv. test 미사용, 커밋 전
+- `14:05:00` 위 결과 줄 보충: "7/10"은 v2 상위 10위 변수 10개 중 7개가 새 상위 10위에 남았다는 뜻이고, 빠진 3개는 모두 제외된 외부점수 변수(EXT_SOURCE_MEAN, _1, _MAX)이다. 제외되지 않은 v2 상위 10위 변수 7개는 전부 새 모형 상위 10위에 남았다 (7/7).
