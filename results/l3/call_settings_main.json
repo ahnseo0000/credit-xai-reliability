@@ -1,0 +1,21 @@
+{
+ "model": "gemini-3.5-flash",
+ "temperature": 0.0,
+ "top_p": null,
+ "max_output_tokens": 8192,
+ "seed": 42,
+ "response_mime_type": "application/json",
+ "response_schema": "Notice(L3_SPEC 3절)",
+ "prompt_version": "p2",
+ "min_interval_sec": 6.5,
+ "max_api_retries": 3,
+ "max_parse_retries": 2,
+ "http_timeout_ms": 120000,
+ "sdk_retry": "off",
+ "workers": 4,
+ "order_seed": 42,
+ "order": "신청자 무작위, 신청자마다 A 다음 B",
+ "input_sha256": "188177cd7aa59721ff8e17ff5d50edc9218e3ff71596c27ce8e001723e7f3470",
+ "spec_sha256": "1d737f65ac31e91043683eb80becb21e975a1c76626c4bfb753fef9b7af74f7d",
+ "system_prompt_sha256": "87d32d4e895dbb99ddccafbda8e75ea26008b14212f6b6c96da1efadb065725e"
+}

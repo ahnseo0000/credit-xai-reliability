@@ -14,3 +14,6 @@
 - `2026-11-14 11:49:01` L3-5 시험 10건 (조건 A): 모델 gemini-3.5-flash, 간격 6.5s, status ok 5/10, 매핑률 100.0% → results/l3/trial_L3-5_A.md
 - `2026-11-14 11:55:03` L3-5 시험 10건 (조건 A): 모델 gemini-3.5-flash, 간격 13.0s, status ok 5/10, 매핑률 100.0% → results/l3/trial_L3-5_A.md
 - `2026-11-14 18:37:56` L3-5 시험 10건 (조건 A): 모델 gemini-3.5-flash, 간격 6.5s, status ok 10/10, 매핑률 100.0% → results/l3/trial_L3-5_A.md
+- `2026-11-14 18:39:33` L3-6 본 호출 시작/재개: 모델 gemini-3.5-flash, 남은 600건, 동시 4, 입력 sha256 188177cd7aa5
+- `2026-11-14 19:43:44` L3-6 현황: 기록 600/600건, 조건별 {'A': {'ok': 300}, 'B': {'ok': 300}}, 실패 사유 {}, 두 조건 모두 ok 쌍 300명, model_version {'gemini-3.6-flash': 600} → results/l3/raw/l3_main.csv
+- `2026-11-14 19:58:00` L3-6 완료: 600/600 ok, 쌍 300명, model_version 전부 gemini-3.6-flash, 조건 A 10건은 trial_A 캐시 사용. 요약 results/l3/main_summary.md, 행 단위 기록은 zip(l3_results_for_L4_20261114.zip, repo 밖)으로 L4에 전달.
