@@ -16,6 +16,7 @@ import json
 import os
 import random
 import re
+import threading
 import time
 from datetime import datetime
 
@@ -23,6 +24,7 @@ import pandas as pd
 
 from . import settings as S
 
+_RATE_LOCK = threading.Lock()
 DIR_UP, DIR_DOWN, DIR_NONE = "부도 위험 증가", "부도 위험 감소", "영향 거의 없음"
 
 # =====================================================================================
@@ -236,10 +238,11 @@ def call_llm(prompt: str, *, use_cache: bool = True, client: Gemini | None = Non
     out = {"key": key, "cached": False, "attempts": 0, "status": "failed", "error": None, "text": None, "latency_s": None,
            "tokens_in": None, "tokens_out": None, "tokens_thought": None, "model_version": None, "finish_reason": None}
     for attempt in range(S.MAX_API_RETRIES + 1):
-        wait = S.MIN_INTERVAL_SEC - (time.time() - Gemini._last_call)
-        if wait > 0:
-            time.sleep(wait)
-        Gemini._last_call = time.time()
+        with _RATE_LOCK:   # 동시 호출이어도 호출 시작 간격은 MIN_INTERVAL_SEC 이상 (스레드 공유)
+            wait = S.MIN_INTERVAL_SEC - (time.time() - Gemini._last_call)
+            if wait > 0:
+                time.sleep(wait)
+            Gemini._last_call = time.time()
         out["attempts"] = attempt + 1
         t0 = time.time()
         try:
@@ -254,7 +257,7 @@ def call_llm(prompt: str, *, use_cache: bool = True, client: Gemini | None = Non
         except Exception as e:  # noqa: BLE001
             out["latency_s"] = round(time.time() - t0, 3)
             kind, retry = _err_kind(e)
-            out["error"] = f"{kind}: {str(e)[:200]}"
+            out["error"] = f"{kind}: {str(e)[:600]}"
             if not retry or attempt == S.MAX_API_RETRIES:
                 break
             time.sleep(S.BACKOFF_BASE_SEC * 2 ** attempt + random.uniform(0, 1))
@@ -414,41 +417,47 @@ def log(msg: str):
         f.write(line + "\n")
 
 
+def run_one(rec: dict, condition: str, *, client: Gemini, tag: str, input_hash: str) -> tuple[dict, dict]:
+    """신청자 x 조건 1건 실행 (파싱·스키마 재호출 포함). 반환: (표 한 행, 원문 포함 기록 한 줄). 파일은 쓰지 않는다 (스레드 안전)."""
+    prompt = build_prompt(rec, condition)
+    p_hash = sha256_text(SYSTEM + "\n" + prompt)
+    parse_tries, parsed, viol, out = 0, None, [], None
+    for pt in range(S.MAX_PARSE_RETRIES + 1):
+        out = call_llm(prompt, use_cache=(pt == 0), client=client)
+        parse_tries = pt + 1
+        if out["status"] != "ok":
+            parsed, viol = None, [out["error"].split(":")[0]]   # 실패 사유 (429 한도 초과 / 503 서버 오류 / 타임아웃 …)
+            break
+        parsed, viol = parse_output(out["text"], rec["model_output"]["decision"])
+        if parsed is not None and not viol:
+            if pt > 0:   # 재호출로 통과한 응답을 캐시에 남긴다 (같은 키는 다시 부르지 않게)
+                (S.CACHE_DIR / f"{out['key']}.json").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
+            break
+    ok = out["status"] == "ok" and parsed is not None and not viol
+    base = {"tag": tag, "sample_id": rec["sample_id"], "cell_id": rec["cell"]["cell_id"], "pd_bin": rec["cell"]["pd_bin"],
+            "condition": condition, "model": client.model, "model_version": out.get("model_version"),
+            "prompt_version": S.PROMPT_VERSION, "input_sha256": input_hash, "prompt_sha256": p_hash,
+            "called_at": out.get("called_at"), "cached": out["cached"], "api_attempts": out["attempts"], "parse_attempts": parse_tries,
+            "latency_s": out["latency_s"], "tokens_in": out["tokens_in"], "tokens_out": out["tokens_out"],
+            "tokens_thought": out["tokens_thought"], "finish_reason": out["finish_reason"],
+            "status": "ok" if ok else "failed", "fail_reason": "; ".join(viol), "parse_ok": parsed is not None}
+    post = postprocess(parsed, rec) if parsed is not None else None
+    if post:
+        base.update(post["summary"])
+    line = {**base, "response_text": out["text"], "error": out["error"], "items": post["items"] if post else None}
+    return base, line
+
+
 def run_batch(records: list[dict], condition: str, *, client: Gemini, tag: str, input_hash: str | None = None) -> pd.DataFrame:
-    """레코드를 한 번씩 실행. 한 행 = 한 호출. 원문 포함 기록은 results/l3/raw/calls_<tag>.jsonl, 표는 results/l3/raw/l3_<tag>.csv"""
+    """레코드를 순서대로 한 번씩 실행 (시험용). 한 행 = 한 호출. 원문 포함 기록은 results/l3/raw/calls_<tag>.jsonl, 표는 results/l3/raw/l3_<tag>.csv"""
     input_hash = input_hash or sha256_file(S.INPUT_JSONL)
     S.RAW_DIR.mkdir(parents=True, exist_ok=True)
     rows = []
     with open(S.RAW_DIR / f"calls_{tag}.jsonl", "a", encoding="utf-8") as logf:
         for i, rec in enumerate(records, 1):
-            prompt = build_prompt(rec, condition)
-            p_hash = sha256_text(SYSTEM + "\n" + prompt)
-            parse_tries, parsed, viol, out = 0, None, [], None
-            for pt in range(S.MAX_PARSE_RETRIES + 1):
-                out = call_llm(prompt, use_cache=(pt == 0), client=client)
-                parse_tries = pt + 1
-                if out["status"] != "ok":
-                    parsed, viol = None, [out["error"].split(":")[0]]
-                    break
-                parsed, viol = parse_output(out["text"], rec["model_output"]["decision"])
-                if parsed is not None and not viol:
-                    if pt > 0:   # 재호출로 통과한 응답을 캐시에 남긴다 (같은 키는 다시 부르지 않게)
-                        (S.CACHE_DIR / f"{out['key']}.json").write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
-                    break
-            ok = out["status"] == "ok" and parsed is not None and not viol
-            base = {"tag": tag, "sample_id": rec["sample_id"], "cell_id": rec["cell"]["cell_id"], "pd_bin": rec["cell"]["pd_bin"],
-                    "condition": condition, "model": client.model, "model_version": out.get("model_version"),
-                    "prompt_version": S.PROMPT_VERSION, "input_sha256": input_hash, "prompt_sha256": p_hash,
-                    "called_at": out.get("called_at"), "cached": out["cached"], "api_attempts": out["attempts"], "parse_attempts": parse_tries,
-                    "latency_s": out["latency_s"], "tokens_in": out["tokens_in"], "tokens_out": out["tokens_out"],
-                    "tokens_thought": out["tokens_thought"], "finish_reason": out["finish_reason"],
-                    "status": "ok" if ok else "failed", "fail_reason": "; ".join(viol), "parse_ok": parsed is not None}
-            post = postprocess(parsed, rec) if parsed is not None else None
-            if post:
-                base.update(post["summary"])
+            base, line = run_one(rec, condition, client=client, tag=tag, input_hash=input_hash)
             rows.append(base)
-            logf.write(json.dumps({**base, "response_text": out["text"], "error": out["error"],
-                                   "items": post["items"] if post else None}, ensure_ascii=False) + "\n")
+            logf.write(json.dumps(line, ensure_ascii=False) + "\n")
             logf.flush()   # 한 건마다 바로 기록 (중단돼도 남는다)
             print(f"  [{tag}] {i}/{len(records)} {base['status']} ({base['latency_s']}s, cached={base['cached']})", flush=True)
     df = pd.DataFrame(rows)

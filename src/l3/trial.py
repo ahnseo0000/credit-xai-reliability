@@ -60,7 +60,8 @@ def list_models():
 
 
 def report(df: pd.DataFrame, fakes: list[dict], model: str, args) -> str:
-    calls = df[~df.cached] if (~df.cached).any() else df
+    ok_df = df[df.status == "ok"]
+    calls = ok_df[~ok_df.cached] if (~ok_df.cached).any() else ok_df   # 지연·토큰은 성공한 새 호출만 (실패 건 0.4초·0토큰이 평균을 낮추지 않게)
     lines = [json.loads(l) for l in open(S.RAW_DIR / f"calls_{args.tag}.jsonl", encoding="utf-8")]
     real_overlap = []
     for rec in fakes:
@@ -88,7 +89,7 @@ def report(df: pd.DataFrame, fakes: list[dict], model: str, args) -> str:
           f"| **통과 기준 (10/10)** | **{'통과' if ok == len(df) == N_TRIAL else '미달'}** |",
           f"| API 재시도 | {int((df.api_attempts > 1).sum())}건 (총 시도 {int(df.api_attempts.sum())}회) |",
           f"| 파싱·스키마 재호출 | {int((df.parse_attempts > 1).sum())}건 |",
-          f"| 호출당 지연 (새 호출) | 평균 {calls.latency_s.mean():.1f}초, 최대 {calls.latency_s.max():.1f}초 |",
+          f"| 호출당 지연 (성공한 새 호출) | 평균 {calls.latency_s.mean():.1f}초, 최대 {calls.latency_s.max():.1f}초 |",
           f"| 호출당 토큰 | 입력 {tin.mean():,.0f} / 출력 {tout.mean():,.0f} / 생각 {tth.mean():,.0f} |",
           f"| 호출당 비용 | {'무료 티어: 청구 0 (유료 단가 미입력)' if cost is None else f'유료 단가 기준 ${cost.mean():.5f}, 600건 환산 ${cost.mean() * 600:.2f}'} |",
           f"| 변수 매핑률 (main_reasons + other_factors) | {n_map:.0f}/{n_items:.0f} = {n_map / max(n_items, 1):.1%} (목표 90%) |",
@@ -114,11 +115,19 @@ def main():
     ap.add_argument("--tag", default="trial")
     ap.add_argument("--price-in", type=float)
     ap.add_argument("--price-out", type=float)
+    ap.add_argument("--condition", choices=("A", "B"), default="B",
+                    help="B(기본) = 가짜 SHAP으로 조건 B. A = 같은 10명을 조건 A로 (SHAP 미제공이라 진짜 레코드 그대로, 매핑률 확인용)")
     a = ap.parse_args()
     if a.list_models:
         return list_models()
     assert a.model, "--model 을 준다 (먼저 --list-models 로 확인)"
-    fakes = [fake_shap(r, seed=r["sample_id"]) for r in pick(llm.load_records())]
+    if a.condition == "B":
+        fakes = [fake_shap(r, seed=r["sample_id"]) for r in pick(llm.load_records())]
+    else:   # 조건 A는 SHAP을 프롬프트에 넣지 않으므로 가짜 SHAP이 의미 없다. 진짜 레코드로 같은 10명
+        fakes = pick(llm.load_records())
+        for r in fakes:
+            for f in r["features"]:
+                f["real_shap_rank"] = f["shap_rank"]
     if a.dry_run:
         d = S.RAW_DIR / "prompt_examples"
         d.mkdir(parents=True, exist_ok=True)
@@ -133,12 +142,18 @@ def main():
         "max_parse_retries": S.MAX_PARSE_RETRIES, "input_sha256": in_hash, "spec_sha256": llm.sha256_file(S.SPEC_MD),
         "system_prompt_sha256": llm.sha256_text(llm.SYSTEM)}, ensure_ascii=False, indent=1), encoding="utf-8")
     client = llm.Gemini(a.model)
-    df = llm.run_batch(fakes, "B", client=client, tag=a.tag, input_hash=in_hash)
+    df = llm.run_batch(fakes, a.condition, client=client, tag=a.tag, input_hash=in_hash)
     md = report(df, fakes, a.model, a)
-    (S.L3_DIR / "trial_L3-5.md").write_text(md, encoding="utf-8")
+    if a.condition == "A":
+        md = (md.replace("(가짜 SHAP, 조건 B)", "(조건 A, SHAP 미제공, 같은 10명)")
+                .replace("SHAP은 레코드 안에서 섞음 (시드 = sample_id)", "조건 A라 SHAP 미제공 (F는 진짜 SHAP 기준)")
+                .replace("가짜 SHAP 상위 4 ∩ 응답 4개 (F)", "진짜 SHAP 상위 4 ∩ 응답 4개 (F)")
+                .replace("방향 포함 (F_dir, 가짜 SHAP 기준)", "방향 포함 (F_dir, 진짜 SHAP 기준)"))
+    out_md = "trial_L3-5.md" if a.condition == "B" else "trial_L3-5_A.md"
+    (S.L3_DIR / out_md).write_text(md, encoding="utf-8")
     print(md)
-    llm.log(f"L3-5 시험 10건 (가짜 SHAP, B): 모델 {a.model}, 간격 {S.MIN_INTERVAL_SEC}s, status ok {int((df.status == 'ok').sum())}/10, "
-            f"매핑률 {df.get('n_mapped', pd.Series([0])).sum() / max(df.get('n_items', pd.Series([1])).sum(), 1):.1%} → results/l3/trial_L3-5.md")
+    llm.log(f"L3-5 시험 10건 (조건 {a.condition}{', 가짜 SHAP' if a.condition == 'B' else ''}): 모델 {a.model}, 간격 {S.MIN_INTERVAL_SEC}s, status ok {int((df.status == 'ok').sum())}/10, "
+            f"매핑률 {df.get('n_mapped', pd.Series([0])).sum() / max(df.get('n_items', pd.Series([1])).sum(), 1):.1%} → results/l3/{out_md}")
 
 
 if __name__ == "__main__":

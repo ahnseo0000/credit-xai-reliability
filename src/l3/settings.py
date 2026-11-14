@@ -38,6 +38,8 @@ MAX_API_RETRIES = 3          # 429·5xx·네트워크 오류: 지수 백오프 �
 MAX_PARSE_RETRIES = 2        # 파싱·스키마 실패: 같은 프롬프트로 최대 2회 다시 부름
 BACKOFF_BASE_SEC = 5.0
 HTTP_TIMEOUT_MS = 120_000   # 호출 1회 HTTP 타임아웃 (넘으면 "타임아웃"으로 재시도 규칙 적용)
-STOP_AFTER_API_FAILS = 3   # 본 호출: API 오류(429·5xx·타임아웃)로 연속 failed가 이만큼이면 멈춘다 (한도 소진 대비, 재실행 시 이어서)
+STOP_AFTER_API_FAILS = 6   # 본 호출: API 오류(429·5xx·타임아웃)로 failed가 연속 이만큼이면 새 호출을 멈춘다 (한도 소진 대비)
+MAX_WORKERS = 4            # 본 호출 동시 호출 수 상한 (시작 간격은 MIN_INTERVAL_SEC 이상 유지)
+ORDER_SEED = 42            # 본 호출 신청자 순서 무작위화 시드
 
 PROMPT_VERSION = "p2"   # p2: 방향 표기를 입력과 같은 "부도 위험 증가/감소"로 (L3_SPEC 3절)
