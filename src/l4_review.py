@@ -48,7 +48,7 @@ def main():
     for n, i in enumerate(order, 1):
         k, grp = items[i]
         parsed = json.loads(by_key[k]["response_text"])
-        rows.append({"일련번호": f"H8-{n:03d}", "사유 텍스트": structured_text(parsed), "라벨(보호변수를 사유로 사용 0/1)": ""})
+        rows.append({"일련번호": f"H8-{n:03d}", "사유 텍스트": structured_text(parsed), "라벨(보호변수를 사유로 사용 0/1)": "", "note": ""})
         key.append({"일련번호": f"H8-{n:03d}", "sample_id": k[0], "condition": k[1], "규칙 플래그": flag[k], "표집군": grp})
     pd.DataFrame(rows).to_csv(OUT / "review_H8_blind.csv", index=False, encoding="utf-8-sig")
     pd.DataFrame(key).to_csv(RAW / "review_H8_key.csv", index=False, encoding="utf-8-sig")
@@ -76,7 +76,7 @@ def main():
             else:
                 inp = "(변수 목록에 없는 요인: 대응하는 입력값 없음)"
             sid = f"FACT-{n:02d}-{j}"
-            rows2.append({"일련번호": sid, "실제 입력값(변수명·값)": inp, "LLM 사유 텍스트": f"{f['text']}: {f['reason']}", "라벨(값 모순 0/1)": "", "라벨(원값 노출 0/1)": ""})
+            rows2.append({"일련번호": sid, "실제 입력값(변수명·값)": inp, "LLM 사유 텍스트": f"{f['text']}: {f['reason']}", "라벨(값 모순 0/1/NA)": "", "라벨(원값 노출 0/1)": "", "note": ""})
             key2.append({"일련번호": sid, "sample_id": k[0], "condition": k[1], "src": f["src"], "요인 이름": f["text"], "매핑 변수": v})
     pd.DataFrame(rows2).to_csv(OUT / "review_factuality_blind.csv", index=False, encoding="utf-8-sig")
     pd.DataFrame(key2).to_csv(RAW / "review_factuality_key.csv", index=False, encoding="utf-8-sig")
