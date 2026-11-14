@@ -129,6 +129,47 @@ def fidelity(parsed: dict, record: dict, mapper: Mapper) -> dict:
     return {"F": len(hits) / 4, "F_dir": dir_hits / 4, "n_overlap": len(hits)}
 
 
+# ---- 탐색 지표 (분석 계획 3절, 2026-11-14 정의 추가. 확증 F는 위 fidelity()가 그대로이다: 변수 단위, 분모 4)
+EXT_PREFIX = "EXT_SOURCE"
+EXT_FACTOR = "EXT_SOURCE(합산)"
+
+
+def llm_variables(parsed: dict, mapper: Mapper) -> list[str]:
+    """main_reasons 앞 4개를 변수로 매핑한 목록 (순서 유지, 중복·매핑 실패 제외). fidelity()와 같은 절차."""
+    seen = []
+    for x in parsed["main_reasons"][:4]:
+        var, _ = mapper.map(x.get("variable", ""))
+        if var is not None and var not in seen:
+            seen.append(var)
+    return seen
+
+
+def fidelity_k(parsed: dict, record: dict, mapper: Mapper, k: int) -> dict:
+    """탐색 F_k = |LLM 4개 변수 ∩ SHAP 상위 k개 변수| / min(4, k). k in {3, 5, 6}. k=4면 확증 F와 같다."""
+    top = shap_top(record, k)
+    hits = [v for v in llm_variables(parsed, mapper) if v in top]
+    return {f"F{k}": len(hits) / min(4, k), f"n_overlap{k}": len(hits)}
+
+
+def _merge_ext(vs: list[str]) -> list[str]:
+    out = []
+    for v in vs:
+        f = EXT_FACTOR if v.startswith(EXT_PREFIX) else v
+        if f not in out:
+            out.append(f)
+    return out
+
+
+def fidelity_ext_merged(parsed: dict, record: dict, mapper: Mapper) -> dict:
+    """탐색 F_ext: EXT_SOURCE_* 변수를 하나의 요인으로 합쳐 중복 제거한 뒤
+    |LLM 요인 ∩ SHAP 상위 4 요인| / |SHAP 상위 4 요인|. SHAP 상위 4 요인 = shap_rank 1~4 변수를 합치고 중복을 제거한 것(개수 1~4)."""
+    top_vars = [f["variable"] for f in sorted(record["features"], key=lambda f: f["shap_rank"]) if f["shap_rank"] <= 4]
+    top_f = _merge_ext(top_vars)
+    llm_f = _merge_ext(llm_variables(parsed, mapper))
+    hits = [f for f in llm_f if f in top_f]
+    return {"F_ext": len(hits) / len(top_f), "n_overlap_ext": len(hits), "n_top_factors": len(top_f)}
+
+
 def extract_factors(parsed: dict) -> list[dict]:
     """환각률의 분모: main_reasons + other_factors (improvement_direction 제외)."""
     out = [{"src": "main", "text": x.get("variable", ""), "reason": x.get("reason_text", "")} for x in parsed.get("main_reasons", [])]
@@ -302,6 +343,29 @@ def selftest(path=None):
     assert g["protected_struct"]["flag_A_core"] and g["protected_other"]["flag_A_core"]
     assert not g["oracle"]["flag_A_core"] and not g["oracle"]["flag_A_core_free"]
     assert g["schema_violation"]["status"] == "failed" and "decision_mismatch" in g["schema_violation"]["violations"]
+    # 탐색 지표 F_k / F_ext 단위시험
+    ora = _fake_output(r0, o)
+    assert fidelity_k(ora, r0, mp, 3)["F3"] == 1.0 and fidelity_k(ora, r0, mp, 5)["F5"] == 1.0 and fidelity_k(ora, r0, mp, 6)["F6"] == 1.0   # 상위 4개를 모두 말하면 k=3은 3/3, k=5·6은 4/4
+    assert fidelity_k(ora, r0, mp, 4)["F4"] == analyze_one(ora, r0, mp, kw)["F"]                                                             # k=4는 확증 F와 같다
+    sh = sorted(r0["features"], key=lambda f: f["shap_rank"])
+    far = [(f["korean_name"], UP) for f in sh[10:14]]
+    fk = fidelity_k(_fake_output(r0, far), r0, mp, 6)
+    assert fk["F6"] == 0.0 and fidelity_ext_merged(_fake_output(r0, far), r0, mp)["F_ext"] == 0.0
+    mix = [(sh[0]["korean_name"], UP), (sh[5]["korean_name"], UP), (sh[10]["korean_name"], UP), (sh[11]["korean_name"], UP)]      # 상위 6 안에 2개 (순위 1, 6)
+    assert fidelity_k(_fake_output(r0, mix), r0, mp, 3)["F3"] == 1 / 3 and fidelity_k(_fake_output(r0, mix), r0, mp, 6)["F6"] == 0.5
+    # F_ext: EXT 변수 2개를 말하면 한 요인으로 센다. 합성 레코드로 확인
+    import copy
+    rr = copy.deepcopy(r0)
+    for f in rr["features"]:
+        f["shap_rank"] = 99
+    names = {f["variable"]: f for f in rr["features"]}
+    for rk, v in enumerate(["EXT_SOURCE_MEAN", "EXT_SOURCE_1", "CREDIT_TERM", "EXT_SOURCE_MAX"], 1):
+        names[v]["shap_rank"] = rk
+    o2 = _fake_output(rr, [("EXT_SOURCE_2", UP), ("EXT_SOURCE_3", UP), ("CREDIT_TERM", UP), ("AMT_ANNUITY", UP)])
+    fe = fidelity_ext_merged(o2, rr, mp)
+    assert fe["n_top_factors"] == 2 and fe["F_ext"] == 1.0 and fe["n_overlap_ext"] == 2, fe     # SHAP 상위 4 = EXT(합산), CREDIT_TERM -> 요인 2개, LLM이 둘 다 말함
+    assert analyze_one(o2, rr, mp, kw)["F"] == 0.25                                              # 확증 F는 변수 단위라 CREDIT_TERM만 일치
+    print("F_k / F_ext 단위시험 통과")
     print("보호변수 규칙 적중(본문):", p["hits_core_free"], p["hits_ext"], "| (구조화):", g["protected_struct"]["hits_core"])
     # 별칭: 100개 변수 전부 한국어 이름과 모든 별칭이 자기 변수로 매핑되는지
     al = pd.read_csv(ALIASES, encoding="utf-8-sig")
