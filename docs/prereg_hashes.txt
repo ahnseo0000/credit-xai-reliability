@@ -2,3 +2,4 @@
 # 동결 후 파일을 바꾸면 src/l4_analysis.py의 verify_frozen()이 불일치를 알린다. 바꾸면 분석 계획 8절 이탈 기록에 적는다.
 protected_keywords.csv d7160db1f3fa4c32ddcee9f57b1d037375e0bb15f11d5b5094611a9a60dd7be1 2026-11-12
 variable_aliases.csv 9c3a87a7ff19e8e65471a1126c9f2be2241e6490468c9b679f380d9c146161d7 동결기록=이_커밋_시각 (내용은 fe12bc1(2026-11-12)과 동일, 동결 기록 시각은 이 커밋 시각; L3 호출 2026-11-14 18:39보다 뒤이므로 분석 계획 8절 이탈 기록 참고)
+# L3 호출에 쓰인 SPEC(zip판) sha256=1d737f65ac31e91043683eb80becb21e975a1c76626c4bfb753fef9b7af74f7d, 저장소 docs/L3_SPEC.md sha256=877d28d44844ba15f0c30fbbb0db9744e76a87c1a38e7c05029171dc72401c0a, 차이=분석용 부분 3곳의 추가뿐(보호변수 B 목록 2항목 `DEF_60_CNT_SOCIAL_CIRCLE`·`NAME_EDUCATION_TYPE`, jsonl `family` 필드가 구 분류라는 안내 1줄; 모두 2026-11-12 19:29 커밋 cd3ee0f). 상단 안내 문구는 두 판이 같고, 프롬프트 형식·출력 스키마·변수 순서·호출 설정 차이는 없음
