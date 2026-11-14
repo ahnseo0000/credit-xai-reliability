@@ -17,3 +17,4 @@
 - `2026-11-14 18:39:33` L3-6 본 호출 시작/재개: 모델 gemini-3.5-flash, 남은 600건, 동시 4, 입력 sha256 188177cd7aa5
 - `2026-11-14 19:43:44` L3-6 현황: 기록 600/600건, 조건별 {'A': {'ok': 300}, 'B': {'ok': 300}}, 실패 사유 {}, 두 조건 모두 ok 쌍 300명, model_version {'gemini-3.6-flash': 600} → results/l3/raw/l3_main.csv
 - `2026-11-14 19:58:00` L3-6 완료: 600/600 ok, 쌍 300명, model_version 전부 gemini-3.6-flash, 조건 A 10건은 trial_A 캐시 사용. 요약 results/l3/main_summary.md, 행 단위 기록은 zip(l3_results_for_L4_20261114.zip, repo 밖)으로 L4에 전달.
+- `2026-11-14 22:57:01` [L4] calls_main.jsonl sha256 = c530b89e5ef293cbe19c7a22391cd25b02e1915ba529961d39853118f641998f (2301680 bytes, 600행). 입력 jsonl sha256 188177cd7aa5…, 시스템 프롬프트 해시 87d32d4e895d… (기대값과 일치). 점검 결과는 results/l4/integrity.md
