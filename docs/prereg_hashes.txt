@@ -1,4 +1,4 @@
 # 사전 등록 해시 (LLM 호출 전 동결). 형식: <파일> <sha256> <동결일>
 # 동결 후 파일을 바꾸면 src/l4_analysis.py의 verify_frozen()이 불일치를 알린다. 바꾸면 분석 계획 8절 이탈 기록에 적는다.
 protected_keywords.csv d7160db1f3fa4c32ddcee9f57b1d037375e0bb15f11d5b5094611a9a60dd7be1 2026-11-12
-variable_aliases.csv (시험 10건 후 동결 예정; 이 줄은 동결 시 '<이름> <sha256> <동결일>' 형식으로 바꾼다. 현재 초안 sha256 9c3a87a7ff19e8e65471a1126c9f2be2241e6490468c9b679f380d9c146161d7)
+variable_aliases.csv 9c3a87a7ff19e8e65471a1126c9f2be2241e6490468c9b679f380d9c146161d7 동결기록=이_커밋_시각 (내용은 fe12bc1(2026-11-12)과 동일, 동결 기록 시각은 이 커밋 시각; L3 호출 2026-11-14 18:39보다 뒤이므로 분석 계획 8절 이탈 기록 참고)
